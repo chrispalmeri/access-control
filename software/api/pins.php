@@ -35,20 +35,24 @@ $smap = array(
 
 $pin = $rmap[$resource];
 
-// if no state then should return the current state
-
-$command = 'gpio write ' . $pin . ' ' . $smap[$data['state']];
-
-// 'gpio write 3 1' turn led on
-// 'gpio write 3 0' turn led off
-
-exec($command, $output, $result);
 
 $response = array(
-  'pin' => $pin,
-  'command' => $command,
-  'result' => $result
+  'pin' => $pin
 );
+
+
+// if POST
+if ($data && $data['state']) {
+  $command = 'gpio write ' . $pin . ' ' . $smap[$data['state']];
+  exec($command, $output, $result);
+
+  //$response['command'] = $command;
+  //$response['result'] = $result;
+}
+
+// always
+$response['value'] = exec('gpio read ' . $pin);
+
 
 $json = json_encode($response);
 

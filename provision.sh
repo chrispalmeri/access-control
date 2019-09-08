@@ -24,6 +24,7 @@ cat > /etc/apache2/sites-available/000-default.conf << EOF
     <Directory /var/www/html>
         Options -Indexes
         AllowOverride All
+        Header set Access-Control-Allow-Origin "*"
     </Directory>
 
     ErrorLog /vagrant/.logs/apache-error.log
@@ -33,6 +34,7 @@ EOF
 
 # Enable mod rewrite and restart Apache
 a2enmod rewrite
+# might need a2enmod headers too
 systemctl restart apache2
 
 rm /var/www/html/index.html

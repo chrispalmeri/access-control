@@ -168,3 +168,5 @@ phpinfo();
 do you want to emulate `gpio` command for dev?
 
 you should use some of this https://github.com/calcinai/phpi
+
+`Access-Control-Allow-Origin` was for dev probably shouldn't stay

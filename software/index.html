@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <script>
+      var url = '';
+      // var url = 'http://localhost:8080';
+      // var url = 'http://192.168.1.28';
+      
+      function pinState(type, action = null) {
+        var endpoint = url + '/api/pins/' + type;
+        if (action) {
+          endpoint += '/' + action
+        }
+
+        /* e.g.
+          status check = '/api/pins/led'
+          turn on = '/api/pins/led/on'
+          turn off = '/api/pins/led/off'
+        */
+
+        var id = type + 'Stat';
+
+        fetch(endpoint)
+        .then((resp) => resp.json())
+        .then(function(data) {
+          document.getElementById(id).innerHTML = parseInt(data.value) ? 'On' : 'Off';
+          //console.log(data);
+        });
+      }
+
+      window.addEventListener('load', function() {
+
+        pinState('lock');
+        pinState('led');
+        pinState('buzzer');
+
+        document.getElementById('lockOn').addEventListener('click', function() {
+          pinState('lock', 'on');
+        });
+        document.getElementById('lockOff').addEventListener('click', function() {
+          pinState('lock', 'off');
+        });
+        
+        document.getElementById('ledOn').addEventListener('click', function() {
+          pinState('led', 'on');
+        });
+        document.getElementById('ledOff').addEventListener('click', function() {
+          pinState('led', 'off');
+        });
+        
+        document.getElementById('buzzerOn').addEventListener('click', function() {
+          pinState('buzzer', 'on');
+        });
+        document.getElementById('buzzerOff').addEventListener('click', function() {
+          pinState('buzzer', 'off');
+        });
+
+      });
+    </script>
+
+  </head>
+  <body>
+
+    <table>
+      <tr>
+        <td>Lock</td>
+        <td><span id="lockStat">Unknown</span></td>
+        <td><button id="lockOn">On</button></td>
+        <td><button id="lockOff">Off</button></td>
+      </tr>
+      <tr>
+        <td>LED</td>
+        <td><span id="ledStat">Unknown</span></td>
+        <td><button id="ledOn">On</button></td>
+        <td><button id="ledOff">Off</button></td>
+      </tr>
+      <tr>
+        <td>Buzzer</td>
+        <td><span id="buzzerStat">Unknown</span></td>
+        <td><button id="buzzerOn">On</button></td>
+        <td><button id="buzzerOff">Off</button></td>
+      </tr>
+    </table>
+
+    <a href="/api/update">Update software</a>
+
+  </body>
+</html>
