@@ -49,14 +49,15 @@ cd nanopi-neo-nodejs
 sudo ./provision.sh
 ```
 
-## WiringNP fix
+## WiringNP install/fix
 
 This might be because of Armbian, and I think the values are specific for H3 boards. Worked with Neo v1.3 and Neo Core v1.1
 
-Start with install steps at https://github.com/friendlyarm/WiringNP
+from https://github.com/friendlyarm/WiringNP
 
-  * edit `~/WiringNP/wiringPi/boardtype_friendlyelec.c` and replace `/sys/class/sunxi_info/sys_info` with `/etc/sys_info`
-  * create the file `/etc/sys_info` with this content (sudo nano)
+`git clone https://github.com/friendlyarm/WiringNP`
+
+`sudo nano /etc/sys_info` to create this file
 
 ```
 sunxi_platform    : Sun8iw7p1
@@ -67,7 +68,13 @@ sunxi_batchno     : 1
 sunxi_board_id    : 1(0)
 ```
 
-`./build` again probably
+`nano WiringNP/wiringPi/boardtype_friendlyelec.c` and replace `/sys/class/sunxi_info/sys_info` with `/etc/sys_info`
+
+`cd WiringNP/`
+
+`chmod 755 build`
+
+`./build`
 
 ## GPIO
 
@@ -126,3 +133,38 @@ print("Hello, World!");
 ## PHP
 
 `apt install php`
+
+`apt install apache2 libapache2-mod-php` cause php installs it but doesn't setup the service or something
+
+And then also
+
+`nano /etc/apache2/apache2.conf`
+
+```
+<FilesMatch \.php$>
+SetHandler application/x-httpd-php
+</FilesMatch>
+```
+
+And if it is still jacked up
+
+`a2dismod mpm_event && a2enmod mpm_prefork && a2enmod php7.2`
+
+`systemctl restart apache2`
+
+Then go to `/var/www/html` and make your files
+
+`index.php`
+
+```
+<?php
+phpinfo();
+```
+
+`rm index.html`
+
+## Notes
+
+do you want to emulate `gpio` command for dev?
+
+you should use some of this https://github.com/calcinai/phpi
