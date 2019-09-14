@@ -23,9 +23,10 @@ if(array_key_exists(4, $parts)) {
 // POST /api/pins/led/ {state: on}
 
 $rmap = array(
-  'led' => 3,
-  'buzzer' => 2,
-  'lock' => 6
+  'led' => 16,
+  'buzzer' => 18,
+  'lock' => 11, // using physical pin numbers cause '0' wouldn't work
+  'relay' => 7
 );
 
 $smap = array(
@@ -43,7 +44,7 @@ $response = array(
 
 // if POST
 if ($data && $data['state']) {
-  $command = 'gpio write ' . $pin . ' ' . $smap[$data['state']];
+  $command = 'gpio -1 write ' . $pin . ' ' . $smap[$data['state']]; // -1 is for physical
   exec($command, $output, $result);
 
   //$response['command'] = $command;
@@ -51,7 +52,7 @@ if ($data && $data['state']) {
 }
 
 // always
-$response['value'] = exec('gpio read ' . $pin);
+$response['value'] = exec('gpio -1 read ' . $pin); // -1 is for physical
 
 
 $json = json_encode($response);

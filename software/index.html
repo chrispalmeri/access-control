@@ -35,6 +35,7 @@
         pinState('lock');
         pinState('led');
         pinState('buzzer');
+        pinState('bell');
 
         document.getElementById('lockOn').addEventListener('click', function() {
           pinState('lock', 'on');
@@ -57,8 +58,31 @@
           pinState('buzzer', 'off');
         });
 
+        document.getElementById('bellOn').addEventListener('click', function() {
+          pinState('bell', 'on');
+        });
+        document.getElementById('bellOff').addEventListener('click', function() {
+          pinState('bell', 'off');
+        });
+
       });
     </script>
+
+    <style>
+      body {
+        font: 14px sans-serif;
+        margin: 16px;
+      }
+      p {
+        padding: 16px;
+      }
+      table {
+        border-spacing: 16px;
+      }
+      button {
+        padding: 20px 40px;
+      }
+    </style>
 
   </head>
   <body>
@@ -82,9 +106,15 @@
         <td><button id="buzzerOn">On</button></td>
         <td><button id="buzzerOff">Off</button></td>
       </tr>
+      <tr>
+        <td>Doorbell</td>
+        <td><span id="bellStat">Unknown</span></td>
+        <td><button id="bellOn">On</button></td>
+        <td><button id="bellOff">Off</button></td>
+      </tr>
     </table>
 
-    <a href="/api/update">Update software</a>
+    <p><a href="/api/update">Update software</a></p>
 
   </body>
 </html>

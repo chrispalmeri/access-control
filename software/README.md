@@ -88,29 +88,20 @@ sunxi_board_id    : 1(0)
 
 `gpio mode 4 in` enable d1 input pin
 
-### Old test board
-
-pin | function
---- | ---
-  3 | led
-  2 | buzzer
-  6 | lock
-  4 | d1
-  5 | d0
- 16 | door
-
 ### Current hardware
 
-pin | function
---- | ---
-  0 | lock
-  1 | door contact
-  2 | reader d0
-  3 | reader d1
-  4 | reader led
-  5 | reader buzzer
-  6 | doorbell
-  7 | relay out
+wPi | physical | function
+--- | --- | ---
+  0 |  11 | lock
+  1 |  12 | door contact
+  2 |  13 | reader d0
+  3 |  15 | reader d1
+  4 |  16 | reader led
+  5 |  18 | reader buzzer
+  6 |  22 | doorbell
+  7 |   7 | relay out
+
+There is nothing to set these up currently you have to manually set modes each boot
 
 ## Python
 
@@ -170,3 +161,23 @@ do you want to emulate `gpio` command for dev?
 you should use some of this https://github.com/calcinai/phpi
 
 `Access-Control-Allow-Origin` was for dev probably shouldn't stay
+
+
+## Future installation
+
+from wherever, home directory probably
+
+`git clone`
+
+`./provision-prod.sh`
+
+  * this should save the working directory somewhere
+  * and do whatever other setup
+  * and kick off `update.sh`
+  * that would copy files into /var/www/html
+
+then api/update will know where to switch to in order to
+
+`git pull`
+
+`./update.sh` again
