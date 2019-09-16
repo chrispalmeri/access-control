@@ -1,6 +1,6 @@
 # Hardware
 
-[DipTrace][1] files, `gerber.zip` works with [JLCPCB][2]
+[DipTrace][1] files, `gerber` works with [JLCPCB][2]
 
 You need to plug a [NanoPi Neo Core][3] on to it
 

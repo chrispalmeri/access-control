@@ -2,6 +2,7 @@
 
 DIY door access control system with NanoPi
 
+![Board picture](docs/board.jpg)
 
 ## Development
 
