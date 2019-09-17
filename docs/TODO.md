@@ -25,6 +25,11 @@
   * relay holes were tight
   * resistors sometimes didn't flow through
 
+## Code changes
+
+  * add provisioning scripts
+  * figure out a better development process
+
 ## Ideas
 
   * make a simple and an advanced version

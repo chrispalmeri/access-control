@@ -1,4 +1,4 @@
-# libgpiod setup
+# libgpiod
 
 ## Installation
 
@@ -36,7 +36,7 @@ where ever I just did it in root home
 
 > can maybe delete it all now it is in `/usr/local/lib`
 
-## Test it
+## Testing
 
 > Pins are all on `gpiochip0` using the "BCM" nuumbers that WiringNP would show you with `gpio readall`
 
