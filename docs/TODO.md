@@ -21,6 +21,9 @@
   * ethernet magnetics
   * mounting holes
   * update resistor values?
+  * socket and connector hole sizes too big
+  * relay holes were tight
+  * resistors sometimes didn't flow through
 
 ## Ideas
 
