@@ -1,10 +1,10 @@
 <?php
 
-$command = 'git pull 2>&1';
+$command = 'git pull && rsync -av --delete code/ /var/www/html 2>&1';
 $output = array();
 $result = '';
 
-chdir('../');
+chdir('/var/tmp/access-control');
 exec($command, $output, $result);
 
 $response = array(

@@ -26,7 +26,7 @@ $rmap = array(
   'led' => 16,
   'buzzer' => 18,
   'lock' => 11, // using physical pin numbers cause '0' wouldn't work
-  'relay' => 7
+  'bell' => 7
 );
 
 $smap = array(
