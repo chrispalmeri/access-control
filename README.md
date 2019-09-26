@@ -4,7 +4,7 @@ DIY door access control system with NanoPi
 
 # Hardware
 
-![Board picture](docs/board.png)
+![Board picture](board/svgs/composites/top.svg)
 
 [DipTrace][1] files, `gerber` works with [JLCPCB][2]
 
