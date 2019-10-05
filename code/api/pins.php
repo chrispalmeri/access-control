@@ -22,11 +22,12 @@ if(array_key_exists(4, $parts)) {
 // GET /api/pins/led/on
 // POST /api/pins/led/ {state: on}
 
+ // using physical pin numbers
 $rmap = array(
-  'led' => 16,
-  'buzzer' => 18,
-  'lock' => 11, // using physical pin numbers cause '0' wouldn't work
-  'bell' => 7
+  'led' => 7,
+  'buzzer' => 8,
+  'lock' => 13,
+  'bell' => 15
 );
 
 $smap = array(
