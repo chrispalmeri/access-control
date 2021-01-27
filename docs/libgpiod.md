@@ -25,6 +25,11 @@ where ever I just did it in root home
 `mkdir m4`
 
 > install doxygen and help2man
+> `apt-get install graphviz doxygen`
+> supposedley you can do `make doc` but that did nothing
+> `doxygen Doxyfile`
+> `cd doc`
+> You prob need to do this on Ubuntu desktop so you can actually read the docs
 
 `./autogen.sh --enable-tools=yes --prefix=/usr/local`
 

@@ -10,6 +10,12 @@
   * interrupt handler
   * reboot command
 
+need to update to use libgpiod, also currently have to set pin modes manually after every reboot
+gpio mode 2 out
+gpio mode 3 out
+gpio mode 7 out
+gpio mode 15 out
+
 ## Ideas
 
   * make a simple and an advanced version

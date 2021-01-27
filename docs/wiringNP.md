@@ -31,12 +31,15 @@ sunxi_board_id    : 1(0)
 
 `gpio readall`
 
-`gpio mode 3 out` enable led pin
+`gpio mode 7 out` enable led pin
 
-`gpio write 3 1` turn led on
+`gpio write 7 1` turn led on
 
-`gpio write 3 0` turn led off
+`gpio write 7 0` turn led off
 
-`gpio mode 4 in` enable d1 input pin
+`gpio mode 16 in` enable d1 input pin
 
 There is nothing to set these up currently you have to manually set modes each boot
+
+`-1` to use physical numbers
+`-g` to use BCM numbers (didn't work all the time)
