@@ -2,6 +2,8 @@
 
   * add high res image or pdf
   * add connection diagram or image
+  * check that diptrace setup is repeatable
+  * how do diffs work, or can you use/auto generate an image for that
 
 ## Code changes
 
@@ -18,8 +20,9 @@ gpio mode 15 out
 
 ## Ideas
 
-  * make a simple and an advanced version
+  * make a simple and an advanced version, neo is cheaper than neo core
   * use 3.3 from board instead of 5v divider on contacts
+  * transistor or resistor arrays
 
 ## Notes
 

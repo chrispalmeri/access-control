@@ -1,2 +1,6 @@
 .logs/
 .vagrant/
+**/*.eli~
+**/*.dip~
+**/*.lib~
+**/*.dch~
