@@ -1,4 +1,17 @@
-This should all go in the schematic probably
+# Specs
+
+## Pins
+
+Name  | Type | Phys | Nano | Orange
+---   | ---  | ---  | ---  | ---
+D0    | IN   | 15   | PA3  | PA3
+D1    | IN   | 7    | PG11 | PA6
+DOOR  | IN   | 8    | PG6  | PA13
+AUX   | IN   | 10   | PG7  | PA14
+LED   | OUT  | 18   | PG9  | PC7
+BZR   | OUT  | 12   | PA6  | PD14
+MFET  | OUT  | 22   | PA1  | PA2
+RELAY | OUT  | 16   | PG8  | PC4
 
 ## Nano Pi
 
@@ -14,6 +27,7 @@ This should all go in the schematic probably
   * BZR needs to sink ~ 4.8V 3.6mA
   * LED needs to sink ~ 3.5V 0.4mA
   * Three data resistors achieve pullup plus voltage divide (and current limiting?)
+  * I think you have one reader that is 26 bit and the other is 34 bit
 
 ## Lock
 

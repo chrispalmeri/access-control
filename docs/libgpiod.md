@@ -1,64 +1,21 @@
-# libgpiod
+# libgpiod setup
 
-## Installation
+https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/about/
 
-`armbian-config`
+`sudo apt install gpiod`
 
-Software > Headers
+`sudo gpiodetect`
 
-install that
+Need to do something about requiring sudo probably
 
-Back > Exit
+https://forum.armbian.com/topic/8714-gpio-not-working-for-non-root/?do=findComment&comment=86295
 
-> puts it in `/usr/src`
->
-> it is not available in package manager
+## Input Example
 
-where ever I just did it in root home
+`sudo gpiomon --num-events=1 --falling-edge gpiochip0 6`
 
-`git clone https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git`
+## Output Example
 
-`cd libgpiod`
+On `sudo gpioset gpiochip0 2=1`
 
-`apt-get install -y autoconf-archive pkg-config libtool`
-
-`mkdir m4`
-
-> install doxygen and help2man
-> `apt-get install graphviz doxygen`
-> supposedley you can do `make doc` but that did nothing
-> `doxygen Doxyfile`
-> `cd doc`
-> You prob need to do this on Ubuntu desktop so you can actually read the docs
-
-`./autogen.sh --enable-tools=yes --prefix=/usr/local`
-
-`make`
-
-`make install`
-
-`ldconfig`
-
-> can maybe delete it all now it is in `/usr/local/lib`
-
-## Testing
-
-> Pins are all on `gpiochip0` using the "BCM" nuumbers that WiringNP would show you with `gpio readall`
-
-`gpioinfo`
-
-`gpioset gpiochip0 0=1` lock
-
-`gpioset gpiochip0 200=1` led
-
-`gpioset gpiochip0 201=1` buzzer
-
-`gpioset gpiochip0 203=1` relay
-
-`gpioget gpiochip0 6` door contact (or mon falling)
-
-`gpioget gpiochip0 1` doorbell (or mon falling)
-
-`gpiomon --falling-edge gpiochip0 2 3` weigand d0 d1
-
-...the reader I have is using 34bit instead of 26, otherwise working perfectly
+Off `sudo gpioset gpiochip0 2=0`
