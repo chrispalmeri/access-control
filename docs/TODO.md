@@ -1,9 +1,7 @@
 ## Layout Changes
 
-  * add high res image or pdf
   * add connection diagram or image
   * check that diptrace setup is repeatable
-  * how do diffs work, or can you use/auto generate an image for that
 
 ## Code changes
 

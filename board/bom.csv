@@ -1,25 +1,25 @@
-Name,Value,Quantity,RefDes,Manufacturer,Datasheet
-CAP_E1,47uF,1,C1,,
-CAP_C2,10uF,1,C2,,
-CAP_C1,2.2nF,1,C3,,
-CAP_C1,10nF,1,C4,,
-CAP_E1,100uF,1,C5,,
-CAP_C1,1uF,1,C6,,
-CAP_C1,100nF,2,"C7, C8",,
-DIODE_S,SB240,1,D1,,
-DIODE,IN4007,2,"D2, D3",,
-CON_ETH_MAG,Ethernet,1,J1,,
-CON_14,14,1,J16,,
-RELAY,G5Q-14-DC5,1,K1,,
-INDUCTOR,33uH,1,L1,,
-NPN,2N2222A,4,"Q1, Q2, Q3, Q5",,
-MOSFETP_D,NDP6020P,1,Q4,,
-RES,52k3,1,R1,,
-RES,10k,6,"R2, R4, R7, R10, R11, R14",,
-RES,8.2k,1,R3,,
-RES,2.2k,3,"R5, R8, R16",,
-RES,4.3k,9,"R6, R9, R13, R15, R17, R18, R19, R21, R23",,
-RES,2.4k,3,"R12, R20, R22",,
-RES,56R,2,"R24, R25",,
-ACT,ACT4065A,1,U1,,
-NanoPi Partial,NanoPi Neo Core,1,U2,,
+"Name","Value","Quantity","RefDes","Manufacturer","Datasheet"
+"CAP_E1","47uF","1","C1","",""
+"CAP_C2","10uF","1","C2","",""
+"CAP_C1","2.2nF","1","C3","",""
+"CAP_C1","10nF","1","C4","",""
+"CAP_E1","100uF","1","C5","",""
+"CAP_C1","1uF","1","C6","",""
+"CAP_C1","100nF","2","C7, C8","",""
+"DIODE_S","SB240","1","D1","",""
+"DIODE","IN4007","2","D2, D3","",""
+"CON_14","Terminals","1","J1","",""
+"CON_ETH_MAG","Ethernet","1","J2","",""
+"RELAY","G5Q-14-DC5","1","K1","",""
+"INDUCTOR","33uH","1","L1","",""
+"NPN","2N2222A","4","Q1, Q2, Q3, Q5","",""
+"MOSFETP_D","NDP6020P","1","Q4","",""
+"RES","52k3","1","R1","",""
+"RES","10k","6","R2, R4, R7, R10, R11, R14","",""
+"RES","8.2k","1","R3","",""
+"RES","2.2k","3","R5, R8, R16","",""
+"RES","4.3k","9","R6, R9, R13, R15, R17, R18, R19, R21, R23","",""
+"RES","2.4k","3","R12, R20, R22","",""
+"RES","56R","2","R24, R25","",""
+"ACT","ACT4065A","1","U1","",""
+"NanoPi Partial","NanoPi Neo Core","1","U2","",""

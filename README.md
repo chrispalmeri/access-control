@@ -4,15 +4,18 @@ DIY door access control system with NanoPi
 
 # Hardware
 
-![Board picture](board/svgs/composites/top.svg)
+![Board picture](board/images/top.png)
 
-[DipTrace][1] files, `gerber` works with [JLCPCB][2]
+[DipTrace][1] files, `gerber.zip` works with [JLCPCB][2]
 
-You need to plug a [NanoPi Neo Core][3] on to it
+Removed SVG's from repo but you can drop `gerber.zip` into [tracespace][3] to generate.
+
+You need to plug a [NanoPi Neo Core][4] on to it
 
   [1]: https://diptrace.com/
   [2]: https://jlcpcb.com/
-  [3]: https://www.friendlyarm.com/index.php?route=product/product&path=69&product_id=212
+  [3]: https://tracespace.io/view/
+  [4]: https://www.friendlyarm.com/index.php?route=product/product&path=69&product_id=212
 
 These are the gpio pins that are used:
 
