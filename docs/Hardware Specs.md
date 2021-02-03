@@ -1,5 +1,14 @@
 # Specs
 
+## FAQ
+
+Q. Why not a microcontroller? It would make interrupts simpler and lower your power
+requirements dramatically. And you don't really need a web server on device.
+
+A. Networking, while possible, is more complicated and has minimal feature set.
+TLS is the same story, but even more compromises, and super hard to find good
+guides, especially for stuff like MQTT or websockets.
+
 ## Pins
 
 Name  | Type | Phys | Nano | Orange

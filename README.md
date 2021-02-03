@@ -34,7 +34,7 @@ BCM | wPi | physical | function
 
 ## OS setup
 
-Download [Armbian][1] Bionic image and [7-Zip][2] to extract it.
+Download [Armbian][1] image (Debian 10.7 "Buster") and [7-Zip][2] to extract it.
 
 Use [Etcher][4] to flash the image onto your [SD card][3].
 
