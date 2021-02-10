@@ -2,6 +2,21 @@
 
 DIY door access control system with NanoPi
 
+<!--
+
+order spare inventory parts
+AUX was flaky on NEO, check solder joints
+
+board changes:
+  put 12V at the top, move lock?
+  you meant to widen lock trace
+  you could make the JLCJLC text bigger
+  and the github text
+  any way to get the resistor designators readable? smaller?
+  upsidedown ethernet kinda bugs me
+
+-->
+
 # Hardware
 
 ![Board picture](board/images/top.png)

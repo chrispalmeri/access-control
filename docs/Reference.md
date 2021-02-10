@@ -63,9 +63,7 @@ In Schematic go to Objects > Bill Of material > Export to file (group by name/va
 
 Just click Export > Gerber and hit the "Export All" button
 
-Then Export > N/C Drill... "Export All", "Yes" to auto set
-
-add to zip file
+Select "Zip Archive: Gerber + NC Drill"
 
 ### PDF
 
@@ -78,4 +76,4 @@ left out Top Paste when dropping into tracespace.io for svg's
 
 > removed two transforms in bottom.svg to get it right side up
 
-drag the svg's into GIMP and leave at 100 pixels per inch
+drag the svg's into GIMP and set at 100 pixels per inch
