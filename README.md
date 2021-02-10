@@ -19,16 +19,16 @@ You need to plug a [NanoPi Neo Core][4] on to it
 
 These are the gpio pins that are used:
 
-BCM | wPi | physical | function
---- | --- | --- | ---
-  2 |   2 |  13 | lock
-201 |   5 |  18 | door contact
-  6 |   1 |  12 | reader d0
-199 |  16 |  10 | reader d1
-203 |   7 |   7 | reader led
-198 |  15 |   8 | reader buzzer
-200 |   4 |  16 | doorbell
-  3 |   3 |  15 | relay out
+Name | Physical | libgpiod | Type | Description
+---  | ---      | ---      | ---  | ---
+PA1  | 22       | 1        | OUT  | lock
+PG8  | 16       | 200      | OUT  | relay out
+PG9  | 18       | 201      | OUT  | reader led
+PA6  | 12       | 6        | OUT  | reader buzzer
+PA3  | 15       | 3        | IN   | reader d0
+PG11 | 7        | 203      | IN   | reader d1
+PG6  | 8        | 198      | IN   | door contact
+PG7  | 10       | 199      | IN   | doorbell
 
 # Software
 

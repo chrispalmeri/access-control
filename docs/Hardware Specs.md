@@ -11,16 +11,27 @@ guides, especially for stuff like MQTT or websockets.
 
 ## Pins
 
-Name  | Type | Phys | Nano | Orange
----   | ---  | ---  | ---  | ---
-D0    | IN   | 15   | PA3  | PA3
-D1    | IN   | 7    | PG11 | PA6
-DOOR  | IN   | 8    | PG6  | PA13
-AUX   | IN   | 10   | PG7  | PA14
-LED   | OUT  | 18   | PG9  | PC7
-BZR   | OUT  | 12   | PA6  | PD14
-MFET  | OUT  | 22   | PA1  | PA2
-RELAY | OUT  | 16   | PG8  | PC4
+Inputs are normally high, outputs are normally low.
+
+Name  | Type | Phys | Nano | #     | Orange | #
+---   | ---  | ---  | ---  | ---   | ---    | ---
+LOCK  | OUT  | 22   | PA1  | 1     | PA2    | 2
+RELAY | OUT  | 16   | PG8  | 200   | PC4    | 68
+LED   | OUT  | 18   | PG9  | 201   | PC7    | 71
+BZR   | OUT  | 12   | PA6  | 6     | PD14   | 110
+D0    | IN   | 15   | PA3  | 3     | PA3    | 3
+D1    | IN   | 7    | PG11 | 203   | PA6    | 6
+DOOR  | IN   | 8    | PG6  | 198   | PA13   | 13
+AUX   | IN   | 10   | PG7  | 199   | PA14   | 14
+
+For the pin designators like `PG7` the `P` just means "pin", then each following
+letter represents a group of 32 pins. So multiply the zero-indexed letter of the
+alphabet position by 32 and add the number to get the final number. And they
+were all on `gpiochip0` in my limited experience. For example:
+
+`PA3` would be `0 * 32 + 3` so `gpiochip0 3`
+
+`PG7` would be `6 * 32 + 7` so `gpiochip0 199` 
 
 ## Nano Pi
 
@@ -54,7 +65,3 @@ RELAY | OUT  | 16   | PG8  | PC4
 
   * Board is not powering, resistor divider is,
     and contact closure just sinks to ground
-
-## Notes
-
-  * Resistor values were adjusted a little after real world measurements
