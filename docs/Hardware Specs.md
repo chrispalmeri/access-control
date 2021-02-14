@@ -65,3 +65,4 @@ were all on `gpiochip0` in my limited experience. For example:
 
   * Board is not powering, resistor divider is,
     and contact closure just sinks to ground
+  * Normal alarm contacts are electrically NO, plus magnet, for a NC alarm loop
