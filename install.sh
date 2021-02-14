@@ -24,4 +24,4 @@ else
   fi
 fi
 
-sudo -u www-data rsync -av --delete code/ /var/www/html
+sudo -u www-data rsync -av --delete www/ /var/www/html

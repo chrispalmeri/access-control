@@ -1,6 +1,6 @@
 <?php
 
-$command = 'git pull && rsync -av --delete code/ /var/www/html 2>&1';
+$command = 'git pull && rsync -av --delete www/ /var/www/html 2>&1';
 $output = array();
 $result = '';
 
