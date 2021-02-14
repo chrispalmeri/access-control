@@ -4,3 +4,4 @@
 **/*.dip~
 **/*.lib~
 **/*.dch~
+__pycache__/
