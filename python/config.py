@@ -1,4 +1,8 @@
-name = 'access-control'
+import gpiod
+
+chip = gpiod.Chip('gpiochip0')
+
+name = 'door-control'
 
 lock   = 2
 relay  = 68

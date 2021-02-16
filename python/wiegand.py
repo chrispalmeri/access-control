@@ -1,14 +1,16 @@
-import time
+import gpiod
 import config
 
-data = 0
+d0 = config.chip.get_line(config.d0)
+d1 = config.chip.get_line(config.d1)
 
-def store(event):
-	global data
-	if event.source.offset() == config.d0:
-		data = data << 1
-	elif event.source.offset() == config.d1:
-		data = data << 1 | 1
+lines = gpiod.LineBulk([d0, d1])
+lines.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN) # prevent initial interrupt
+lines.release()
+lines.request(consumer=config.name, type=gpiod.LINE_REQ_EV_FALLING_EDGE)
+
+reading = False
+data = 0
 
 def parity(datain, p):
 	while datain:
@@ -16,7 +18,7 @@ def parity(datain, p):
 		datain >>= 1
 	return p
 
-def handleCard():
+def parse():
 	evenParity = data >> 25 & 1
 	evenHalf = data >> 13 & 4095
 	oddHalf = data >> 1 & 4095
@@ -27,26 +29,38 @@ def handleCard():
 		facility = data >> 17 & 255
 		number = data >> 1 & 65535
 
-		print(time.time(), 'Card number:', number, 'Facility code:', facility)
+		return (facility, number)
 		
-		# unlock
-		#if number == 34169:
-		#	unlockLock()
 	else:
-		print('Invalid card')
+		return False # invalid card
 
-def handleKey():
-	# 10 = ESC
-	# 11 = ENT
-	print('Key press:', data)
-
-def handle():
+def read():
+	global reading
 	global data
-	#print('Event captured')
-	if data < 16:
-		# must be a keypress
-		handleKey()
-	else:
-		# assume it is 26-bit wiegand
-		handleCard()
-	data = 0
+	
+	events = lines.event_wait(nsec=3000000) # 3ms
+	
+	if events:
+		reading = True
+		for line in events:
+			event = line.event_read()
+			
+			if event.source.offset() == d0.offset(): # or config.d0
+				data = data << 1
+			elif event.source.offset() == d1.offset(): # or config.d1
+				data = data << 1 | 1
+	
+	# if it timed out after 3ms that means it's done
+	elif reading:
+		reading = False
+		
+		if data < 16:
+			out = data # just a keypress
+		else:
+			out = parse() # 26-bit wiegand card
+		
+		data = 0
+		
+		return out
+	
+	# returns None by default

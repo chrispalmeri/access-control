@@ -1,0 +1,2 @@
+doorClosed = False
+auxClosed = False
