@@ -1,5 +1,6 @@
 import gpiod
 import config
+import event
 
 d0 = config.chip.get_line(config.d0)
 d1 = config.chip.get_line(config.d1)
@@ -11,6 +12,13 @@ lines.request(consumer=config.name, type=gpiod.LINE_REQ_EV_FALLING_EDGE)
 
 reading = False
 data = 0
+
+class Card:
+	def __init__(self, number, facility):
+		self.number = number
+		self.facility = facility
+	def __str__(self):
+		return f'{self.facility}:{self.number}'
 
 def parity(datain, p):
 	while datain:
@@ -29,10 +37,10 @@ def parse():
 		facility = data >> 17 & 255
 		number = data >> 1 & 65535
 
-		return (facility, number)
+		return Card(number, facility)
 		
 	else:
-		return False # invalid card
+		event.log('Wiegand reading error')
 
 def read():
 	global reading
@@ -55,7 +63,7 @@ def read():
 		reading = False
 		
 		if data < 16:
-			out = data # just a keypress
+			out = data
 		else:
 			out = parse() # 26-bit wiegand card
 		

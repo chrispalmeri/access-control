@@ -15,6 +15,17 @@ board changes:
   any way to get the resistor designators readable? smaller?
   upsidedown ethernet kinda bugs me
 
+www  
+  sqlite
+    view log
+    add codes
+
+python  
+  update docs
+  sqlite
+  systemd
+  totp
+
 -->
 
 # Hardware

@@ -2,6 +2,7 @@ import time
 import gpiod
 import config
 import state
+import event
 
 lock = config.chip.get_line(config.lock)
 relay = config.chip.get_line(config.relay)
@@ -25,6 +26,9 @@ def allow():
 	unlocked = True
 	unlockTime = time.time()
 
+def deny():
+	pass
+
 def secure():
 	global unlocked
 	global unlockTime
@@ -37,3 +41,4 @@ def secure():
 			lock.set_value(0)
 			led.set_value(0)
 			unlocked = False
+			event.log('Access secured')

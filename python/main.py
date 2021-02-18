@@ -2,20 +2,34 @@ import sys
 import config
 import event
 import wiegand
-import entry
 import sensors
+import entry
+import numpad
+import auth
+
+code = None
 
 try:
 	while True:
 		# 3ms delay affects everything following
-		code = wiegand.read()
+		response = wiegand.read()
 		
+		if isinstance(response, int):
+			code = numpad.press(response) # button
+		else:
+			code = response # card (or None)
+		
+		# check the code
 		if code != None:
-			event.log('Code:', code)
-		
-			# unlock
-			if code == 5: # fixme
+			if auth.verify(code):
+				# unlock
 				entry.allow()
+				event.log('Access granted', code)
+			else:
+				entry.deny()
+				event.log('Access denied', code)
+			
+			code = None
 		
 		# check sensors
 		sensors.check()
