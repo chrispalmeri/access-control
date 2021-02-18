@@ -5,3 +5,4 @@
 **/*.lib~
 **/*.dch~
 __pycache__/
+.env
