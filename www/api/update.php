@@ -1,10 +1,10 @@
 <?php
 
-$command = 'git pull && rsync -av --delete www/ /var/www/html 2>&1';
+$command = "git pull && rsync -av --delete --delete-excluded --include='php/***' --include='python/***' --include='www/***' --filter 'protect database.db' --exclude='*' /home/www-data/door-control/ /srv/door-control/ 2>&1";
 $output = array();
 $result = '';
 
-chdir('/var/tmp/access-control');
+chdir('/home/www-data/door-control');
 exec($command, $output, $result);
 
 $response = array(

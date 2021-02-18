@@ -91,8 +91,6 @@ Boot the hardware from the SD card and use [Putty][5] to access it.
 
 ## Usage
 
-Use your new username and password
+Check [task-board][1] readme for better instructions that also apply to this.
 
-## Local Development
-
-`vagrant up` for dev at http://localhost:8080
+  [1]: https://github.com/chrispalmeri/task-board

@@ -1,40 +1,28 @@
 #!/bin/bash
 
-export DEBIAN_FRONTEND=noninteractive
-
-# Timezone
-cp /usr/share/zoneinfo/America/Chicago /etc/localtime
-
-apt-get update
-apt-get install -y php
-
-# Make a log directory
-mkdir -p /vagrant/.logs
-
-# Add another PHP .ini to be parsed after the defaults
-cat > /etc/php/7.2/apache2/conf.d/99-custom.ini << EOF
-error_log = /vagrant/.logs/php-error.log
+# Don't let WSL ruin it with virtualizatiion features
+# that botch the hashes for package archives
+mkdir -p /etc/gcrypt
+cat > /etc/gcrypt/hwf.deny << EOF
+all
 EOF
 
-# Overwrite default Apache .conf file
-cat > /etc/apache2/sites-available/000-default.conf << EOF
-<VirtualHost *:80>
-    DocumentRoot /var/www/html
+# Run the installer
+source /vagrant/install.sh vagrant
 
-    <Directory /var/www/html>
-        Options -Indexes
-        AllowOverride All
-        Header set Access-Control-Allow-Origin "*"
-    </Directory>
+# Copy environment variables from .env
+# if not a comment and not blank
+# into apache format env.conf
+while read -r line; do
+  if [[ $line != \#* ]] && [[ -n "$line" ]]; then
+    key=$(echo $line | cut -f 1 -d "=")
+    value=$(echo $line | cut -f 2- -d "=")
+    echo "SetEnv $key $value" >> /tmp/env.conf
+  fi
+done < /vagrant/.env
 
-    ErrorLog /vagrant/.logs/apache-error.log
-    CustomLog /vagrant/.logs/apache-access.log combined
-</VirtualHost>
-EOF
+# Move to apache conf available
+mv -f /tmp/env.conf /etc/apache2/conf-available/
 
-# Enable mod rewrite and restart Apache
-a2enmod rewrite
-# might need a2enmod headers too
+# Restart Apache
 systemctl restart apache2
-
-rm /var/www/html/index.html
