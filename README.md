@@ -77,8 +77,8 @@ Boot the hardware from the SD card and use [Putty][5] to access it.
 * login as `root` using `1234`
 * change password
 * new user wizard
-  * password
-  * skip all the questions
+    * password
+    * skip all the questions
 * `apt update`
 * `DEBIAN_FRONTEND=noninteractive apt upgrade -y`
 * `armbian-config`

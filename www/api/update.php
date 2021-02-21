@@ -8,10 +8,10 @@ chdir('/home/www-data/door-control');
 exec($command, $output, $result);
 
 $response = array(
-  'directory' => getcwd(),
-  'command' => $command,
-  'output' => $output,
-  'result' => $result
+    'directory' => getcwd(),
+    'command' => $command,
+    'output' => $output,
+    'result' => $result
 );
 
 $json = json_encode($response);

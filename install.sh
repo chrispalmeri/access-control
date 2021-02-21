@@ -2,8 +2,8 @@
 
 # be running as root
 if [[ $EUID != 0 ]]; then
-  echo "This script needs to be run as root." >&2
-  exit 1
+    echo "This script needs to be run as root." >&2
+    exit 1
 fi
 
 # setup variables to use below
@@ -12,8 +12,8 @@ build=/home/www-data/door-control
 serve=/srv/door-control
 
 if [[ $1 ]]; then
-  build=/vagrant
-  serve=/vagrant
+    build=/vagrant
+    serve=/vagrant
 fi
 
 # Timezone
@@ -36,14 +36,14 @@ usermod -d /home/www-data www-data
 
 # clone repo as www-data, check if exists first
 if [[ -d /home/www-data/door-control ]]; then
-  cd /home/www-data/door-control
-  #sudo -u www-data git fetch
-  #if [[ $(sudo -u www-data git rev-parse HEAD) != $(sudo -u www-data git rev-parse @{u}) ]]; then
-    # sudo -u www-data git reset --hard
-    sudo -u www-data git pull
-  #fi
+    cd /home/www-data/door-control
+    #sudo -u www-data git fetch
+    #if [[ $(sudo -u www-data git rev-parse HEAD) != $(sudo -u www-data git rev-parse @{u}) ]]; then
+        # sudo -u www-data git reset --hard
+        sudo -u www-data git pull
+    #fi
 else
-  sudo -u www-data git clone https://github.com/chrispalmeri/access-control.git /home/www-data/door-control
+    sudo -u www-data git clone https://github.com/chrispalmeri/access-control.git /home/www-data/door-control
 fi
 
 # copy www to www

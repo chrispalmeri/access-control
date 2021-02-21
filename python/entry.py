@@ -18,27 +18,27 @@ unlocked = False # move to state
 unlockTime = 0
 
 def allow():
-	global unlocked
-	global unlockTime
-	
-	lock.set_value(1)
-	led.set_value(1)
-	unlocked = True
-	unlockTime = time.time()
+    global unlocked
+    global unlockTime
+    
+    lock.set_value(1)
+    led.set_value(1)
+    unlocked = True
+    unlockTime = time.time()
 
 def deny():
-	pass
+    pass
 
 def secure():
-	global unlocked
-	global unlockTime
-	
-	if unlocked:
-		now = time.time()
-		
-		# if time is up and door is closed re-lock
-		if now - unlockTime > 5 and state.doorClosed: # add config for time
-			lock.set_value(0)
-			led.set_value(0)
-			unlocked = False
-			event.log('Access secured')
+    global unlocked
+    global unlockTime
+    
+    if unlocked:
+        now = time.time()
+        
+        # if time is up and door is closed re-lock
+        if now - unlockTime > 5 and state.doorClosed: # add config for time
+            lock.set_value(0)
+            led.set_value(0)
+            unlocked = False
+            event.log('Access secured')

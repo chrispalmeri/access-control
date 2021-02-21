@@ -14,11 +14,11 @@ source /vagrant/install.sh vagrant
 # if not a comment and not blank
 # into apache format env.conf
 while read -r line; do
-  if [[ $line != \#* ]] && [[ -n "$line" ]]; then
-    key=$(echo $line | cut -f 1 -d "=")
-    value=$(echo $line | cut -f 2- -d "=")
-    echo "SetEnv $key $value" >> /tmp/env.conf
-  fi
+    if [[ $line != \#* ]] && [[ -n "$line" ]]; then
+        key=$(echo $line | cut -f 1 -d "=")
+        value=$(echo $line | cut -f 2- -d "=")
+        echo "SetEnv $key $value" >> /tmp/env.conf
+    fi
 done < /vagrant/.env
 
 # Move to apache conf available
