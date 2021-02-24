@@ -2,10 +2,11 @@
 
 DIY door access control system with NanoPi
 
+Software part is very much unfinished
+
 <!--
 
 order spare inventory parts
-AUX was flaky on NEO, check solder joints
 
 board changes:
   put 12V at the top, move lock?
@@ -15,12 +16,11 @@ board changes:
   any way to get the resistor designators readable? smaller?
   upsidedown ethernet kinda bugs me
 
-www  
-  sqlite
+www
     view log
     add codes
 
-python  
+python
   update docs
   sqlite
   systemd
@@ -92,5 +92,7 @@ Boot the hardware from the SD card and use [Putty][5] to access it.
 ## Usage
 
 Check [task-board][1] readme for better instructions that also apply to this.
+
+Run python with `sudo python3 python/main.py`
 
   [1]: https://github.com/chrispalmeri/task-board

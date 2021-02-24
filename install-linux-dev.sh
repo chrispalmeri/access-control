@@ -8,7 +8,7 @@ fi
 
 # Update and install software
 apt-get update
-apt-get install -y apache2 sqlite3 php libapache2-mod-php php-curl php-sqlite3
+apt-get install -y apache2 sqlite3 php libapache2-mod-php php-curl php-sqlite3 gpiod python3-libgpiod
 
 # setup the database
 dir="$(pwd)"
