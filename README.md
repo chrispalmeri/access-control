@@ -93,6 +93,6 @@ Boot the hardware from the SD card and use [Putty][5] to access it.
 
 Check [task-board][1] readme for better instructions that also apply to this.
 
-Run python with `sudo python3 python/main.py`
+Run python with `python3 code/server.py`
 
   [1]: https://github.com/chrispalmeri/task-board
