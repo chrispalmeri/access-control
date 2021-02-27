@@ -8,7 +8,7 @@ fi
 
 # Update and install software
 apt-get update
-apt-get install -y micro sqlite3 gpiod python3-libgpiod python3-aiohttp
+apt-get install -y xclip micro gpiod python3-libgpiod python3-aiohttp sqlite3
 
 # variables
 dir="$(pwd)"
@@ -49,3 +49,8 @@ chmod g+rw /dev/gpiochip* # this might be lost on reboot
 
 # you have to log out and back in though
 usermod -a -G gpio "$(logname)"
+
+# create udev rule to allow group access to gpio
+# /etc/udev/rules.d/99-custom.rules
+# SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
+# definitley need to reboot
