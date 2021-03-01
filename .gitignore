@@ -5,5 +5,5 @@
 **/*.lib~
 **/*.dch~
 __pycache__/
-db/database.db
+db/
 .env

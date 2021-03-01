@@ -5,16 +5,21 @@ from aiohttp import web
 from example import MyView
 from websocket import websocket_handler
 import gpiod
+import socket
 
-chip = gpiod.Chip('gpiochip0')
+try:
+    chip = gpiod.Chip('gpiochip0')
 
-d0 = chip.get_line(3)
-d1 = chip.get_line(6)
+    d0 = chip.get_line(3)
+    d1 = chip.get_line(6)
 
-lines = gpiod.LineBulk([d0, d1])
-lines.request(consumer='door-control', type=gpiod.LINE_REQ_DIR_IN) # prevent initial interrupt
-lines.release()
-lines.request(consumer='door-control', type=gpiod.LINE_REQ_EV_FALLING_EDGE)
+    lines = gpiod.LineBulk([d0, d1])
+    lines.request(consumer='door-control', type=gpiod.LINE_REQ_DIR_IN) # prevent initial interrupt
+    lines.release()
+    lines.request(consumer='door-control', type=gpiod.LINE_REQ_EV_FALLING_EDGE)
+except FileNotFoundError:
+    chip = None
+    print('No GPIO detected')
 
 def read():
     # tested with artificial delays in rest of app
@@ -103,10 +108,13 @@ async def cleanup_background_tasks(app):
     app['my_task'].cancel()
     await app['my_task']
 
-app.on_startup.append(start_background_tasks)
-app.on_cleanup.append(cleanup_background_tasks)
+# avoid all the weigand stuff if no gpio, eg vagrant
+if chip:
+    app.on_startup.append(start_background_tasks)
+    app.on_cleanup.append(cleanup_background_tasks)
 
 app['websockets'] = set()
 
 if __name__ == '__main__':
-    web.run_app(app, host='localhost', port=8080)
+    sock = socket.socket(fileno=3)
+    web.run_app(app, sock=sock)
