@@ -2,10 +2,9 @@ from os import path
 import logging
 import asyncio
 from aiohttp import web
-from example import MyView
-from websocket import websocket_handler
 import gpiod
 import socket
+from py import users, websocket
 
 try:
     chip = gpiod.Chip('gpiochip0')
@@ -14,9 +13,9 @@ try:
     d1 = chip.get_line(6)
 
     lines = gpiod.LineBulk([d0, d1])
-    lines.request(consumer='door-control', type=gpiod.LINE_REQ_DIR_IN) # prevent initial interrupt
+    lines.request(consumer='doorctl', type=gpiod.LINE_REQ_DIR_IN) # prevent initial interrupt
     lines.release()
-    lines.request(consumer='door-control', type=gpiod.LINE_REQ_EV_FALLING_EDGE)
+    lines.request(consumer='doorctl', type=gpiod.LINE_REQ_EV_FALLING_EDGE)
 except FileNotFoundError:
     chip = None
     print('No GPIO detected')
@@ -68,18 +67,22 @@ def read():
 # https://docs.aiohttp.org/en/stable/web.html
 # https://github.com/aio-libs/aiohttp/issues/1220
 
+# custom 404 page
+# https://aiohttp-demos.readthedocs.io/en/latest/tutorial.html#aiohttp-demos-polls-middlewares
+
 async def root_handler(request):
     return web.FileResponse(path.dirname(__file__) + '/index.html')
 
 app = web.Application()
 
+# add trailing slash seperatley if you want it
 app.add_routes([
     web.get('/', root_handler),
-    web.get('/ws', websocket_handler),
-    web.view('/api', MyView),       # cause technically
-    web.view('/api/', MyView),      # these three
-    web.view('/api/{name}', MyView) # are not the same
-    #web.static('/', path.dirname(__file__) + '/../www')
+    web.static('/js', path.dirname(__file__) + '/js'),
+    web.static('/css', path.dirname(__file__) + '/css'),
+    web.get('/ws', websocket.get),
+    web.view('/api/users', users.view),
+    web.view('/api/users/{id}', users.view)
 ])
 
 async def background_task(app):

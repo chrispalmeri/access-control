@@ -1,11 +1,7 @@
-
 from aiohttp import web, WSMsgType
 import logging
 
-#app.add_routes([web.get('/ws', websocket_handler)])
-
-async def websocket_handler(request):
-
+async def get(request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
 

@@ -1,4 +1,4 @@
-# access-control
+# doorctl
 
 DIY door access control system with NanoPi
 
@@ -93,6 +93,10 @@ Boot the hardware from the SD card and use [Putty][5] to access it.
 
 Check [task-board][1] readme for better instructions that also apply to this.
 
-Run python with `python3 code/server.py`
+Run python with `python3 code/serve.py`
+
+Or now
+
+`sudo systemctl restart doorctl`
 
   [1]: https://github.com/chrispalmeri/task-board

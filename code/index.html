@@ -1,48 +1,43 @@
-<p id="output">Hello world!</p>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>My App</title>
+        <meta name="description" content="Example app for testing and reference">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/default.css" />
+    </head>
+    <body>
+        <p id="output">Hello world!</p>
 
-<h3>Has</h3>
+        <h3>Has</h3>
+        <ul>
+            <li>Websocket</li>
+            <li>Secondary loop</li>
+            <li>Proper Logging</li>
+            <li>HTTP API</li>
+            <li>Static files</li>
+            <li>GPIO</li>
+            <li>systemd</li>
+        </ul>
 
-<ul>
-    <li>Websocket</li>
-    <li>Secondary loop</li>
-    <li>Proper Logging</li>
-    <li>HTTP API</li>
-    <li>Static files</li>
-</ul>
+        <h3>Needs</h3>
+        <ul>
+            <li>SQLite</li>
+            <li>Authentication</li>
+            <li>upgrade/backup/restore/reboot</li>
+        </ul>
 
-<h3>Needs</h3>
+        <!--
+            custom logging handlers
+                sqlite
+                websocket
+                fallback file
+            be able to view logs in vagrant
+            nginx friendly directory structure?
+            favicon
+        -->
 
-<ul>
-    <li>SQLite</li>
-    <li>GPIO</li>
-    <li>Authentication</li>
-    <li>upgrade/backup/restore/reboot</li>
-</ul>
-
-<!--
-test if gpio is async
-test if gpio misses interrupts
-html socket close message
-custom logging handlers
-  sqlite
-  websocket
-  fallback file
-css/js static routes
-nginx friendly directory structure
--->
-
-<script>
-// Create WebSocket connection.
-const socket = new WebSocket('ws://localhost:8080/ws');
-
-// Connection opened
-socket.addEventListener('open', function (event) {
-    socket.send('Hello Server!');
-});
-
-// Listen for messages
-socket.addEventListener('message', function (event) {
-    console.log('Message from server ', event.data);
-    document.getElementById('output').innerHTML = event.data
-});
-</script>
+        <script type="module" src="js/main.js"></script>
+    </body>
+</html>

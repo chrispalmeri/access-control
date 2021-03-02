@@ -13,7 +13,7 @@ apt-get install -y gpiod python3-libgpiod python3-aiohttp sqlite3
 # variables
 dir=$(dirname "$0")
 user=$(logname)
-app="door-control"
+app="doorctl"
 
 # allow vagrant to override the directory with argument
 if [ $1 ] && [ -d $1 ]; then
@@ -78,7 +78,7 @@ Requires=$app.socket
 
 [Service]
 User=$user
-ExecStart=/usr/bin/python3 $dir/code/server.py
+ExecStart=/usr/bin/python3 $dir/code/serve.py
 Restart=always
 
 [Install]

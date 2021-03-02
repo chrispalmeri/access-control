@@ -2,7 +2,7 @@ import gpiod
 
 chip = gpiod.Chip('gpiochip0')
 
-name = 'door-control'
+name = 'doorctl'
 
 lock   = 2
 relay  = 68
