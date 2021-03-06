@@ -71,18 +71,17 @@ def read():
 # https://aiohttp-demos.readthedocs.io/en/latest/tutorial.html#aiohttp-demos-polls-middlewares
 
 async def root_handler(request):
-    return web.FileResponse(path.dirname(__file__) + '/index.html')
+    return web.FileResponse(path.dirname(__file__) + '/static/index.html')
 
 app = web.Application()
 
 # add trailing slash seperatley if you want it
 app.add_routes([
-    web.get('/', root_handler),
-    web.static('/js', path.dirname(__file__) + '/js'),
-    web.static('/css', path.dirname(__file__) + '/css'),
-    web.get('/ws', websocket.get),
     web.view('/api/users', users.view),
-    web.view('/api/users/{id}', users.view)
+    web.view('/api/users/{id}', users.view),
+    web.get('/ws', websocket.get),
+    web.get('/', root_handler),
+    web.static('/', path.dirname(__file__) + '/static') # needs to be last
 ])
 
 async def background_task(app):
