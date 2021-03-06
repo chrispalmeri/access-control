@@ -15,12 +15,12 @@ class view(web.View):
         if userid:
             row = conn.execute('SELECT * FROM users WHERE id = ?', (userid,)).fetchone()
             if row:
-                return web.json_response({'message': 'GET request', 'data': dict(row)})
+                return web.json_response(dict(row))
             else:
                 raise web.HTTPNotFound()
         else:
             rows = conn.execute('SELECT * FROM users').fetchall()
-            return web.json_response({'message': 'GET request', 'data': [dict(x) for x in rows]})
+            return web.json_response([dict(x) for x in rows])
 
     async def post(self):
         userid = self.request.match_info.get('id', None)
@@ -44,7 +44,7 @@ class view(web.View):
             userid = conn.execute("""INSERT INTO users ( name, pin, card, facility )
                 VALUES ( :name, :pin, :card, :facility )""", temp).lastrowid
             conn.commit()
-            return web.json_response({'message': 'POST request', 'data': {'id': userid, **temp}})
+            return web.json_response({'id': userid, **temp})
         except Exception as e:
             return web.json_response({'error': str(e)}, status=500)
 
@@ -77,7 +77,8 @@ class view(web.View):
                 card = :card,
                 facility = :facility
                 WHERE id = :id""", temp).rowcount
-            return web.json_response({'message': 'PUT request', 'data': temp, "rows_affected": count})
+            # not checking count before returning, but you did already do a select
+            return web.json_response(temp)
         except Exception as e:
             return web.json_response({'error': str(e)}, status=500)
 
@@ -89,6 +90,8 @@ class view(web.View):
         try:
             count = conn.execute('DELETE FROM users WHERE id = ?', (userid,)).rowcount
             conn.commit()
-            return web.json_response({'message': 'DELETE request', "rows_affected": count})
+            # you could return count if you wanted
         except Exception as e:
             return web.json_response({'error': str(e)}, status=500)
+
+        raise web.HTTPNoContent()
