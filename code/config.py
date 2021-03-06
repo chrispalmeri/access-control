@@ -1,6 +1,8 @@
 from os import path
 import gpiod
 import sqlite3
+import logging
+import sqlite_handler
 
 try:
     chip = gpiod.Chip('gpiochip0')
@@ -23,3 +25,7 @@ dbpath = path.normpath(path.dirname(__file__) + '/../db/database.db')
 conn = sqlite3.connect(dbpath)
 conn.row_factory = sqlite3.Row
 # don't forget to close this, same for chip
+
+logger = logging.getLogger('MyLoggerName')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(sqlite_handler.SQLiteHandler(conn))

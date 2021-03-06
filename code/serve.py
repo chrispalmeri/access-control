@@ -6,6 +6,7 @@ import gpiod
 import socket
 from py import websocket
 import users
+import events
 
 try:
     chip = gpiod.Chip('gpiochip0')
@@ -80,6 +81,7 @@ app = web.Application()
 app.add_routes([
     web.view('/api/users', users.view),
     web.view('/api/users/{id}', users.view),
+    web.view('/api/events', events.view),
     web.get('/ws', websocket.get),
     web.get('/', root_handler),
     web.static('/', path.dirname(__file__) + '/static') # needs to be last

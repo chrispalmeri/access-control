@@ -1,7 +1,5 @@
 from aiohttp import web
-import sqlite3
-import logging
-from config import conn
+from config import conn, logger
 
 # should try catch the json parsing
 # has no type checking of json values
@@ -44,6 +42,7 @@ class view(web.View):
             userid = conn.execute("""INSERT INTO users ( name, pin, card, facility )
                 VALUES ( :name, :pin, :card, :facility )""", temp).lastrowid
             conn.commit()
+            logger.debug(f'User {userid} created')
             return web.json_response({'id': userid, **temp})
         except Exception as e:
             return web.json_response({'error': str(e)}, status=500)

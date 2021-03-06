@@ -32,20 +32,22 @@ if [ ! -f $dir/db/database.db ]; then
 fi
 
 sqlite3 $dir/db/database.db << EOF
-CREATE TABLE IF NOT EXISTS "users" (
-    "id" INTEGER NOT NULL UNIQUE,
-    "name" TEXT NOT NULL,
-    "pin" TEXT,
-    "card" INTEGER,
-    "facility" INTEGER,
-    PRIMARY KEY("id" AUTOINCREMENT)
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    pin TEXT,
+    card INTEGER,
+    facility INTEGER
 );
-CREATE TABLE IF NOT EXISTS "events" (
-    "id" INTEGER NOT NULL UNIQUE,
-    "message" TEXT NOT NULL,
-    "data" TEXT,
-    PRIMARY KEY("id" AUTOINCREMENT)
-);
+CREATE TABLE IF NOT EXISTS logs (
+    id INTEGER PRIMARY KEY,
+    time TEXT,
+    logger TEXT,
+    level TEXT,
+    message TEXT,
+    file TEXT,
+    line INTEGER
+)
 EOF
 
 # add a group for gpio access
@@ -95,6 +97,7 @@ if [ $1 ] && [ -d $1 ]; then
 
     # cause in vagrant shared folder is the holdup, causes service not to start
     sed -i 's/WantedBy=multi-user.target/WantedBy=vagrant.mount/' /etc/systemd/system/$app.service
+    systemctl daemon-reload
 
     # start it
     systemctl start $app

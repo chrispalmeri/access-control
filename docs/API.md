@@ -74,7 +74,21 @@ Response 204
 
 ### GET /events
 
-not implemented
+Response 200
+
+```json
+[
+    {
+        "id": 1,
+        "time": "2021-03-06T18:32:19.961Z",
+        "logger": "MyLoggerName",
+        "level": "DEBUG",
+        "message": "User 2 created",
+        "file": "/vagrant/code/users.py",
+        "line": 45
+    }
+]
+```
 
 ## update
 
