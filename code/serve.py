@@ -4,7 +4,7 @@ import asyncio
 from aiohttp import web
 import gpiod
 import socket
-from py import websocket
+import websocket
 import users
 import events
 

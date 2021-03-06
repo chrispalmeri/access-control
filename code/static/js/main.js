@@ -1,3 +1,7 @@
+// main.js
+
+import events from './events.js';
+
 // Create WebSocket connection.
 const socket = new WebSocket('ws://localhost:8080/ws');
 
@@ -9,11 +13,14 @@ socket.addEventListener('open', function (event) {
 // Listen for messages
 socket.addEventListener('message', function (event) {
     console.log('Message from server ', event.data);
-    document.getElementById('output').innerHTML = event.data
+    document.getElementById('ws_data').innerHTML = event.data;
+
+    // refresh the event list
+    events.get();
 });
 
 // Connection closed by server
 socket.addEventListener('close', (event) => {
     console.log('The connection has been closed successfully.');
-    document.getElementById('output').innerHTML = 'Disconnected'
+    document.getElementById('ws_data').innerHTML = 'Disconnected'
 });

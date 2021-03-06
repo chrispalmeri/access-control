@@ -42,7 +42,14 @@ class view(web.View):
             userid = conn.execute("""INSERT INTO users ( name, pin, card, facility )
                 VALUES ( :name, :pin, :card, :facility )""", temp).lastrowid
             conn.commit()
+
+            # Log it
             logger.debug(f'User {userid} created')
+
+            # Ping websockets about log update
+            for ws in self.request.app['websockets']:
+                await ws.send_str('Logs updated')
+
             return web.json_response({'id': userid, **temp})
         except Exception as e:
             return web.json_response({'error': str(e)}, status=500)
