@@ -99,4 +99,8 @@ Or now
 
 `sudo systemctl restart doorctl`
 
+Check for errors
+
+`sudo journalctl -u doorctl --since "5 minutes ago"`
+
   [1]: https://github.com/chrispalmeri/task-board

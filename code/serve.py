@@ -4,7 +4,8 @@ import asyncio
 from aiohttp import web
 import gpiod
 import socket
-from py import users, websocket
+from py import websocket
+import users
 
 try:
     chip = gpiod.Chip('gpiochip0')
