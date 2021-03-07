@@ -1,3 +1,4 @@
+import sys
 from os import path
 from socket import socket
 from aiohttp import web
@@ -32,4 +33,15 @@ if config.chip:
     app.on_startup.append(reader.startup)
     app.on_cleanup.append(reader.cleanup)
 
-web.run_app(app, sock=socket(fileno=3))
+# logger (MyLoggerName) does not emit to console initially
+# but once you have used logging (root) then it starts
+#import logging
+#logging.warning('test')
+#config.logger.debug('startup')
+
+if len(sys.argv) > 1:
+    web.run_app(app, host='localhost', port=8080) # command line
+else:
+    web.run_app(app, sock=socket(fileno=3)) # systemd
+
+# code here won't run til server stops

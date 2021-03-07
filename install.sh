@@ -11,7 +11,7 @@ apt-get update
 apt-get install -y gpiod python3-libgpiod python3-aiohttp sqlite3
 
 # variables
-dir=$(dirname "$0")
+dir=$(cd $(dirname $0); pwd)
 user=$(logname)
 app="doorctl"
 

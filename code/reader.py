@@ -5,15 +5,15 @@ import gpiod
 import config
 
 if config.chip:
-    d0 = chip.get_line(config.d0)
-    d1 = chip.get_line(config.d1)
+    d0 = config.chip.get_line(config.d0)
+    d1 = config.chip.get_line(config.d1)
 
     lines = gpiod.LineBulk([d0, d1])
     lines.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN) # prevent initial interrupt
     lines.release()
     lines.request(consumer=config.name, type=gpiod.LINE_REQ_EV_FALLING_EDGE)
 
-def read():
+async def read(app):
     """
     tested with artificial delays in rest of app
     event_read will return queued events so you don't miss them
@@ -30,7 +30,7 @@ def read():
     long is probably blocking the rest of app
     short will use the event loop more frequently
     """
-    events = lines.event_wait(nsec=3000000) # need to catch InterruptedError here
+    events = lines.event_wait(nsec=3000000) # could catch InterruptedError here
     data = []
     output = 0
 
@@ -58,24 +58,32 @@ def read():
                     output = output << 1
                 elif obj.source.offset() == d1.offset():
                     output = output << 1 | 1
-            print(output)
+            #print(output)
+            config.logger.debug(output)
+            # Ping websockets about log update
+            for ws in app['websockets']:
+                await ws.send_str('Logs updated')
 
 async def background_task(app):
     try:
         while True:
-            read()
+            try:
+                await read(app)
+            except InterruptedError:
+                logging.warning('gpio task interrupted')
 
             # just to mess with the reading
             # as a reliability test
-            logging.warning('sleeping')
-            await asyncio.sleep(3)
+            #logging.warning('sleeping')
+            #await asyncio.sleep(3)
+            await asyncio.sleep(0)
 
             #logging.warning('background stuff')
             # Forward message to all connected websockets:
             #for ws in app['websockets']:
                 #await ws.send_str('Hello Client')
     except asyncio.CancelledError:
-        pass
+        logging.warning('reader task cancelled')
     finally:
         logging.warning('Goodbye')
 
