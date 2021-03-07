@@ -3,7 +3,7 @@
 import events from './events.js';
 
 // Create WebSocket connection.
-const socket = new WebSocket('ws://localhost:8080/ws');
+const socket = new WebSocket('ws://' + location.host + '/ws');
 
 // Connection opened
 socket.addEventListener('open', function (event) {
@@ -12,7 +12,7 @@ socket.addEventListener('open', function (event) {
 
 // Listen for messages
 socket.addEventListener('message', function (event) {
-    console.log('Message from server ', event.data);
+    console.log('Message from server:', event.data);
     document.getElementById('ws_data').innerHTML = event.data;
 
     // refresh the event list
@@ -20,7 +20,7 @@ socket.addEventListener('message', function (event) {
 });
 
 // Connection closed by server
-socket.addEventListener('close', (event) => {
-    console.log('The connection has been closed successfully.');
+socket.addEventListener('close', function (event) {
+    console.log('The connection has been closed');
     document.getElementById('ws_data').innerHTML = 'Disconnected'
 });

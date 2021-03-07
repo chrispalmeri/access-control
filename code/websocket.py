@@ -1,5 +1,5 @@
-from aiohttp import web, WSMsgType
 import logging
+from aiohttp import web, WSMsgType
 
 async def get(request):
     ws = web.WebSocketResponse()

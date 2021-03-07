@@ -1,10 +1,9 @@
-import logging
-import os
+from logging import Handler
 from datetime import datetime
 
-class SQLiteHandler(logging.Handler):
+class SQLiteHandler(Handler):
     def __init__(self, conn):
-        logging.Handler.__init__(self)
+        Handler.__init__(self)
         self.conn = conn
 
     def emit(self, record):

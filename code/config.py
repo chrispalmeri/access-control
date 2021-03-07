@@ -1,13 +1,15 @@
 from os import path
-import gpiod
-import sqlite3
 import logging
+import sqlite3
+import gpiod
+
 import sqlite_handler
 
 try:
     chip = gpiod.Chip('gpiochip0')
 except FileNotFoundError:
     chip = None
+    print('No GPIO detected')
 
 name = 'doorctl'
 
