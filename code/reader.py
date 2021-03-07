@@ -67,10 +67,7 @@ async def read(app):
 async def background_task(app):
     try:
         while True:
-            try:
-                await read(app)
-            except InterruptedError:
-                logging.warning('gpio task interrupted')
+            await read(app)
 
             # just to mess with the reading
             # as a reliability test
@@ -82,14 +79,11 @@ async def background_task(app):
             # Forward message to all connected websockets:
             #for ws in app['websockets']:
                 #await ws.send_str('Hello Client')
+
+    except InterruptedError:
+        logging.warning('gpio task interrupted')
     except asyncio.CancelledError:
         logging.warning('reader task cancelled')
-    finally:
-        logging.warning('Goodbye')
 
 async def startup(app):
     app['my_task'] = asyncio.create_task(background_task(app))
-
-async def cleanup(app):
-    app['my_task'].cancel()
-    await app['my_task']

@@ -31,7 +31,6 @@ app.add_routes([
 # avoid all the weigand stuff if no gpio, eg vagrant
 if config.chip:
     app.on_startup.append(reader.startup)
-    app.on_cleanup.append(reader.cleanup)
 
 # logger (MyLoggerName) does not emit to console initially
 # but once you have used logging (root) then it starts
