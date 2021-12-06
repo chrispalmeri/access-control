@@ -6,11 +6,12 @@ def verify(code):
             return True
         else:
             return False
-        
-    else:
-        code = str(code)
-        
+
+    elif isinstance(code, str):
         if code in ['1234', '000000']:
             return True
         else:
             return False
+
+    else:
+        return False

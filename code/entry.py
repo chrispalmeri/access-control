@@ -2,7 +2,6 @@ import time
 import gpiod
 import config
 import state
-import event
 
 lock = config.chip.get_line(config.lock)
 relay = config.chip.get_line(config.relay)
@@ -20,7 +19,7 @@ unlockTime = 0
 def allow():
     global unlocked
     global unlockTime
-    
+
     lock.set_value(1)
     led.set_value(1)
     unlocked = True
@@ -32,13 +31,17 @@ def deny():
 def secure():
     global unlocked
     global unlockTime
-    
+    updates = False
+
     if unlocked:
         now = time.time()
-        
+
         # if time is up and door is closed re-lock
         if now - unlockTime > 5 and state.doorClosed: # add config for time
             lock.set_value(0)
             led.set_value(0)
             unlocked = False
-            event.log('Access secured')
+            config.logger.debug('Door secured')
+            updates = True
+
+    return updates

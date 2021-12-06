@@ -4,12 +4,12 @@ from socket import socket
 from aiohttp import web
 
 import config
-from reader import Reader
 import users
 import events
 import websocket
 
-reader = Reader()
+from loop import Loop
+loop = Loop()
 
 # custom 404 page
 # https://aiohttp-demos.readthedocs.io/en/latest/tutorial.html#aiohttp-demos-polls-middlewares
@@ -32,8 +32,8 @@ app.add_routes([
 
 # avoid all the weigand stuff if no gpio, eg vagrant
 if config.chip:
-    app.on_startup.append(reader.startup)
-    app.on_shutdown.append(reader.shutdown)
+    app.on_startup.append(loop.startup)
+    app.on_shutdown.append(loop.shutdown)
 
 # logger (MyLoggerName) does not emit to console initially
 # but once you have used logging (root) then it starts

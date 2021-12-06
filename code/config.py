@@ -28,6 +28,6 @@ conn = sqlite3.connect(dbpath)
 conn.row_factory = sqlite3.Row
 # don't forget to close this, same for chip
 
-logger = logging.getLogger('MyLoggerName')
+logger = logging.getLogger(name)
 logger.setLevel(logging.DEBUG)
 logger.addHandler(sqlite_handler.SQLiteHandler(conn))
