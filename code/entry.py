@@ -41,7 +41,7 @@ def secure():
             lock.set_value(0)
             led.set_value(0)
             unlocked = False
-            config.logger.debug('Door secured')
+            config.logger.info('Door secured')
             updates = True
 
     return updates

@@ -40,6 +40,10 @@ if config.chip:
 #import logging
 #logging.warning('test')
 #config.logger.debug('startup')
+# INTERESTING that might be a transient thing? SQLite saves loop startup log that is missing in journalctl
+# oh no, still an issue, nothing from customer logger goes to journalctl unless you use a defautl logger first
+# switched websocket connection from defautl logger and see issue again
+# although I don't really care if SQL has the logs?
 
 if len(sys.argv) > 1:
     web.run_app(app, host='localhost', port=8080) # command line

@@ -13,7 +13,8 @@ socket.addEventListener('open', function (event) {
 // Listen for messages
 socket.addEventListener('message', function (event) {
     console.log('Message from server:', event.data);
-    document.getElementById('ws_data').innerHTML = event.data;
+    //document.getElementById('ws_data').innerHTML = event.data;
+    document.getElementById('ws_data').innerHTML = 'Connected';
 
     // refresh the event list
     events.get();

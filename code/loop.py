@@ -14,11 +14,11 @@ class Loop():
             rawdata = reader.read()
             data = wiegand.parse(rawdata)
             if data is not None:
-                config.logger.debug(str(data))
+                config.logger.info(str(data))
 
                 # verify code
                 valid = auth.verify(data)
-                config.logger.debug('Access granted' if valid else 'Access denied')
+                config.logger.info('Access granted' if valid else 'Access denied')
 
                 if valid:
                     entry.allow()
@@ -28,7 +28,9 @@ class Loop():
             # cleanup
             outputchange = entry.secure()
 
-            if data is not None or inputchange or outputchange:
+            # a little agressive to use 'rawdata' instead of 'data' but not bad
+            # gets wiegand errors to pop up, but also refreshes each keypress when entering pin
+            if rawdata is not None or inputchange or outputchange:
                 # Ping websockets about log update
                 for ws in app['websockets']:
                     await ws.send_str('Logs updated')
@@ -38,10 +40,10 @@ class Loop():
             print('gracefully stopped')
 
     async def startup(self, app):
-        print('start hardware loop')
+        config.logger.debug('Hardware loop startup')
         app['hardware_loop'] = asyncio.create_task(self.run(app))
 
     async def shutdown(self, app):
-        print('stop hardware loop')
+        config.logger.debug('Hardware loop shutdown')
         state.loopRunning = False
         await app['hardware_loop']

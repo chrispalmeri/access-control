@@ -1,5 +1,5 @@
-import logging
 from aiohttp import web, WSMsgType
+import config
 
 async def get(request):
     ws = web.WebSocketResponse()
@@ -10,18 +10,18 @@ async def get(request):
     async for msg in ws:
         if msg.type == WSMsgType.TEXT:
 
-            logging.warning(msg.data)
+            #config.logger.warning(msg.data)
+            config.logger.debug('Websocket client connected')
 
             if msg.data == 'close':
                 await ws.close()
             else:
                 await ws.send_str('Received: ' + msg.data)
         elif msg.type == WSMsgType.ERROR:
-            logging.error('ws connection closed with exception %s' %
-                  ws.exception())
+            config.logger.warning('Websocket connection closed with exception %s' % ws.exception())
 
     # actually not sure how it only comes to this block after close
-    logging.warning('websocket connection closed')
+    config.logger.debug('Websocket client disconnected')
     request.app['websockets'].remove(ws)
 
     return ws

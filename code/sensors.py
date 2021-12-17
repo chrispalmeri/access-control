@@ -19,7 +19,7 @@ def check():
 
     if state.doorClosed != doorTemp:
         state.doorClosed = doorTemp
-        config.logger.debug('Door closed' if state.doorClosed else 'Door opened')
+        config.logger.info('Door closed' if state.doorClosed else 'Door opened')
         updates = True
 
     # aux check
@@ -30,7 +30,7 @@ def check():
 
     if state.auxClosed != auxTemp:
         state.auxClosed = auxTemp
-        config.logger.debug('Aux closed' if state.auxClosed else 'Aux opened')
+        config.logger.info('Aux closed' if state.auxClosed else 'Aux opened')
         updates = True
 
     return updates
