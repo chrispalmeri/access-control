@@ -45,6 +45,9 @@ if config.chip:
 # switched websocket connection from defautl logger and see issue again
 # although I don't really care if SQL has the logs?
 
+# I think you didn't get a SQL startup log on a cold boot though
+# test that
+
 if len(sys.argv) > 1:
     web.run_app(app, host='localhost', port=8080) # command line
 else:

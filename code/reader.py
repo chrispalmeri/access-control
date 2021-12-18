@@ -35,13 +35,10 @@ def read():
 
     tested with artificial delays in rest of app
     event_read will return queued events so you don't miss them
-    but they might be out of order
-    so need to save and sort, can't just bit shift them into a value
-
-    (artificial 3s) delays in rest of app can cause keypresses to be combined
+    but they might be out of order, so need to save and sort
+    also keypresses might be combined
     example there could be 8 inturrupts queued up
     and the 3ms timeout would not split them
-    maybe an argument against bit shifting if you need to count/split them later
 
     inital wait time is arbitrary
     long would affect responsiveness of reading
@@ -64,20 +61,15 @@ def read():
         # if data, sort it and return it
         # has nice benefit of returning output 0 properly
         if data:
-            output = 0
+            output = ''
             data.sort(key=lambda x: x.sec * 1000000000 + x.nsec)
-            # should check data length
-            # if 8, 12, 16 then split into 4's
-            # Wiegand 4 bit, 8 bit, 24 bit, 26 bit, 32 bit and 34 bit
-            # well you are not even parsing it here, so do that in the parser
-            # either validate parity and get card/facility, or split and get digit(s)
+
             for obj in data:
-                # you don't need to bit shift if you don't want
                 # speed doesn't matter at this point vs clarity
+                # using a string cause it has length and easy enough to convert to binary later
                 if obj.source.offset() == d0.offset():
-                    output = output << 1
+                    output += '0'
                 elif obj.source.offset() == d1.offset():
-                    output = output << 1 | 1
-            #config.logger.debug(output)
+                    output += '1'
 
     return output
