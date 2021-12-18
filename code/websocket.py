@@ -11,6 +11,7 @@ async def get(request):
         if msg.type == WSMsgType.TEXT:
 
             #config.logger.warning(msg.data)
+            # should include ip and broadcast to all clients
             config.logger.debug('Websocket client connected')
 
             if msg.data == 'close':

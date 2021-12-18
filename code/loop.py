@@ -10,22 +10,16 @@ import auth
 class Loop():
     async def run(self, app):
         while state.loopRunning:
-            # do things
             rawdata = reader.read()
             data = wiegand.parse(rawdata)
-            if data is not None:
-                config.logger.info(str(data))
 
-                # verify code
+            if data is not None:
                 valid = auth.verify(data)
-                config.logger.info('Access granted' if valid else 'Access denied')
 
                 if valid:
                     entry.allow()
 
             inputchange = sensors.check()
-
-            # cleanup
             outputchange = entry.secure()
 
             # a little agressive to use 'rawdata' instead of 'data' but not bad
