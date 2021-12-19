@@ -54,47 +54,84 @@ PG7  | 10       | 199      | IN   | doorbell
 
 ## OS setup
 
-Download [Armbian][1] image (Debian 10.7 "Buster") and [7-Zip][2] to extract it.
+Download [Armbian][5] Bullseye image, use [Etcher][6] to flash the image onto your [SD card][7].
 
-Use [Etcher][4] to flash the image onto your [SD card][3].
+Boot the hardware from the SD card, check your router to find the IP address, and use [Putty][8] to access it.
 
-Boot the hardware from the SD card and use [Putty][5] to access it.
-
-  [1]: https://www.armbian.com/nanopi-neo/
-  [2]: https://www.7-zip.org/
-  [3]: https://shop.sandisk.com/store/sdiskus/en_US/pd/productID.5163153100/SanDisk-Ultra-microSDXC-UHSI-Card-32GB-A1C10U1
-  [4]: https://www.balena.io/etcher/
-  [5]: https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+  [5]: https://www.armbian.com/nanopi-neo/
+  [6]: https://www.balena.io/etcher/
+  [7]: https://shop.sandisk.com/store/sdiskus/en_US/pd/productID.5163153100/SanDisk-Ultra-microSDXC-UHSI-Card-32GB-A1C10U1
+  [8]: https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 
 ## Initial config
 
-* login as `root` using `1234`
-* change password
-* new user wizard
-    * password
-    * skip all the questions
+* login as `root` with password `1234`
+* enter new password twice
+* pick `1` for "bash" terminal
+* enter new username
+* password twice
+* display name
+* `Enter` to accept language based on detected timezone
+* pick `1` for "en_US.UTF-8"
 * `apt update`
 * `DEBIAN_FRONTEND=noninteractive apt upgrade -y`
 * `armbian-config`
-    * System > Install > Install/Update the bootloader on SD/eMMC > Yes
-    * Ok > Back
+    * Personal > Timezone > set that
     * Personal > Hostname > type a new hostname
-    * Personal > Timezone > set that too
-    * Ok > Ok > Back > Exit
-* `shutdown -r now` to reboot
+    * System > Install > Install/Update the bootloader on SD/eMMC > Yes
+    * System > Install > Boot from eMMC - system on eMMC > Yes > ext4 > Power Off
+
+Unplug power, Remove SD card, and reconnect power.
+
+<!--
+I think you could then reuse the SD card on additional boards
+and only need to do the hostname, bootloader, eMMC steps
+-->
+
+## Installation
+
+Connect all your door hardware.
+
+Reconnect with Putty and use new username.
+
+`git clone https://github.com/chrispalmeri/access-control.git`
+
+`cd access-control`
+
+`sudo ./install.sh`
+
+`sudo shutdown -r now` to reboot
 
 ## Usage
 
-Check [task-board][1] readme for better instructions that also apply to this.
+Navigate to IP address in browser.
 
-Run python with `python3 code/serve.py`
+<!--
+If weblog shows wrong contact status and wiegand readding errors
 
-Or now
-
+remote in `nano access-control/code/config.py`
+change pin numbers to correct ones for your board
+Ctrl+S, Ctrl+X
 `sudo systemctl restart doorctl`
 
-Check for errors
+I think it has the 60 sec websocket hang when stopping again
+just wait a minute and then it is good
+-->
 
-`sudo journalctl -u doorctl --since "5 minutes ago"`
+Swipe a card and check the logs for the number. Then use Postman to add a user with `POST` to `/api/users`.
 
-  [1]: https://github.com/chrispalmeri/task-board
+Should be good to go. Check that the hardware is all working correctly.
+
+## Troubleshooting
+
+Restart process with `sudo systemctl restart doorctl`
+
+Check for errors with `sudo journalctl -u doorctl --since "5 minutes ago"`
+
+## Update
+
+`cd access-control`, `git fetch` then `git status`
+
+If there are updates `git pull`. Maybe should `sudo ./install.sh` again?
+
+`sudo systemctl restart doorctl`
