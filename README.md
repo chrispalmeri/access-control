@@ -1,4 +1,4 @@
-# access-control
+# doorctl
 
 DIY door access control system with NanoPi
 
@@ -16,14 +16,8 @@ board changes:
   any way to get the resistor designators readable? smaller?
   upsidedown ethernet kinda bugs me
 
-www
-    view log
-    add codes
-
 python
   update docs
-  sqlite
-  systemd
   totp
 
 -->
@@ -93,6 +87,14 @@ Boot the hardware from the SD card and use [Putty][5] to access it.
 
 Check [task-board][1] readme for better instructions that also apply to this.
 
-Run python with `sudo python3 python/main.py`
+Run python with `python3 code/serve.py`
+
+Or now
+
+`sudo systemctl restart doorctl`
+
+Check for errors
+
+`sudo journalctl -u doorctl --since "5 minutes ago"`
 
   [1]: https://github.com/chrispalmeri/task-board

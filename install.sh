@@ -1,94 +1,113 @@
 #!/bin/bash
 
 # be running as root
-if [[ $EUID != 0 ]]; then
+if [ $UID != 0 ]; then
     echo "This script needs to be run as root." >&2
     exit 1
 fi
 
-# setup variables to use below
-# to switch to shared folder when vagrant
-build=/home/www-data/door-control
-serve=/srv/door-control
-
-if [[ $1 ]]; then
-    build=/vagrant
-    serve=/vagrant
-fi
-
-# Timezone
-timedatectl set-timezone America/Chicago
-
 # Update and install software
 apt-get update
-apt-get install -y git apache2 sqlite3 php libapache2-mod-php php-curl php-sqlite3 ufw
+apt-get install -y gpiod python3-libgpiod python3-aiohttp sqlite3
 
-# need to stop apache while modifying the user
-systemctl stop apache2
+# variables
+dir=$(cd $(dirname $0); pwd)
+user=$(logname)
+app="doorctl"
 
-# give www-data a proper home directory
-# that's the user php will run commands as
-# want it to have a place to put stuff
-# where it has permission to `git pull` later
-mkdir -p /home/www-data
-chown www-data:www-data /home/www-data
-usermod -d /home/www-data www-data
-
-# clone repo as www-data, check if exists first
-if [[ -d /home/www-data/door-control ]]; then
-    cd /home/www-data/door-control
-    #sudo -u www-data git fetch
-    #if [[ $(sudo -u www-data git rev-parse HEAD) != $(sudo -u www-data git rev-parse @{u}) ]]; then
-        # sudo -u www-data git reset --hard
-        sudo -u www-data git pull
-    #fi
-else
-    sudo -u www-data git clone https://github.com/chrispalmeri/access-control.git /home/www-data/door-control
+# allow vagrant to override the directory with argument
+if [ $1 ] && [ -d $1 ]; then
+  dir=$1
 fi
 
-# copy www to www
-rsync -av --delete --delete-excluded --include='php/***' --include='python/***' --include='www/***' --filter 'protect database.db' --exclude='*' /home/www-data/door-control/ /srv/door-control/
+# setup the database
+if [ ! -d $dir/db ]; then
+    mkdir $dir/db
+    chown $user:$user $dir/db
+fi
 
-# Make a log directory
-mkdir -p $build/.log
+if [ ! -f $dir/db/database.db ]; then
+    touch $dir/db/database.db
+    chown $user:$user $dir/db/database.db
+fi
 
-# Add another PHP .ini to be parsed after the defaults
-cat > /etc/php/7.3/apache2/conf.d/90-custom.ini << EOF
-date.timezone = America/Chicago
-error_log = $build/.log/php-error.log
+sqlite3 $dir/db/database.db << EOF
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    pin TEXT,
+    card INTEGER,
+    facility INTEGER
+);
+CREATE TABLE IF NOT EXISTS logs (
+    id INTEGER PRIMARY KEY,
+    time TEXT,
+    logger TEXT,
+    level TEXT,
+    message TEXT,
+    file TEXT,
+    line INTEGER
+)
 EOF
 
-# Overwrite default Apache .conf file
-cat > /etc/apache2/sites-available/000-default.conf << EOF
-<VirtualHost *:80>
-    ServerName example.com
+# add a group for gpio access
+groupadd -f gpio
 
-    DocumentRoot $serve/www
+# add yourself to the group
+# you have to log out and back in though
+usermod -a -G gpio $user
 
-    <Directory $serve/www>
-        Options -Indexes +FollowSymLinks -MultiViews
-        AllowOverride All
-        Require all granted
-    </Directory>
-
-    ErrorLog $build/.log/apache-error.log
-    CustomLog $build/.log/apache-access.log combined
-</VirtualHost>
+# create udev rule to allow group access to gpio
+# definitley need to reboot
+cat > /etc/udev/rules.d/99-custom.rules << EOF
+SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
 EOF
 
-# Add placeholder env config file
-cat > /etc/apache2/conf-available/env.conf << EOF
-SetEnv FOO ""
-SetEnv BAR ""
+# setup systemd service and port
+cat > /etc/systemd/system/$app.socket << EOF
+[Unit]
+Description=$app socket
+
+[Socket]
+ListenStream=80
 EOF
 
-# Enable mod rewrite, env config, and restart Apache
-a2enmod rewrite
-a2enconf env
-systemctl restart apache2
+cat > /etc/systemd/system/$app.service << EOF
+[Unit]
+Description=$app service
+After=network.target
+Requires=$app.socket
 
-# Enable firewall
-ufw allow ssh
-ufw allow http
-ufw allow https
-ufw --force enable
+[Service]
+User=$user
+ExecStart=/usr/bin/python3 $dir/code/serve.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl enable $app
+
+if [ $1 ] && [ -d $1 ]; then
+    # you could make this uniform for vagrant/hardware
+    # reboot = vagrant reload after initial vagrant up
+    # and fix service start via additional "always" provisioner
+    # also additional provisioner could show the status message on reload/resume
+
+    # cause in vagrant shared folder is the holdup, causes service not to start
+    sed -i 's/WantedBy=multi-user.target/WantedBy=vagrant.mount/' /etc/systemd/system/$app.service
+    systemctl daemon-reload
+
+    # start it
+    systemctl start $app
+
+    if systemctl is-active $app &> /dev/null; then
+        echo -e ">>> $app service is \e[32mUP\e[0m"
+    else
+        echo -e ">>> $app service is \e[31mDOWN\e[0m"
+    fi
+else
+    # if running with real gpio you will need permissions and udev reloaded
+    echo "You should reboot now"
+fi

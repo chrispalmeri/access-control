@@ -7,7 +7,11 @@
 
 ## Code changes
 
+  * would be cool to ping websocket from within the logger directly, and clean up manual code
+  * get rid of more print statements
+  * increasing timeout for bad pin or card attempts
   * reboot command
+  * beep or something on startup, so you know when it is ready after a power cycle
 
 ## Ideas
 
