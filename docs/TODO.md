@@ -7,7 +7,11 @@
 
 ## Code changes
 
-  * would be cool to ping websocket from within the logger directly, and clean up manual code
+  * refector logger init? rename myLog
+  * put state in app[]? would have to pass app around more
+  * include state in websocket instead of generic logs updated
+  * ui switch for log level display
+  * 'gpio' package, change 'entry' to 'output'
   * get rid of more print statements
   * increasing timeout for bad pin or card attempts
   * reboot command

@@ -8,6 +8,8 @@ import api.users
 import api.events
 import websocket
 
+from logger import Logger
+
 from loop import Loop
 loop = Loop()
 
@@ -19,6 +21,8 @@ async def root_handler(request):
 
 app = web.Application()
 app['websockets'] = set()
+
+config.myLog = Logger(app, config.conn)
 
 # add trailing slash seperatley if you want it
 app.add_routes([

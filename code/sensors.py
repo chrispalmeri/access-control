@@ -9,9 +9,7 @@ if config.chip:
     door.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN)
     aux.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN)
 
-def check():
-    updates = False
-
+async def check():
     # door check
     if door.get_value() == 0:
         doorTemp = True
@@ -20,8 +18,7 @@ def check():
 
     if state.doorClosed != doorTemp:
         state.doorClosed = doorTemp
-        config.logger.info('Door closed' if state.doorClosed else 'Door opened')
-        updates = True
+        await config.myLog.log('INFO', 'Door closed' if state.doorClosed else 'Door opened')
 
     # aux check
     if aux.get_value() == 0:
@@ -31,7 +28,5 @@ def check():
 
     if state.auxClosed != auxTemp:
         state.auxClosed = auxTemp
-        config.logger.info('Aux closed' if state.auxClosed else 'Aux opened')
-        updates = True
+        await config.myLog.log('INFO', 'Aux closed' if state.auxClosed else 'Aux opened')
 
-    return updates

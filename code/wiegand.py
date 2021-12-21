@@ -14,13 +14,13 @@ def parity(datain, p):
         datain >>= 1
     return p
 
-def parse(data):
+async def parse(data):
     if data is None:
         return None
 
     length = len(data)
 
-    config.logger.debug('Data: ' + data + ' Length: ' + str(length))
+    await config.myLog.log('DEBUG', 'Data: ' + data + ' Length: ' + str(length))
     # convert to actual binary (integer instead of string)
     # since existing parser expects that
     data = int(data, 2)
@@ -69,5 +69,5 @@ def parse(data):
         return Card(number, facility)
 
     else:
-        config.logger.warning('Wiegand reading error')
+        await config.myLog.log('WARNING', 'Wiegand reading error')
         return None

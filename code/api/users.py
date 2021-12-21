@@ -1,6 +1,10 @@
 from aiohttp import web
 
-from config import conn, logger
+from config import conn, myLog
+# For some reason I think this doesn't work
+# need to simply import config
+# could probably fix how myLog is initiated
+
 
 # should try catch the json parsing
 # has no type checking of json values
@@ -45,11 +49,13 @@ class view(web.View):
             conn.commit()
 
             # Log it
-            logger.debug(f'User {userid} created')
+            await myLog.log('DEBUG', f'User {userid} created')
 
+            '''
             # Ping websockets about log update
             for ws in self.request.app['websockets']:
                 await ws.send_str('Logs updated')
+            '''
 
             return web.json_response({'id': userid, **temp})
         except Exception as e:

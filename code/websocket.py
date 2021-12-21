@@ -10,19 +10,21 @@ async def get(request):
     async for msg in ws:
         if msg.type == WSMsgType.TEXT:
 
-            #config.logger.warning(msg.data)
+            # can also log `msg.data` if you want
             # should include ip and broadcast to all clients
-            config.logger.debug('Websocket client connected')
+            await config.myLog.log('DEBUG', 'Websocket client connected')
+            # is it repetitive that this file uses the logger which pings all websockets
+            # maybe not
 
             if msg.data == 'close':
                 await ws.close()
             else:
                 await ws.send_str('Received: ' + msg.data)
         elif msg.type == WSMsgType.ERROR:
-            config.logger.warning('Websocket connection closed with exception %s' % ws.exception())
+            await config.myLog.log('WARNING', 'Websocket connection closed with exception %s' % ws.exception())
 
     # actually not sure how it only comes to this block after close
-    config.logger.debug('Websocket client disconnected')
+    await config.myLog.log('DEBUG', 'Websocket client disconnected')
     request.app['websockets'].remove(ws)
 
     return ws

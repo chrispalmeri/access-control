@@ -32,10 +32,9 @@ def allow():
 def deny():
     pass
 
-def secure():
+async def secure():
     global unlocked
     global unlockTime
-    updates = False
 
     if unlocked:
         now = time.time()
@@ -45,7 +44,5 @@ def secure():
             lock.set_value(0)
             led.set_value(0)
             unlocked = False
-            config.logger.info('Door secured')
-            updates = True
+            await config.myLog.log('INFO', 'Door secured')
 
-    return updates
