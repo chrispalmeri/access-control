@@ -6,4 +6,3 @@
 **/*.dch~
 __pycache__/
 db/
-.env

@@ -4,8 +4,8 @@ from socket import socket
 from aiohttp import web
 
 import config
-import users
-import events
+import api.users
+import api.events
 import websocket
 
 from loop import Loop
@@ -22,13 +22,16 @@ app['websockets'] = set()
 
 # add trailing slash seperatley if you want it
 app.add_routes([
-    web.view('/api/users', users.view),
-    web.view('/api/users/{id}', users.view),
-    web.view('/api/events', events.view),
+    web.view('/api/users', api.users.view),
+    web.view('/api/users/{id}', api.users.view),
+    web.view('/api/events', api.events.view),
     web.get('/ws', websocket.get),
     web.get('/', root_handler),
     web.static('/', path.dirname(__file__) + '/static') # needs to be last
 ])
+
+# cleanup websockets so it doesn't take 60 sec to restart
+app.on_shutdown.append(websocket.shutdown)
 
 # avoid all the weigand stuff if no gpio, eg vagrant
 if config.chip:

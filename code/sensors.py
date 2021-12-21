@@ -2,11 +2,12 @@ import gpiod
 import config
 import state
 
-door = config.chip.get_line(config.door)
-aux = config.chip.get_line(config.aux)
+if config.chip:
+    door = config.chip.get_line(config.door)
+    aux = config.chip.get_line(config.aux)
 
-door.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN)
-aux.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN)
+    door.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN)
+    aux.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN)
 
 def check():
     updates = False

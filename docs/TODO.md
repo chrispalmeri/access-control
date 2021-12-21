@@ -12,6 +12,10 @@
   * increasing timeout for bad pin or card attempts
   * reboot command
   * beep or something on startup, so you know when it is ready after a power cycle
+  * add control buttons on homepage, would need api first
+  * users page
+  * ping websocket periodically, power loss still shows connected
+  * way to delete events
 
 ## Ideas
 

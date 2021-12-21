@@ -1,4 +1,4 @@
-from aiohttp import web, WSMsgType
+from aiohttp import web, WSMsgType, WSCloseCode
 import config
 
 async def get(request):
@@ -26,3 +26,7 @@ async def get(request):
     request.app['websockets'].remove(ws)
 
     return ws
+
+async def shutdown(app):
+    for ws in app['websockets']:
+        await ws.close(code=WSCloseCode.GOING_AWAY, message='Server shutdown')
