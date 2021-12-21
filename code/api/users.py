@@ -51,12 +51,6 @@ class view(web.View):
             # Log it
             await myLog.log('DEBUG', f'User {userid} created')
 
-            '''
-            # Ping websockets about log update
-            for ws in self.request.app['websockets']:
-                await ws.send_str('Logs updated')
-            '''
-
             return web.json_response({'id': userid, **temp})
         except Exception as e:
             return web.json_response({'error': str(e)}, status=500)

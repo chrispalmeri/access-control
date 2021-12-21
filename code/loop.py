@@ -28,6 +28,8 @@ class Loop():
 
     async def startup(self, app):
         await config.myLog.log('DEBUG', 'Hardware loop startup')
+        # Log doesn't show up on a cold boot, which is exactly when you would want it
+        # hopefully related to aiohttp version
         app['hardware_loop'] = asyncio.create_task(self.run(app))
 
     async def shutdown(self, app):
