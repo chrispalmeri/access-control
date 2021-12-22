@@ -7,7 +7,25 @@ I tried like five browsers and it was the best on a low power device.
 
 # Git
 
-Configure it, don't remember exactly what was required
+Configure it, don't remember all that was required
+
+`~/.ssh/config`
+
+```
+Host github
+    HostName github.com
+    IdentityFile ~/.ssh/github
+```
+
+add to end of `~/.bashrc`
+
+```
+# add ssh key
+your_path=~/.ssh/github
+your_key=$(ssh-keygen -lf $your_path)
+# could probably silence the output of this
+ssh-add -l | grep -q "$your_key" || ssh-add $your_path
+```
 
 # Geany
 
