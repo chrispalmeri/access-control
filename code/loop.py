@@ -3,7 +3,7 @@ import sensors
 import entry
 import reader
 import wiegand
-import config
+import broadcast
 import state
 import auth
 
@@ -24,15 +24,18 @@ class Loop():
 
             await asyncio.sleep(0)
         else:
-            print('gracefully stopped')
+            await broadcast.event('DEBUG', 'Hardware loop gracefully stopped')
 
     async def startup(self, app):
-        await config.myLog.log('DEBUG', 'Hardware loop startup')
-        # Log doesn't show up on a cold boot, which is exactly when you would want it
+        await broadcast.event('DEBUG', 'Hardware loop startup')
+        # Event doesn't show up on a cold boot, which is exactly when you would want it
         # hopefully related to aiohttp version
         app['hardware_loop'] = asyncio.create_task(self.run(app))
 
     async def shutdown(self, app):
-        await config.myLog.log('DEBUG', 'Hardware loop shutdown')
+        await broadcast.event('DEBUG', 'Hardware loop shutdown')
         state.loopRunning = False
         await app['hardware_loop']
+
+    async def skipped(self, app):
+        await broadcast.event('DEBUG', 'No GPIO found')

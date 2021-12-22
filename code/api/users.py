@@ -1,10 +1,6 @@
 from aiohttp import web
-
-from config import conn, myLog
-# For some reason I think this doesn't work
-# need to simply import config
-# could probably fix how myLog is initiated
-
+from config import conn
+import broadcast
 
 # should try catch the json parsing
 # has no type checking of json values
@@ -48,8 +44,8 @@ class view(web.View):
                 VALUES ( :name, :pin, :card, :facility )""", temp).lastrowid
             conn.commit()
 
-            # Log it
-            await myLog.log('DEBUG', f'User {userid} created')
+            # Broadcast it
+            await broadcast.event('DEBUG', f'User {userid} created')
 
             return web.json_response({'id': userid, **temp})
         except Exception as e:

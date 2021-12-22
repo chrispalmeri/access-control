@@ -1,6 +1,7 @@
 import gpiod
 import config
 import state
+import broadcast
 
 if config.chip:
     door = config.chip.get_line(config.door)
@@ -18,7 +19,7 @@ async def check():
 
     if state.doorClosed != doorTemp:
         state.doorClosed = doorTemp
-        await config.myLog.log('INFO', 'Door closed' if state.doorClosed else 'Door opened')
+        await broadcast.event('INFO', 'Door closed' if state.doorClosed else 'Door opened')
 
     # aux check
     if aux.get_value() == 0:
@@ -28,5 +29,5 @@ async def check():
 
     if state.auxClosed != auxTemp:
         state.auxClosed = auxTemp
-        await config.myLog.log('INFO', 'Aux closed' if state.auxClosed else 'Aux opened')
+        await broadcast.event('INFO', 'Aux closed' if state.auxClosed else 'Aux opened')
 

@@ -1,5 +1,5 @@
 import numpad
-import config
+import broadcast
 
 class Card:
     def __init__(self, number, facility):
@@ -20,7 +20,7 @@ async def parse(data):
 
     length = len(data)
 
-    await config.myLog.log('DEBUG', 'Data: ' + data + ' Length: ' + str(length))
+    await broadcast.event('DEBUG', 'Data: ' + data + ' Length: ' + str(length))
     # convert to actual binary (integer instead of string)
     # since existing parser expects that
     data = int(data, 2)
@@ -69,5 +69,5 @@ async def parse(data):
         return Card(number, facility)
 
     else:
-        await config.myLog.log('WARNING', 'Wiegand reading error')
+        await broadcast.event('WARNING', 'Wiegand reading error')
         return None

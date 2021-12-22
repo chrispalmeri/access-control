@@ -107,7 +107,7 @@ Reconnect with Putty and use new username.
 Navigate to IP address in browser.
 
 <!--
-If weblog shows wrong contact status and wiegand readding errors
+If events shows wrong contact status and wiegand readding errors
 
 remote in `nano access-control/code/config.py`
 change pin numbers to correct ones for your board
@@ -118,7 +118,7 @@ I think it has the 60 sec websocket hang when stopping again
 just wait a minute and then it is good
 -->
 
-Swipe a card and check the logs for the number. Then use Postman to add a user with `POST` to `/api/users`.
+Swipe a card and check the events for the number. Then use Postman to add a user with `POST` to `/api/users`.
 
 Should be good to go. Check that the hardware is all working correctly.
 
@@ -133,6 +133,11 @@ Check for errors with `sudo journalctl -u doorctl --since "5 minutes ago"`
 `vagrant up` then go to http://localhost:8080/
 
 Maybe `vagrant reload` but I don't think it is required
+
+<!--
+if you `vagrnat halt` and `vagrant up` you might have to `vagrant ssh` and `sudo systemctl restart doorctl`
+seems like the wait for vagrant shared folder to mount might not actually be waiting
+-->
 
 If there are issues `vagrant ssh` then use troubleshooting commands above.
 

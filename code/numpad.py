@@ -11,7 +11,7 @@ def press(key):
     
     # check if past the timeout
     # should you add a function and call in main loop
-    # doesn't matter if it hangs around if not logged
+    # doesn't matter if it hangs around if not broadcast
     if now - buttonTime > 5:
         pin = ''
         # chirp buzzer?

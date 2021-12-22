@@ -2,6 +2,7 @@ import time
 import gpiod
 import config
 import state
+import broadcast
 
 # check first cause vagrant (this is in three files)
 # even though in that case the loop would never run
@@ -44,5 +45,5 @@ async def secure():
             lock.set_value(0)
             led.set_value(0)
             unlocked = False
-            await config.myLog.log('INFO', 'Door secured')
+            await broadcast.event('INFO', 'Door secured')
 

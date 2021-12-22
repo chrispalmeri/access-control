@@ -7,8 +7,7 @@ import config
 import api.users
 import api.events
 import websocket
-
-from logger import Logger
+import broadcast
 
 from loop import Loop
 loop = Loop()
@@ -22,7 +21,7 @@ async def root_handler(request):
 app = web.Application()
 app['websockets'] = set()
 
-config.myLog = Logger(app, config.conn)
+broadcast.setup(app)
 
 # add trailing slash seperatley if you want it
 app.add_routes([
@@ -41,6 +40,8 @@ app.on_shutdown.append(websocket.shutdown)
 if config.chip:
     app.on_startup.append(loop.startup)
     app.on_shutdown.append(loop.shutdown)
+else:
+    app.on_startup.append(loop.skipped)
 
 if len(sys.argv) > 1:
     web.run_app(app, host='localhost', port=8080) # command line

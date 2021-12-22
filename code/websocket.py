@@ -1,5 +1,5 @@
 from aiohttp import web, WSMsgType, WSCloseCode
-import config
+import broadcast
 
 async def get(request):
     ws = web.WebSocketResponse()
@@ -10,25 +10,26 @@ async def get(request):
     async for msg in ws:
         if msg.type == WSMsgType.TEXT:
 
-            # can also log `msg.data` if you want
-            # should include ip and broadcast to all clients
-            await config.myLog.log('DEBUG', 'Websocket client connected')
-            # is it repetitive that this file uses the logger which pings all websockets
-            # maybe not
+            # can also include `msg.data` if you want
+            # should include ip
+            await broadcast.event('DEBUG', 'Websocket client connected')
 
             if msg.data == 'close':
                 await ws.close()
             else:
                 await ws.send_str('Received: ' + msg.data)
         elif msg.type == WSMsgType.ERROR:
-            await config.myLog.log('WARNING', 'Websocket connection closed with exception %s' % ws.exception())
+            await broadcast.event('WARNING', 'Websocket connection closed with exception %s' % ws.exception())
 
     # actually not sure how it only comes to this block after close
-    await config.myLog.log('DEBUG', 'Websocket client disconnected')
     request.app['websockets'].remove(ws)
+    await broadcast.event('DEBUG', 'Websocket client disconnected')
 
     return ws
 
 async def shutdown(app):
-    for ws in app['websockets']:
-        await ws.close(code=WSCloseCode.GOING_AWAY, message='Server shutdown')
+    # cause of 'RuntimeError: Set changed size during iteration'
+    # I think cause when you close it it triggers above to remove from set
+    copy = app['websockets'].copy()
+    for ws in copy:
+        await ws.close()

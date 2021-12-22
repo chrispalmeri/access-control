@@ -6,7 +6,6 @@ try:
     chip = gpiod.Chip('gpiochip0')
 except FileNotFoundError:
     chip = None
-    print('No GPIO detected')
 
 name = 'doorctl'
 
@@ -36,5 +35,3 @@ dbpath = path.normpath(path.dirname(__file__) + '/../db/database.db')
 conn = sqlite3.connect(dbpath)
 conn.row_factory = sqlite3.Row
 # don't forget to close this, same for chip
-
-myLog = None

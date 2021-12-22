@@ -1,5 +1,6 @@
 import wiegand
 import config
+import broadcast
 
 async def verify(code):
     if isinstance(code, wiegand.Card):
@@ -10,8 +11,8 @@ async def verify(code):
         # or you should just construct both strings here, so it will say 'Pin: 1234'
 
     if row:
-        await config.myLog.log('INFO', 'Access granted for ' + row['name'])
+        await broadcast.event('INFO', 'Access granted for ' + row['name'])
         return True
     else:
-        await config.myLog.log('INFO', 'Access denied for ' + str(code))
+        await broadcast.event('INFO', 'Access denied for ' + str(code))
         return False
