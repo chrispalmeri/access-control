@@ -15,7 +15,7 @@ export default {
                     html += '<td>' + event[key] + '</td>';
                 }*/
                 html += '<td>' + new Date(event.time).toLocaleString() + '</td>';
-                html += '<td>' + event.level + '</td>';
+                html += '<td>' + event.channel + '</td>';
                 html += '<td>' + event.message + '</td>';
 
                 html += '</tr>';

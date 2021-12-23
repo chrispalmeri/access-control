@@ -9,7 +9,7 @@
 ## Code changes
 
   * put state in app[]? would have to pass app around more
-  * include state in websocket data instead of generic 'logs updated'
+  * include state in websocket data instead of generic notification
   * ui switch for message channel display
   * 'gpio' package, change 'entry' to 'output'
   * increasing timeout for bad pin or card attempts
@@ -19,9 +19,6 @@
   * users page
   * ping websocket periodically, power loss still shows connected
   * way to delete events
-  * remove some columns from events table if not using them, and change 'level' to 'channel'
-  * rename table from 'logs' to 'events'
-  * include a default user
 
 ## Ideas
 

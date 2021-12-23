@@ -81,11 +81,8 @@ Response 200
     {
         "id": 1,
         "time": "2021-03-06T18:32:19.961Z",
-        "logger": "MyLoggerName",
-        "level": "DEBUG",
-        "message": "User 2 created",
-        "file": "/vagrant/code/users.py",
-        "line": 45
+        "channel": "DEBUG",
+        "message": "User 2 created"
     }
 ]
 ```

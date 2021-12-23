@@ -28,8 +28,6 @@ class Loop():
 
     async def startup(self, app):
         await broadcast.event('DEBUG', 'Hardware loop startup')
-        # Event doesn't show up on a cold boot, which is exactly when you would want it
-        # hopefully related to aiohttp version
         app['hardware_loop'] = asyncio.create_task(self.run(app))
 
     async def shutdown(self, app):

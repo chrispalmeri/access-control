@@ -8,7 +8,7 @@ def setup(parent):
     app = parent
 
 async def event(channel, message):
-    conn.execute("""INSERT INTO logs (time, level, message)
+    conn.execute("""INSERT INTO events (time, channel, message)
         VALUES (?,?,?)""", (
             datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
             channel,
@@ -22,4 +22,4 @@ async def event(channel, message):
             # not currently happening, but you should check if it is not in process of closing
             # just in case of 'ConnectionResetError: Cannot write to closing transport'
             # see aiohttp docs for WebSocketResponse
-            await ws.send_str('Logs updated')
+            await ws.send_str('New events available')
