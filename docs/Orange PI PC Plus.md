@@ -1,38 +1,48 @@
 Using this board as testbench cause you have HDMI and can install a regular desktop
 
-# Browser
+Armbian bullsey is under other downloads and does not include desktop
 
-`apt-get purge chromium` and then install "firefox-esr".
-I tried like five browsers and it was the best on a low power device.
+run through initial config
+as soon as you get a terminal, don't do anything else, reboot
+cause there was an issue with no default terminal or something
+
+shutdown -r now
+sudo apt update
+sudo apt upgrade
+sudo armbian config
+
+replace "System > Install > Boot from eMMC - system on eMMC" with "System > Default" to install desktop
+
+> actually it does have eMMC also if you want
+
+then exit and `sudo dpkg --configure -a`
+cause it didn't finish all that for some reason and desktop would not work
+
+then go back to `sudo armbian config`
+You will have option for System > Desktop
+Enable Auto Login = No
+
+should drop you to desktop
+reboot to make sure everything is good, audio for example needed it
+
+rest is just preferences
+default applications, theme, notifications, desktop, purge some stuff
+
+<!--
+I tried like five browsers and firefox-esr was least laggy
+-->
 
 # Git
 
-Configure it, don't remember all that was required
-
-`~/.ssh/config`
-
-```
-Host github
-    HostName github.com
-    IdentityFile ~/.ssh/github
-```
-
-add to end of `~/.bashrc`
-
-```
-# add ssh key
-your_path=~/.ssh/github
-your_key=$(ssh-keygen -lf $your_path)
-# could probably silence the output of this
-ssh-add -l | grep -q "$your_key" || ssh-add $your_path
-```
+See github cheetsheet TODO: add link
 
 # Geany
 
 Just to remember what I did, obviously setup to your liking.
 
-`apt-get install geany-plugins`
+`sudo apt install geany geany-plugins`
 
+<!--
 make it dark theme:
 
 `~/.config/gtk-3.0/settings.ini`
@@ -41,6 +51,7 @@ make it dark theme:
 [Settings]
 gtk-application-prefer-dark-theme=true
 ```
+-->
 
 > Himbeere theme from https://www.geany.org/download/themes/
 
@@ -51,15 +62,43 @@ then View > Change Color Theme
 
 ## plugins
 
-Addons -> mark by double click, deselect single click
-
+  * Addons
+    * Preferences = (unselect) show available tasks, (select) mark by double click, deselect single click
   * Tree Browser
-  * Git Change Bar
-  * Overview
+  <!-- * Git Change Bar
+  * Overview -->
 
-```
-msgwin_status_visible=false
-msgwin_compiler_visible=false
-msgwin_messages_visible=false
-msgwin_scribble_visible=false
-```
+## Preferences
+
+unselect
+
+Interface > Interface
+
+Show symbols
+Show documents
+
+Interface > Toolbar
+
+Show toolbar
+
+Editor
+
+(select these)
+Features > Newline strips trailing spaces
+Indentation > Spaces
+Completions > disable all
+Display > Indentation Guides, and White space
+
+Files
+
+(select)
+strip trailing
+replace tabs
+
+Various
+
+intergace.msgwin_compiler_visible
+intergace.msgwin_messages_visible
+intergace.msgwin_scribble_visible
+intergace.msgwin_status_visible
+
