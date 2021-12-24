@@ -101,11 +101,17 @@ not implemented
 
 ### GET /database
 
-not implemented
+Response 200 `application/octet-stream` I think
 
 ### POST /database
 
-not implemented
+Request
+
+Should be `multipart/form-data` with a file form field called "file"
+
+Response 200
+
+Plain text for now
 
 ## reboot
 
