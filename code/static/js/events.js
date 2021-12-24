@@ -7,21 +7,16 @@ export default {
             return response.json();
         })
         .then(function(data) {
-            var html = '<table>';
+            var html = '<table><tr><th>Time</th><th>Channel</th><th>Message</th></tr>';
             for (var event of data) {
                 html += '<tr>';
-
-                /*for (var key in event) {
-                    html += '<td>' + event[key] + '</td>';
-                }*/
                 html += '<td>' + new Date(event.time).toLocaleString() + '</td>';
                 html += '<td>' + event.channel + '</td>';
                 html += '<td>' + event.message + '</td>';
-
                 html += '</tr>';
             }
             html += '</table>';
-            document.getElementById('api_data').innerHTML = html;
+            document.getElementById('event_list').innerHTML = html;
         });
     }
 }

@@ -8,8 +8,11 @@
         <link rel="stylesheet" href="css/default.css" />
     </head>
     <body>
-        <p id="ws_data">Disconnected</p>
-        <p id="api_data"></p>
+        <div class="card">
+            <h2>Events</h2>
+            <p id="ws_data">Disconnected</p>
+            <p id="event_list"></p>
+        </div>
 
         <!--
         <h3>Has</h3>
@@ -35,8 +38,18 @@
             nginx friendly directory structure?
         -->
 
-        <p><button id="backup">Database Backup</button></p>
-        <p><button id="restore">Database Restore</button></p>
+        <div class="card">
+            <h2>Users</h2>
+            <p id="user_list"></p>
+        </div>
+
+        <div class="card">
+            <h2>Database</h2>
+            <p>
+                <button id="backup">Backup</button>
+                <button id="restore">Restore</button>
+            </p>
+        </div>
 
         <script type="module" src="js/main.js"></script>
     </body>

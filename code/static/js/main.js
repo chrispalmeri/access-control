@@ -1,6 +1,7 @@
 // main.js
 
 import events from './events.js';
+import users from './users.js';
 import database from './database.js';
 
 // Create WebSocket connection.
@@ -28,3 +29,7 @@ socket.addEventListener('close', function (event) {
 
 document.getElementById('backup').addEventListener('click', database.backup)
 document.getElementById('restore').addEventListener('click', database.restore)
+
+window.addEventListener('load', function() {
+    users.get();
+});
