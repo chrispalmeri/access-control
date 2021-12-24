@@ -27,6 +27,11 @@
   * use 3.3 from board instead of 5v divider on contacts
   * transistor or resistor arrays
 
+Would it be possible to go to doorctl.com
+and have it connect websockets to any devices on local network?
+and somehow sign in to all of them
+that would be super cool
+
 ## Notes
 
   * 22 guage wire https://4rcustomswire.com/products/22-gauge-txl-wire-6-solid-colors-each-10-foot

@@ -17,6 +17,7 @@ if config.chip:
     relay.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
     led.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
     buzzer.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+    # there is no PWM in libgpiod, so no fancy buzzer sounds
 
 unlocked = False # move to state
 unlockTime = 0
@@ -31,6 +32,8 @@ def allow():
     unlockTime = time.time()
 
 def deny():
+    # buzzer
+    # and then buzzerTime state so you can turn it off
     pass
 
 async def secure():
