@@ -1,10 +1,24 @@
 from aiohttp import web
-
 from config import conn
 
 class view(web.View):
     async def get(self):
+        # add pages or record count to response?
+
         # you need to make a UI switch for this
-        #rows = conn.execute('SELECT * FROM events WHERE channel != ? ORDER BY time DESC LIMIT 20', ('DEBUG',)).fetchall()
-        rows = conn.execute('SELECT * FROM events ORDER BY time DESC LIMIT 20').fetchall()
+        # can you make some kind of 'all' option?
+        channels = self.request.query.getall('channel', ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
+        limit = self.request.query.get('limit', '10')
+        offset = self.request.query.get('offset', '0')
+
+        # becomes '?, ?, ?'
+        placeholders = ', '.join('?' for unused in channels)
+        query = 'SELECT * FROM events WHERE channel IN (' + placeholders + ') ORDER BY time DESC LIMIT ? OFFSET ?'
+
+        params = []
+        params.extend(channels)
+        params.append(limit)
+        params.append(offset)
+
+        rows = conn.execute(query, tuple(params)).fetchall()
         return web.json_response([dict(x) for x in rows])

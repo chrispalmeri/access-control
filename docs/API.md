@@ -74,6 +74,10 @@ Response 204
 
 ### GET /events
 
+Request
+
+example `/api/events?channel=DEBUG&channel=INFO&limit=10&offset=0`
+
 Response 200
 
 ```json
