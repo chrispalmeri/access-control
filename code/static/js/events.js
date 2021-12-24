@@ -8,15 +8,15 @@ export default {
         })
         .then(function(data) {
             var html = '<table>';
-            for (var log of data) {
+            for (var event of data) {
                 html += '<tr>';
 
-                /*for (var key in log) {
-                    html += '<td>' + log[key] + '</td>';
+                /*for (var key in event) {
+                    html += '<td>' + event[key] + '</td>';
                 }*/
-                html += '<td>' + new Date(log.time).toLocaleString() + '</td>';
-                html += '<td>' + log.level + '</td>';
-                html += '<td>' + log.message + '</td>';
+                html += '<td>' + new Date(event.time).toLocaleString() + '</td>';
+                html += '<td>' + event.channel + '</td>';
+                html += '<td>' + event.message + '</td>';
 
                 html += '</tr>';
             }

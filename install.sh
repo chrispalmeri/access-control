@@ -39,15 +39,17 @@ CREATE TABLE IF NOT EXISTS users (
     card INTEGER,
     facility INTEGER
 );
-CREATE TABLE IF NOT EXISTS logs (
+
+INSERT INTO users (name, pin)
+SELECT 'Admin', '1234'
+WHERE NOT EXISTS (SELECT * FROM users);
+
+CREATE TABLE IF NOT EXISTS events (
     id INTEGER PRIMARY KEY,
     time TEXT,
-    logger TEXT,
-    level TEXT,
-    message TEXT,
-    file TEXT,
-    line INTEGER
-)
+    channel TEXT,
+    message TEXT
+);
 EOF
 
 # add a group for gpio access

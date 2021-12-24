@@ -7,6 +7,7 @@ import config
 import api.users
 import api.events
 import websocket
+import broadcast
 
 from loop import Loop
 loop = Loop()
@@ -19,6 +20,8 @@ async def root_handler(request):
 
 app = web.Application()
 app['websockets'] = set()
+
+broadcast.setup(app)
 
 # add trailing slash seperatley if you want it
 app.add_routes([
@@ -37,19 +40,8 @@ app.on_shutdown.append(websocket.shutdown)
 if config.chip:
     app.on_startup.append(loop.startup)
     app.on_shutdown.append(loop.shutdown)
-
-# logger (MyLoggerName) does not emit to console initially
-# but once you have used logging (root) then it starts
-#import logging
-#logging.warning('test')
-#config.logger.debug('startup')
-# INTERESTING that might be a transient thing? SQLite saves loop startup log that is missing in journalctl
-# oh no, still an issue, nothing from customer logger goes to journalctl unless you use a defautl logger first
-# switched websocket connection from defautl logger and see issue again
-# although I don't really care if SQL has the logs?
-
-# I think you didn't get a SQL startup log on a cold boot though
-# test that
+else:
+    app.on_startup.append(loop.skipped)
 
 if len(sys.argv) > 1:
     web.run_app(app, host='localhost', port=8080) # command line

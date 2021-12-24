@@ -4,11 +4,14 @@
 
   * add connection diagram or image
   * check that diptrace setup is repeatable
+  * brief directions, plus link to Mouser project
 
 ## Code changes
 
-  * would be cool to ping websocket from within the logger directly, and clean up manual code
-  * get rid of more print statements
+  * put state in app[]? would have to pass app around more
+  * include state in websocket data instead of generic notification
+  * ui switch for message channel display
+  * 'gpio' package, change 'entry' to 'output'
   * increasing timeout for bad pin or card attempts
   * reboot command
   * beep or something on startup, so you know when it is ready after a power cycle
@@ -20,8 +23,14 @@
 ## Ideas
 
   * make a simple and an advanced version, neo is cheaper than neo core
+  * slim project box instead of in-wall
   * use 3.3 from board instead of 5v divider on contacts
   * transistor or resistor arrays
+
+Would it be possible to go to doorctl.com
+and have it connect websockets to any devices on local network?
+and somehow sign in to all of them
+that would be super cool
 
 ## Notes
 

@@ -2,6 +2,7 @@ import time
 import gpiod
 import config
 import state
+import broadcast
 
 # check first cause vagrant (this is in three files)
 # even though in that case the loop would never run
@@ -16,6 +17,7 @@ if config.chip:
     relay.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
     led.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
     buzzer.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+    # there is no PWM in libgpiod, so no fancy buzzer sounds
 
 unlocked = False # move to state
 unlockTime = 0
@@ -30,12 +32,13 @@ def allow():
     unlockTime = time.time()
 
 def deny():
+    # buzzer
+    # and then buzzerTime state so you can turn it off
     pass
 
-def secure():
+async def secure():
     global unlocked
     global unlockTime
-    updates = False
 
     if unlocked:
         now = time.time()
@@ -45,7 +48,5 @@ def secure():
             lock.set_value(0)
             led.set_value(0)
             unlocked = False
-            config.logger.info('Door secured')
-            updates = True
+            await broadcast.event('INFO', 'Door secured')
 
-    return updates

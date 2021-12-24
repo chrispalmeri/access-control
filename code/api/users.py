@@ -1,6 +1,6 @@
 from aiohttp import web
-
-from config import conn, logger
+from config import conn
+import broadcast
 
 # should try catch the json parsing
 # has no type checking of json values
@@ -44,12 +44,8 @@ class view(web.View):
                 VALUES ( :name, :pin, :card, :facility )""", temp).lastrowid
             conn.commit()
 
-            # Log it
-            logger.debug(f'User {userid} created')
-
-            # Ping websockets about log update
-            for ws in self.request.app['websockets']:
-                await ws.send_str('Logs updated')
+            # Broadcast it
+            await broadcast.event('DEBUG', f'User {userid} created')
 
             return web.json_response({'id': userid, **temp})
         except Exception as e:
