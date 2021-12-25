@@ -147,6 +147,8 @@ There will be no GPIO locally, so none of that stuff will do anything.
 
 `cd access-control`, `git fetch` then `git status`
 
-If there are updates `git pull`. Maybe should `sudo ./install.sh` again?
+If there are updates `git pull`.
+
+Maybe should `sudo ./install.sh` again? Might stop service first, delete database if you want to see that created, ignore reboot message after install.
 
 `sudo systemctl restart doorctl`

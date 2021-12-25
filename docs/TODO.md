@@ -8,17 +8,32 @@
 
 ## Code changes
 
+  * add/edit/delete users
+  * ui switch for message channel display
+  * add database restored event log
+  * refactor events (differentiate specific status from operational event)
+    * entry made, door propped, door forced - independent of door open/close
+    * lock unlocked/locked - independent of user validated
+    * led on, led off
+    * buzzer
+    * login/logout
+    * http?
+  * if it gets laggy then edit webhook to send event - so web does not need to hit api every time
+  * rename event channels like physicalAccess,remoteAccess,serverStatus,hardwareStatus,humanResources,codeDebug
+  * user export/import csv
   * put state in app[]? would have to pass app around more
   * include state in websocket data instead of generic notification
-  * ui switch for message channel display
   * 'gpio' package, change 'entry' to 'output'
   * increasing timeout for bad pin or card attempts
   * reboot command
   * beep or something on startup, so you know when it is ready after a power cycle
   * add control buttons on homepage, would need api first
-  * users page
   * ping websocket periodically, power loss still shows connected
   * way to delete events
+  * smarter install/update script depending on what changed
+  * split docs/make consistent for each windows dev, orange pi stage, nano pi prod
+  * add git cheatsheet to various-scripts repo
+  * websocket connects/disconnects when firefox scrapes a page preview - auth would stop that
 
 ## Ideas
 

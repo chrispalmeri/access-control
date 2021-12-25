@@ -102,3 +102,14 @@ intergace.msgwin_messages_visible
 intergace.msgwin_scribble_visible
 intergace.msgwin_status_visible
 
+# Install
+
+clone the repo in home directory
+
+run the installer
+
+open localhost, open code in geany
+
+after making changes ``sudo systemctl restart doorctl`
+
+`hostname -I` to get ip if you want to hit website or api from another local machine
