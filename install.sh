@@ -9,6 +9,7 @@ fi
 # Update and install software
 apt-get update
 apt-get install -y gpiod python3-libgpiod python3-aiohttp sqlite3
+# gpiod was already newest version btw on fresh install
 
 # variables
 dir=$(cd $(dirname $0); pwd)

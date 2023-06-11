@@ -52,37 +52,34 @@ PG7  | 10       | 199      | IN   | doorbell
 
 # Software
 
-## OS setup
+## Preparation
 
 Download [Armbian][5] Bullseye CLI image (get the latest archive version),
 use [Etcher][6] to flash the image onto your [SD card][7].
 
-Boot the hardware from the SD card.
+Install the SD card and power up the board.
 
   [5]: https://www.armbian.com/nanopi-neo/
   [6]: https://etcher.balena.io/
   [7]: https://www.westerndigital.com/products/memory-cards/sandisk-ultra-uhs-i-microsd#SDSQUA4-032G-GN6MA
 
-## Initial config
+### First boot
 
 Use [Windows Terminal][8] to `ssh root@nanopineo` and login with password `1234`.
 
-* enter new password twice
+* enter new root password twice
 * pick `1` for "bash" terminal
-* enter new username
+* enter new username (e.g. `doorctl`)
 * password twice
 * display name
 * `Enter` to accept language based on detected timezone
 * pick `1` for "en_US.UTF-8"
-* `apt update`
-* `DEBIAN_FRONTEND=noninteractive apt upgrade -y`
-* `armbian-config`
-    * Personal > Timezone > set that
-    * Personal > Hostname > type a new hostname
+* Run `armbian-config`
+    * Personal > Hostname > type a new hostname (e.g. `doorctl-dev`) > Ok > Back
     * System > Install > Install/Update the bootloader on SD/eMMC > Yes
     * System > Install > Boot from eMMC - system on eMMC > Yes > ext4 > Power Off
 
-Unplug power, Remove SD card, and reconnect power.
+Unplug power, Remove SD card.
 
   [8]: https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701
 
@@ -93,9 +90,13 @@ and only need to do the hostname, bootloader, eMMC steps
 
 ## Installation
 
-Connect all your door hardware.
+Connect all your door hardware, reconnect power.
 
-Reconnect over SSH and use new username.
+Reconnect over SSH using new username and new hostname.
+
+`sudo apt update`
+
+`sudo apt upgrade`
 
 `git clone https://github.com/chrispalmeri/access-control.git`
 
