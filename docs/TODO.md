@@ -30,10 +30,15 @@
   * add control buttons on homepage, would need api first
   * ping websocket periodically, power loss still shows connected
   * way to delete events
+  * websocket connects/disconnects when firefox scrapes a page preview - auth would stop that
+
+## Dev setup
+
+  * remove vagrant
+  * log ip address
   * smarter install/update script depending on what changed
   * split docs/make consistent for each windows dev, orange pi stage, nano pi prod
   * add git cheatsheet to various-scripts repo
-  * websocket connects/disconnects when firefox scrapes a page preview - auth would stop that
 
 ## Ideas
 
@@ -46,8 +51,3 @@ Would it be possible to go to doorctl.com
 and have it connect websockets to any devices on local network?
 and somehow sign in to all of them
 that would be super cool
-
-## Notes
-
-  * 22 guage wire https://4rcustomswire.com/products/22-gauge-txl-wire-6-solid-colors-each-10-foot
-  * HES 5000 LBM https://www.bsasi.com/hes-5000-lbm

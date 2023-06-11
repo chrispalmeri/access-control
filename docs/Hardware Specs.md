@@ -66,3 +66,19 @@ were all on `gpiochip0` in my limited experience. For example:
   * Board is not powering, resistor divider is,
     and contact closure just sinks to ground
   * Normal alarm contacts are electrically NO, plus magnet, for a NC alarm loop
+
+## Power
+
+Wired, with battery backup:
+
+  * Mean Well GST25A12-P1J - 12V 25W GST Series Desktop Adaptor Power Supply
+  * https://www.aliexpress.us item "12V2A 22.2W UPS Uninterrupted Backup Power Supply Mini Battery For Camera Router"
+
+POE:
+
+  * https://www.amazon.com/dp/B08HS4NT13 Gigabit PoE Splitter 12V 2A Output 802.3af/at 5.5x2.1mm DC Plug PS5712TG
+
+## Misc
+
+  * 22 guage wire https://4rcustomswire.com/products/22-gauge-txl-wire-6-solid-colors-each-10-foot
+  * HES 5000 LBM https://www.bsasi.com/hes-5000-lbm
