@@ -63,7 +63,7 @@ Install the SD card and power up the board.
   [6]: https://etcher.balena.io/
   [7]: https://www.westerndigital.com/products/memory-cards/sandisk-ultra-uhs-i-microsd#SDSQUA4-032G-GN6MA
 
-### First boot
+## First boot
 
 Use [Windows Terminal][8] to `ssh root@nanopineo` and login with password `1234`.
 
@@ -98,6 +98,10 @@ Reconnect over SSH using new username and new hostname.
 
 `sudo apt upgrade`
 
+### Option 1: On device
+
+Over SSH connection:
+
 `git clone https://github.com/chrispalmeri/access-control.git`
 
 `cd access-control`
@@ -105,6 +109,31 @@ Reconnect over SSH using new username and new hostname.
 `sudo ./install.sh`
 
 `sudo shutdown -r now` to reboot
+
+### Option 2: Remote development
+
+On Windows host:
+
+`git clone git@github.com:chrispalmeri/access-control.git`
+
+Setup [VS Code][9] and open folder. Enable SFTP extension.
+
+Ctrl-Shift-P > SFTP: Upload Project
+
+Click SFTP icon in sidebar, then click icon on connection to open terminal
+
+`curl -s https://raw.githubusercontent.com/chrispalmeri/access-control/master/install.sh | sudo bash`
+
+`sudo shutdown -r now` to reboot
+
+<!--
+reboot maybe should be part of the script?
+printing IP address should also be part of the script
+-->
+
+Run `sudo systemctl restart doorctl` whenever you make changes
+
+  [9]: https://code.visualstudio.com/download
 
 ## Usage
 
