@@ -35,7 +35,7 @@ You need to plug a [NanoPi Neo Core][4] on to it
   [1]: https://diptrace.com/
   [2]: https://jlcpcb.com/
   [3]: https://tracespace.io/view/
-  [4]: https://www.friendlyarm.com/index.php?route=product/product&path=69&product_id=212
+  [4]: https://www.friendlyelec.com/index.php?route=product/product&path=69&product_id=212
 
 These are the gpio pins that are used:
 
@@ -54,18 +54,19 @@ PG7  | 10       | 199      | IN   | doorbell
 
 ## OS setup
 
-Download [Armbian][5] Bullseye image, use [Etcher][6] to flash the image onto your [SD card][7].
+Download [Armbian][5] Bullseye CLI image (get the latest archive version),
+use [Etcher][6] to flash the image onto your [SD card][7].
 
-Boot the hardware from the SD card, check your router to find the IP address, and use [Putty][8] to access it.
+Boot the hardware from the SD card.
 
   [5]: https://www.armbian.com/nanopi-neo/
-  [6]: https://www.balena.io/etcher/
-  [7]: https://shop.sandisk.com/store/sdiskus/en_US/pd/productID.5163153100/SanDisk-Ultra-microSDXC-UHSI-Card-32GB-A1C10U1
-  [8]: https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+  [6]: https://etcher.balena.io/
+  [7]: https://www.westerndigital.com/products/memory-cards/sandisk-ultra-uhs-i-microsd#SDSQUA4-032G-GN6MA
 
 ## Initial config
 
-* login as `root` with password `1234`
+Use [Windows Terminal][8] to `ssh root@nanopineo` and login with password `1234`.
+
 * enter new password twice
 * pick `1` for "bash" terminal
 * enter new username
@@ -83,6 +84,8 @@ Boot the hardware from the SD card, check your router to find the IP address, an
 
 Unplug power, Remove SD card, and reconnect power.
 
+  [8]: https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701
+
 <!--
 I think you could then reuse the SD card on additional boards
 and only need to do the hostname, bootloader, eMMC steps
@@ -92,7 +95,7 @@ and only need to do the hostname, bootloader, eMMC steps
 
 Connect all your door hardware.
 
-Reconnect with Putty and use new username.
+Reconnect over SSH and use new username.
 
 `git clone https://github.com/chrispalmeri/access-control.git`
 
