@@ -161,22 +161,9 @@ Restart process with `sudo systemctl restart doorctl`
 
 Check for errors with `sudo journalctl -u doorctl --since "5 minutes ago"`
 
-## Locally
-
-`vagrant up` then go to http://localhost:8080/
-
-Maybe `vagrant reload` but I don't think it is required
-
-<!--
-if you `vagrnat halt` and `vagrant up` you might have to `vagrant ssh` and `sudo systemctl restart doorctl`
-seems like the wait for vagrant shared folder to mount might not actually be waiting
--->
-
-If there are issues `vagrant ssh` then use troubleshooting commands above.
-
-There will be no GPIO locally, so none of that stuff will do anything.
-
 ## Update
+
+<!-- assuming on device, otherwise you can just SFTP: Upload Project again -->
 
 `cd access-control`, `git fetch` then `git status`
 

@@ -34,6 +34,3 @@ class Loop():
         await broadcast.event('DEBUG', 'Hardware loop shutdown')
         state.loopRunning = False
         await app['hardware_loop']
-
-    async def skipped(self, app):
-        await broadcast.event('DEBUG', 'No GPIO found')

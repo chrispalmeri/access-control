@@ -34,7 +34,7 @@
 
 ## Dev setup
 
-  * remove vagrant
+  * move `install.sh` into `code/` ?
   * log ip address
   * smarter install/update script depending on what changed
   * split docs/make consistent for each windows dev, orange pi stage, nano pi prod

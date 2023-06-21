@@ -16,11 +16,6 @@ dir=$(cd $(dirname $0); pwd)
 user=$(logname)
 app="doorctl"
 
-# allow vagrant to override the directory with argument
-if [ $1 ] && [ -d $1 ]; then
-  dir=$1
-fi
-
 # setup the database
 if [ ! -d $dir/db ]; then
     mkdir $dir/db
@@ -92,25 +87,5 @@ EOF
 
 systemctl enable $app
 
-if [ $1 ] && [ -d $1 ]; then
-    # you could make this uniform for vagrant/hardware
-    # reboot = vagrant reload after initial vagrant up
-    # and fix service start via additional "always" provisioner
-    # also additional provisioner could show the status message on reload/resume
-
-    # cause in vagrant shared folder is the holdup, causes service not to start
-    sed -i 's/WantedBy=multi-user.target/WantedBy=vagrant.mount/' /etc/systemd/system/$app.service
-    systemctl daemon-reload
-
-    # start it
-    systemctl start $app
-
-    if systemctl is-active $app &> /dev/null; then
-        echo -e ">>> $app service is \e[32mUP\e[0m"
-    else
-        echo -e ">>> $app service is \e[31mDOWN\e[0m"
-    fi
-else
-    # if running with real gpio you will need permissions and udev reloaded
-    echo "You should reboot now"
-fi
+# you will need permissions and udev reloaded for gpio
+echo "You should reboot now"

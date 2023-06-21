@@ -38,12 +38,8 @@ app.add_routes([
 # cleanup websockets so it doesn't take 60 sec to restart
 app.on_shutdown.append(websocket.shutdown)
 
-# avoid all the weigand stuff if no gpio, eg vagrant
-if config.chip:
-    app.on_startup.append(loop.startup)
-    app.on_shutdown.append(loop.shutdown)
-else:
-    app.on_startup.append(loop.skipped)
+app.on_startup.append(loop.startup)
+app.on_shutdown.append(loop.shutdown)
 
 if len(sys.argv) > 1:
     web.run_app(app, host='localhost', port=8080) # command line

@@ -2,14 +2,13 @@ import gpiod
 import config
 import state
 
-if config.chip:
-    d0 = config.chip.get_line(config.d0)
-    d1 = config.chip.get_line(config.d1)
+d0 = config.chip.get_line(config.d0)
+d1 = config.chip.get_line(config.d1)
 
-    lines = gpiod.LineBulk([d0, d1])
-    lines.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN) # prevent initial interrupt
-    lines.release()
-    lines.request(consumer=config.name, type=gpiod.LINE_REQ_EV_FALLING_EDGE)
+lines = gpiod.LineBulk([d0, d1])
+lines.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN) # prevent initial interrupt
+lines.release()
+lines.request(consumer=config.name, type=gpiod.LINE_REQ_EV_FALLING_EDGE)
 
 def get_events():
     """
