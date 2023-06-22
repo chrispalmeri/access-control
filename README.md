@@ -110,6 +110,9 @@ Over SSH connection:
 
 `sudo shutdown -r now` to reboot
 
+> I'll have to build releases on GitHub or something if using Svelte.
+> Otherwise you'll have to `npm install` and `npm build` on device.
+
 ### Option 2: Remote development
 
 On Windows host:

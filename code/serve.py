@@ -13,11 +13,14 @@ import broadcast
 from loop import Loop
 loop = Loop()
 
-# custom 404 page
+# custom 404 page (also should be consistent with svelte-spa-router 404 page)
 # https://aiohttp-demos.readthedocs.io/en/latest/tutorial.html#aiohttp-demos-polls-middlewares
+# https://stackoverflow.com/questions/60588736/how-to-redirect-404-into-another-template-with-aiohttp
 
 async def root_handler(request):
-    return web.FileResponse(path.dirname(__file__) + '/static/index.html')
+    return web.FileResponse(path.dirname(__file__) + '/www/index.html')
+async def api_handler(request):
+    return web.FileResponse(path.dirname(__file__) + '/www/api/index.html')
 
 app = web.Application()
 app['websockets'] = set()
@@ -31,8 +34,9 @@ app.add_routes([
     web.view('/api/events', api.events.view),
     web.view('/api/database', api.database.view),
     web.get('/ws', websocket.get),
+    web.get('/api', api_handler),
     web.get('/', root_handler),
-    web.static('/', path.dirname(__file__) + '/static') # needs to be last
+    web.static('/', path.dirname(__file__) + '/www') # needs to be last
 ])
 
 # cleanup websockets so it doesn't take 60 sec to restart

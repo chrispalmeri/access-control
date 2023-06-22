@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "satiromarra.code-sftp"
+        "satiromarra.code-sftp",
+        "svelte.svelte-vscode"
     ]
 }

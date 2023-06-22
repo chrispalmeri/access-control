@@ -8,9 +8,15 @@
 
 ## Code changes
 
-  * add/edit/delete users
-  * ui switch for message channel display
-  * add database restored event log
+you are not using svelte-spa-router for anything yet
+possibly rename `code` to `backend`, maybe even move `www` out?
+
+  * add/edit/delete users - modal
+  * move api docs from `docs` to `/api` component
+  * ui filters for event list (channel select)
+  * add database restored event log - at least show if restore completed, currently no feedback
+    * obviously refresh events afterward
+  * Authentication
   * refactor events (differentiate specific status from operational event)
     * entry made, door propped, door forced - independent of door open/close
     * lock unlocked/locked - independent of user validated
@@ -21,11 +27,13 @@
   * if it gets laggy then edit webhook to send event - so web does not need to hit api every time
   * rename event channels like physicalAccess,remoteAccess,serverStatus,hardwareStatus,humanResources,codeDebug
   * user export/import csv
+    * so, basically just break db backup/restore into two - users, and events - that's all that is is the db anyway
   * put state in app[]? would have to pass app around more
   * include state in websocket data instead of generic notification
   * 'gpio' package, change 'entry' to 'output'
   * increasing timeout for bad pin or card attempts
   * reboot command
+  * upgrade command
   * beep or something on startup, so you know when it is ready after a power cycle
   * add control buttons on homepage, would need api first
   * ping websocket periodically, power loss still shows connected
