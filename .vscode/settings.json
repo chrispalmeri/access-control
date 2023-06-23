@@ -2,5 +2,8 @@
     "files.eol": "\n",
     "files.insertFinalNewline": true,
     "editor.tabSize": 4,
-    "editor.insertSpaces": true
+    "editor.insertSpaces": true,
+    "svelte.plugin.svelte.compilerWarnings": {
+        "a11y-click-events-have-key-events": "ignore"
+    }
 }

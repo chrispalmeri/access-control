@@ -19,7 +19,14 @@ export default {
 		}
 	},
 	plugins: [
-		svelte(),
+		svelte({
+			onwarn: (warning, handler) => {
+				if (warning.code.startsWith('a11y-')) {
+					return;
+				}
+				handler(warning);
+			}
+		}),
 		resolve(),
 		css({
 			output: 'css/bundle.css'
