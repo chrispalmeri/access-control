@@ -37,7 +37,7 @@
             <td>{user.name}</td>
             <td>{user.pin || ''}</td>
             <td>{user.card || ''}</td>
-            <td><UserUpdate user={user} /> <UserDelete id={user.id} /></td>
+            <td><UserUpdate user={user} /> <UserDelete user={user} /></td>
         </tr>
         {/each}
     </table>

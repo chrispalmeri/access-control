@@ -2,46 +2,46 @@
     import TextInput from './TextInput.svelte';
     import NumberInput from './NumberInput.svelte';
 
-    export let user = {
-        id: null,
-        name: '',
-        pin: null,
-        card: null,
-        facility: null
-    };
+    export let user;
 
     let dialog;
+    let payload = {};
 
     function show() {
+        // this is so user is unchanged if you cancel
+        payload.name = user.name;
+        payload.pin = user.pin;
+        payload.card = user.card;
+        payload.facility = user.facility;
         dialog.showModal();
     }
 
     async function save() {
-        await put(user);
+        await put(payload);
         dialog.close();
 
         // need to refresh user list after
     }
 
     function cancel() {
-        // need to reset the entered values
-        // actually dunno if the input values being bound may be a problem
         dialog.close();
     }
 
+    // json replacer to not save empty strings
+    // binding input values has some flip-flop between '' and null
     async function put(body) {
-        const response = await fetch(`/api/users/${body.id}`, {
+        const response = await fetch(`/api/users/${user.id}`, {
             method: 'PUT',
-            body: JSON.stringify(body)
+            body: JSON.stringify(body, (k, v) => v == '' ? null : v)
         });
 
-        const data = await response.json();
-
-        if (response.ok) {
-            return data;
-        } else {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP Status Code ${response.status}`);
         }
+
+        // not catching json errors though
+        const data = await response.json();
+        return data;
     }
 </script>
 
@@ -50,10 +50,10 @@
 <dialog bind:this={dialog} on:click|self={cancel}>
     <div class="card">
         <h2>Edit user</h2>
-        <TextInput label='Name' bind:value={user.name} />
-        <NumberInput label='Pin' bind:value={user.pin} />
-        <NumberInput label='Card' bind:value={user.card} />
-        <NumberInput label='Facility' bind:value={user.facility} />
+        <TextInput label='Name' bind:value={payload.name} />
+        <NumberInput label='Pin' bind:value={payload.pin} />
+        <NumberInput label='Card' bind:value={payload.card} />
+        <NumberInput label='Facility' bind:value={payload.facility} />
         <p>
             <button on:click={save}>Save</button>
             <button on:click={cancel}>Cancel</button>

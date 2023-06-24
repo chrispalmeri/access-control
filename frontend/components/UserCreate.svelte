@@ -4,12 +4,7 @@
     import TextInput from './TextInput.svelte';
     import NumberInput from './NumberInput.svelte';
 
-    let user = {
-        name: '',
-        pin: null,
-        card: null,
-        facility: null
-    };
+    let payload = {};
 
     /*
     const myForm = [
@@ -26,34 +21,36 @@
     let dialog;
 
     function show() {
+        payload.name = null;
+        payload.pin = null;
+        payload.card = null;
+        payload.facility = null;
         dialog.showModal();
     }
 
     async function save() {
-        await post(user);
+        await post(payload);
         dialog.close();
 
         // need to refresh user list after
     }
 
     function cancel() {
-        // need to nuke entered values
         dialog.close();
     }
 
     async function post(body) {
         const response = await fetch('/api/users', {
             method: 'POST',
-            body: JSON.stringify(body)
+            body: JSON.stringify(body, (k, v) => v == '' ? null : v)
         });
 
-        const data = await response.json(); // will be request but with `id` added
-
-        if (response.ok) { // this is out of order
-            return data;
-        } else {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error(`HTTP Status Code ${response.status}`);
         }
+
+        const data = await response.json(); // will be request but with `id` added
+        return data;
     }
 </script>
 
@@ -62,10 +59,10 @@
 <dialog bind:this={dialog} on:click|self={cancel}>
     <div class="card">
         <h2>Add user</h2>
-        <TextInput label='Name' bind:value={user.name} />
-        <NumberInput label='Pin' bind:value={user.pin} />
-        <NumberInput label='Card' bind:value={user.card} />
-        <NumberInput label='Facility' bind:value={user.facility} />
+        <TextInput label='Name' bind:value={payload.name} />
+        <NumberInput label='Pin' bind:value={payload.pin} />
+        <NumberInput label='Card' bind:value={payload.card} />
+        <NumberInput label='Facility' bind:value={payload.facility} />
         <p>
             <button on:click={save}>Save</button>
             <button on:click={cancel}>Cancel</button>
