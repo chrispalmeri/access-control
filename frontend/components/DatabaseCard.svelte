@@ -31,7 +31,7 @@
 <div class="card">
     <h2>Database</h2>
     <p>
-        <button on:click={backup}>Backup</button>
-        <button on:click={restore}>Restore</button>
+        <button class="primary" on:click={backup}>Backup</button>
+        <button class="danger" on:click={restore}>Restore</button>
     </p>
 </div>

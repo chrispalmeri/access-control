@@ -23,7 +23,9 @@
 
 <div class="card">
     <h2>Users</h2>
-    <UserCreate />
+    <p>
+        <UserCreate />
+    </p>
     {#await api then users}
     <table>
         <tr>

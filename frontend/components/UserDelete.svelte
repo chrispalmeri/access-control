@@ -24,15 +24,15 @@
     }
 </script>
 
-<button on:click={show}>Delete</button>
+<button class="danger" on:click={show}>Delete</button>
 
 <dialog bind:this={dialog} on:click|self={cancel}>
     <div class="card">
         <h2>Delete user</h2>
         <p>Are you sure you want to delete {user.name}?</p>
-        <p>
-            <button on:click={del}>Delete</button>
+        <p class="buttons">
             <button on:click={cancel}>Cancel</button>
+            <button class="danger" on:click={del}>Delete</button>
         </p>
     </div>
 </dialog>

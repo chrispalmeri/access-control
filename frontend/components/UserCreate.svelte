@@ -54,7 +54,7 @@
     }
 </script>
 
-<button on:click={show}>Add</button>
+<button class="primary" on:click={show}>Add</button>
 
 <dialog bind:this={dialog} on:click|self={cancel}>
     <div class="card">
@@ -63,9 +63,9 @@
         <NumberInput label='Pin' bind:value={payload.pin} />
         <NumberInput label='Card' bind:value={payload.card} />
         <NumberInput label='Facility' bind:value={payload.facility} />
-        <p>
-            <button on:click={save}>Save</button>
+        <p class="buttons">
             <button on:click={cancel}>Cancel</button>
+            <button class="primary" on:click={save}>Save</button>
         </p>
     </div>
 </dialog>
