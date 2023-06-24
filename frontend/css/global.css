@@ -13,22 +13,22 @@ body {
     border-radius: 4px;
 }
 h2 {
-  color: #15a9ae;
-  font-weight: 500;
-  margin: 16px 0;
-  font-size: 28px;
+    color: #15a9ae;
+    font-weight: 500;
+    margin: 16px 0;
+    font-size: 28px;
 }
 table {
     border-collapse: collapse;
     margin: 16px 0;
 }
 tr {
-  border-bottom: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
 }
 th {
-  color: #15a9ae;
-  font-weight: 500;
-  font-size: 18px;
+    color: #15a9ae;
+    font-weight: 500;
+    font-size: 18px;
 }
 td, th {
     padding: 8px 24px 8px 0;

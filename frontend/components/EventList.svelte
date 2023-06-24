@@ -30,7 +30,6 @@
         console.log('The connection has been closed');
         state = 'Disconnected'
     });
-
 </script>
 
 <div class="card">

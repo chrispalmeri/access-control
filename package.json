@@ -1,19 +1,19 @@
 {
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"watch": "rollup --config --watch",
-		"build": "rollup --config"
-	},
-	"devDependencies": {
-		"@rollup/plugin-node-resolve": "^15.1.0",
-		"rollup": "^3.25.1",
-		"rollup-plugin-css-only": "^4.3.0",
-		"rollup-plugin-delete": "^2.0.0",
-		"rollup-plugin-svelte": "^7.1.5"
-	},
-	"dependencies": {
-		"svelte": "^3.59.2",
-		"svelte-spa-router": "^3.3.0"
-	}
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "watch": "rollup --config --watch",
+        "build": "rollup --config"
+    },
+    "devDependencies": {
+        "@rollup/plugin-node-resolve": "^15.1.0",
+        "rollup": "^3.25.1",
+        "rollup-plugin-css-only": "^4.3.0",
+        "rollup-plugin-delete": "^2.0.0",
+        "rollup-plugin-svelte": "^7.1.5"
+    },
+    "dependencies": {
+        "svelte": "^3.59.2",
+        "svelte-spa-router": "^3.3.0"
+    }
 }

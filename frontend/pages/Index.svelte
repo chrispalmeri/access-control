@@ -23,7 +23,3 @@
 <UserList />
 
 <DatabaseCard />
-
-<style>
-    /* scoped css */
-</style>

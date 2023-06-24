@@ -2,7 +2,7 @@
 import Api from './pages/Api.svelte';
 
 const app = new Api({
-	target: document.body
+    target: document.body
 });
 
 export default app;
