@@ -154,7 +154,7 @@ I think it has the 60 sec websocket hang when stopping again
 just wait a minute and then it is good
 -->
 
-Swipe a card and check the events for the number. Then use Postman to add a user with `POST` to `/api/users`.
+Swipe a card and check the events for the number, then add it to a user.
 
 Should be good to go. Check that the hardware is all working correctly.
 

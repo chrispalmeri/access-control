@@ -48,3 +48,17 @@ button {
 button:focus {
     outline: 2px solid #59d2d7;
 }
+dialog {
+    background: transparent;
+    padding: 0; /* needed to detect click on backdrop */
+    border: none;
+}
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.3);
+}
+label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
