@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "satiromarra.code-sftp",
-        "svelte.svelte-vscode"
+        "svelte.svelte-vscode",
+        "humao.rest-client"
     ]
 }

@@ -1,0 +1,16 @@
+GET http://doorctl-dev/api/database
+
+# you should save the response body from this as `database.db` in this directory
+# if you want the restore (POST) call to work
+
+###
+
+POST http://doorctl-dev/api/database
+content-type: multipart/form-data; boundary=my_unique_boundary
+
+--my_unique_boundary
+Content-Disposition: form-data; name="file"; filename="database.db"
+Content-Type: application/octet-stream
+
+< ./database.db
+--my_unique_boundary--

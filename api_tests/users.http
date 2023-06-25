@@ -1,0 +1,31 @@
+GET http://doorctl-dev/api/users
+
+###
+
+GET http://doorctl-dev/api/users/1
+
+###
+
+POST http://doorctl-dev/api/users
+
+{
+    "name": "First Last",
+    "pin": "0000",
+    "card": 23456,
+    "facility": 789
+}
+
+###
+
+PUT http://doorctl-dev/api/users/2
+
+{
+    "name": "First Last",
+    "pin": "0000",
+    "card": 23456,
+    "facility": 789
+}
+
+###
+
+DELETE http://doorctl-dev/api/users/2

@@ -17,6 +17,8 @@
         upload.setAttribute("type", "file");
         upload.addEventListener('change', function(e) {
             var file = e.target.files[0];
+            // apparently you can't manually change the content-type of the file part
+            // it will probably be application/octet-stream
             var formData = new FormData();
             formData.append('file', file);
             fetch('/api/database', {

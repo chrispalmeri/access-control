@@ -1,0 +1,5 @@
+GET http://doorctl-dev/api/events
+    ?channel=DEBUG
+    &channel=INFO
+    &channel=WARNING
+    &limit=15
