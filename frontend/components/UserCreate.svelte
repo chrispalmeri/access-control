@@ -3,6 +3,7 @@
 
     import TextInput from './TextInput.svelte';
     import NumberInput from './NumberInput.svelte';
+    import { users } from '../stores.js';
 
     let payload = {};
 
@@ -30,6 +31,7 @@
 
     async function save() {
         await post(payload);
+        users.refresh();
         dialog.close();
 
         // need to refresh user list after

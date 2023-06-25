@@ -2,19 +2,9 @@
     import UserCreate from './UserCreate.svelte';
     import UserUpdate from './UserUpdate.svelte';
     import UserDelete from './UserDelete.svelte';
+    import { users } from '../stores.js';
 
-    async function get() {
-        const response = await fetch('/api/users');
-        const data = await response.json();
-
-        if (response.ok && data.length > 0) {
-            return data;
-        } else {
-            throw new Error('No items to show');
-        }
-    }
-
-    let api = get();
+    users.refresh();
 
     // option
     //var pin = user.pin ? user.pin.replace(/./g, '*') : '';
@@ -26,7 +16,7 @@
     <p>
         <UserCreate />
     </p>
-    {#await api then users}
+    {#if $users.length > 0}
     <table>
         <tr>
             <th>Name</th>
@@ -34,7 +24,7 @@
             <th>Card</th>
             <th></th>
         </tr>
-        {#each users as user}
+        {#each $users as user (user.id)}
         <tr>
             <td>{user.name}</td>
             <td>{user.pin || ''}</td>
@@ -43,7 +33,7 @@
         </tr>
         {/each}
     </table>
-    {:catch error}
-    <p>{error.message}</p>
-    {/await}
+    {:else}
+    <p>No items to show</p>
+    {/if}
 </div>

@@ -1,6 +1,7 @@
 <script>
     import TextInput from './TextInput.svelte';
     import NumberInput from './NumberInput.svelte';
+    import { users } from '../stores.js';
 
     export let user;
 
@@ -18,6 +19,7 @@
 
     async function save() {
         await put(payload);
+        users.refresh();
         dialog.close();
 
         // need to refresh user list after

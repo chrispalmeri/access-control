@@ -1,4 +1,6 @@
 <script>
+    import { users } from '../stores.js';
+
     export let user;
 
     let dialog;
@@ -16,6 +18,7 @@
             throw new Error(`HTTP Status Code ${response.status}`);
         }
 
+        users.refresh();
         dialog.close();
     }
 
