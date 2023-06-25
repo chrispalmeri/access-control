@@ -9,9 +9,10 @@
 ## Code changes
 
 you are not using svelte-spa-router for anything yet
+DEBUG messages for user edited, user deleted
+not sure if $users in two places is ideal in UserList
 possibly rename `code` to `backend`, maybe even move `www` out?
 
-  * add/edit/delete users - modal
   * move api docs from `docs` to `/api` component
   * ui filters for event list (channel select)
   * add database restored event log - at least show if restore completed, currently no feedback

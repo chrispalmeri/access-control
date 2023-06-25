@@ -31,11 +31,11 @@
 
 <dialog bind:this={dialog} on:click|self={cancel}>
     <div class="card">
-        <h2>Delete user</h2>
+        <h2 class="danger">Delete user</h2>
         <p>Are you sure you want to delete {user.name}?</p>
         <p class="buttons">
-            <button on:click={cancel}>Cancel</button>
             <button class="danger" on:click={del}>Delete</button>
+            <button on:click={cancel}>Cancel</button>
         </p>
     </div>
 </dialog>

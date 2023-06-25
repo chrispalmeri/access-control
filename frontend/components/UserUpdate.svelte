@@ -52,13 +52,14 @@
 <dialog bind:this={dialog} on:click|self={cancel}>
     <div class="card">
         <h2>Edit user</h2>
+        <NumberInput label='Id' value={user.id} disabled={true} />
         <TextInput label='Name' bind:value={payload.name} />
         <NumberInput label='Pin' bind:value={payload.pin} />
         <NumberInput label='Card' bind:value={payload.card} />
         <NumberInput label='Facility' bind:value={payload.facility} />
         <p class="buttons">
-            <button on:click={cancel}>Cancel</button>
             <button class="primary" on:click={save}>Save</button>
+            <button on:click={cancel}>Cancel</button>
         </p>
     </div>
 </dialog>

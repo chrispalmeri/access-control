@@ -1,6 +1,7 @@
 <script>
     export let label;
     export let value;
+    export let disabled = false;
 
     // cause firefox lets you enter text in number inputs
     // all the caret position preservation is probably overkill
@@ -26,5 +27,5 @@
 </script>
 
 <p>
-    <label>{label} <input bind:value={value} on:input={clean} /></label>
+    <label>{label} <input bind:value={value} on:input={clean} {disabled}/></label>
 </p>

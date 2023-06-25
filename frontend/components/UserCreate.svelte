@@ -66,8 +66,8 @@
         <NumberInput label='Card' bind:value={payload.card} />
         <NumberInput label='Facility' bind:value={payload.facility} />
         <p class="buttons">
-            <button on:click={cancel}>Cancel</button>
             <button class="primary" on:click={save}>Save</button>
+            <button on:click={cancel}>Cancel</button>
         </p>
     </div>
 </dialog>

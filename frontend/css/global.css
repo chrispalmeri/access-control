@@ -22,6 +22,9 @@ h2 {
     margin: 16px 0;
     font-size: 28px;
 }
+h2.danger {
+    color: #bd555c;
+}
 table {
     border-collapse: collapse;
     margin: 16px 0;
@@ -37,6 +40,9 @@ th {
 td, th {
     padding: 8px 24px 8px 0;
     text-align: left;
+}
+td.end {
+    padding: 8px 0;
 }
 button, input {
     font-family: inherit;
@@ -62,6 +68,11 @@ button.danger {
     color: #ffffff;
     background-color: #bd555c;
 }
+td > button {
+    min-width: 64px;
+    padding: 4px 6px;
+    margin: -4px 0;
+}
 dialog {
     background: transparent;
     padding: 0; /* needed to detect click on backdrop */
@@ -76,6 +87,11 @@ label {
     align-items: center;
     gap: 16px;
 }
+.smallgap {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
 input {
     color: inherit;
     box-sizing: border-box;
@@ -83,6 +99,9 @@ input {
     background: #eaeaea;
     border: none;
     border-radius: 4px;
+}
+input:disabled {
+    color: #777777;
 }
 .buttons {
 	display: flex;

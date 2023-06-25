@@ -22,14 +22,14 @@
             <th>Name</th>
             <th>Pin</th>
             <th>Card</th>
-            <th></th>
+            <th>Actions</th>
         </tr>
         {#each $users as user (user.id)}
         <tr>
             <td>{user.name}</td>
             <td>{user.pin || ''}</td>
             <td>{user.card || ''}</td>
-            <td><UserUpdate user={user} /> <UserDelete user={user} /></td>
+            <td class="end smallgap"><UserUpdate user={user} /> <UserDelete user={user} /></td>
         </tr>
         {/each}
     </table>
