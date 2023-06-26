@@ -1,5 +1,5 @@
 from aiohttp import web
-from config import conn
+from db import conn
 
 class view(web.View):
     async def get(self):

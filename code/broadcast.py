@@ -1,5 +1,5 @@
 from datetime import datetime
-from config import conn
+from db import conn
 
 app = None
 

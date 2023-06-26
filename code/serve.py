@@ -3,7 +3,6 @@ from os import path
 from socket import socket
 from aiohttp import web
 
-import config
 import api.users
 import api.events
 import api.database

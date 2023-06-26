@@ -10,8 +10,14 @@
 
 you are not using svelte-spa-router for anything yet
 DEBUG messages for user edited, user deleted
+api endpoint to get last unknown card (from logs)
+`Connected` styling
+Software screenshot
 not sure if $users in two places is ideal in UserList
 possibly rename `code` to `backend`, maybe even move `www` out?
+
+users - create table like in broadcast
+cleanup install.sh
 
   * move api docs from `docs` to `/api` component
   * ui filters for event list (channel select)

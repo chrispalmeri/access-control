@@ -1,5 +1,5 @@
 from aiohttp import web
-from config import conn
+from db import conn
 import broadcast
 
 # should try catch the json parsing
