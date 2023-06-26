@@ -1,3 +1,4 @@
+from os import path
 import gpiod
 from configparser import ConfigParser
 
@@ -36,3 +37,5 @@ if parser['armbian-release']['BOARD'] == 'orangepipcplus':
     aux    = 14
     d0     = 3
     d1     = 6
+
+dbpath = path.normpath(path.dirname(__file__) + '/../db/database.db')

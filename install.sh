@@ -16,37 +16,11 @@ dir=$(cd $(dirname $0); pwd)
 user=$(logname)
 app="doorctl"
 
-# setup the database
+# setup the database directory
 if [ ! -d $dir/db ]; then
     mkdir $dir/db
     chown $user:$user $dir/db
 fi
-
-if [ ! -f $dir/db/database.db ]; then
-    touch $dir/db/database.db
-    chown $user:$user $dir/db/database.db
-fi
-
-sqlite3 $dir/db/database.db << EOF
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY,
-    name TEXT NOT NULL,
-    pin TEXT,
-    card INTEGER,
-    facility INTEGER
-);
-
-INSERT INTO users (name, pin)
-SELECT 'Admin', '1234'
-WHERE NOT EXISTS (SELECT * FROM users);
-
-CREATE TABLE IF NOT EXISTS events (
-    id INTEGER PRIMARY KEY,
-    time TEXT,
-    channel TEXT,
-    message TEXT
-);
-EOF
 
 # add a group for gpio access
 groupadd -f gpio

@@ -15,9 +15,9 @@ api endpoint to get last unknown card (from logs)
 Software screenshot
 not sure if $users in two places is ideal in UserList
 possibly rename `code` to `backend`, maybe even move `www` out?
+rollup-plugin-copy - keep www in frontend - probably rename static
 
-users - create table like in broadcast
-cleanup install.sh
+rename wiegand `auth.py`
 
   * move api docs from `docs` to `/api` component
   * ui filters for event list (channel select)

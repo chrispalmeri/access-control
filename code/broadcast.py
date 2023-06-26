@@ -7,7 +7,7 @@ def setup(parent):
     global app
     app = parent
 
-def saveMessage(channel, message):
+async def event(channel, message):
     conn.execute("""INSERT INTO events (time, channel, message)
         VALUES (?,?,?)""", (
             datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
@@ -15,27 +15,6 @@ def saveMessage(channel, message):
             message
         )
     )
-    conn.commit()
-
-def createTable():
-    conn.execute("""CREATE TABLE IF NOT EXISTS events (
-        id INTEGER PRIMARY KEY,
-        time TEXT,
-        channel TEXT,
-        message TEXT
-    )""")
-    saveMessage('DEBUG', 'Created events table')
-
-async def event(channel, message):
-    try:
-        saveMessage(channel, message)
-    except Exception as e:
-        # Exception > sqlite3.Error > sqlite3.DatabaseError > sqlite3.OperationalError
-        if str(e) == 'no such table: events':
-            createTable()
-            saveMessage(channel, message)
-        else:
-            raise e
 
     # Ping websockets about update
     if app:

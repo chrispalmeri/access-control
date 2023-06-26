@@ -42,7 +42,6 @@ class view(web.View):
         try:
             userid = conn.execute("""INSERT INTO users ( name, pin, card, facility )
                 VALUES ( :name, :pin, :card, :facility )""", temp).lastrowid
-            conn.commit()
 
             # Broadcast it
             await broadcast.event('DEBUG', f'User {userid} created')
@@ -92,7 +91,6 @@ class view(web.View):
 
         try:
             count = conn.execute('DELETE FROM users WHERE id = ?', (userid,)).rowcount
-            conn.commit()
             # you could return count if you wanted
         except Exception as e:
             return web.json_response({'error': str(e)}, status=500)
