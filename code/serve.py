@@ -6,6 +6,7 @@ from aiohttp import web
 import api.users
 import api.events
 import api.database
+import api.auth
 import websocket
 import broadcast
 
@@ -32,6 +33,7 @@ app.add_routes([
     web.view('/api/users/{id}', api.users.view),
     web.view('/api/events', api.events.view),
     web.view('/api/database', api.database.view),
+    web.view('/api/auth', api.auth.view),
     web.get('/ws', websocket.get),
     web.get('/api', api_handler),
     web.get('/', root_handler),

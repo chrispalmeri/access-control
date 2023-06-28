@@ -6,6 +6,7 @@ import wiegand
 import broadcast
 import state
 import auth
+import session
 
 class Loop():
     async def run(self, app):
@@ -21,6 +22,8 @@ class Loop():
 
             await sensors.check()
             await entry.secure()
+
+            session.gc()
 
             await asyncio.sleep(0)
         else:

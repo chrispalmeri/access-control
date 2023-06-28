@@ -33,6 +33,11 @@ class Db:
         SELECT 'Admin', '1234'
         WHERE NOT EXISTS (SELECT * FROM users)""")
 
+        self.conn.execute("""CREATE TABLE IF NOT EXISTS sessions (
+            uuid TEXT NOT NULL PRIMARY KEY,
+            access TEXT,
+            data TEXT
+        )""")
 
     def reopen(self):
         self.conn.close()
