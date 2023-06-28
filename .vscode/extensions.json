@@ -2,6 +2,7 @@
     "recommendations": [
         "satiromarra.code-sftp",
         "svelte.svelte-vscode",
-        "humao.rest-client"
+        "humao.rest-client",
+        "ms-python.pylint"
     ]
 }

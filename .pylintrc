@@ -1,0 +1,2 @@
+[IMPORTS]
+ignored-modules=gpiod,aiohttp
