@@ -1,4 +1,4 @@
-import wiegand
+from device import wiegand
 from db import conn
 import broadcast
 

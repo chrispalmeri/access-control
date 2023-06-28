@@ -1,11 +1,7 @@
 import asyncio
-import sensors
-import entry
-import reader
-import wiegand
+from device import auth, sensors, entry, reader, wiegand
 import broadcast
 import state
-import auth
 import session
 
 class Loop():

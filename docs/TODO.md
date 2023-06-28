@@ -14,8 +14,6 @@ api endpoint to get last unknown card (from logs)
 `Connected` styling
 not sure if $users in two places is ideal in UserList
 
-rename wiegand `auth.py`
-
   * move api docs from `docs` to `/api` component
   * ui filters for event list (channel select)
   * add database restored event log - at least show if restore completed, currently no feedback

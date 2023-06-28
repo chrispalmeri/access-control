@@ -1,4 +1,4 @@
-import numpad
+from device import numpad
 import broadcast
 
 class Card:
