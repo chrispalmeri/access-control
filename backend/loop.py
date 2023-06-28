@@ -9,6 +9,10 @@ import auth
 import session
 
 class Loop():
+    def __init__(self, app):
+        app.on_startup.append(self.startup)
+        app.on_shutdown.append(self.shutdown)
+
     async def run(self, app):
         while state.loopRunning:
             rawdata = reader.read()

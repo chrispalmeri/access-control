@@ -7,11 +7,10 @@ import api.users
 import api.events
 import api.database
 import api.auth
-import websocket
 import broadcast
 
 from loop import Loop
-loop = Loop()
+from websocket import WebSocket
 
 # custom 404 page (also should be consistent with svelte-spa-router 404 page)
 # https://aiohttp-demos.readthedocs.io/en/latest/tutorial.html#aiohttp-demos-polls-middlewares
@@ -23,7 +22,8 @@ async def api_handler(request):
     return web.FileResponse(path.dirname(__file__) + '/static/api/index.html')
 
 app = web.Application()
-app['websockets'] = set()
+loop = Loop(app)
+websocket = WebSocket(app)
 
 broadcast.setup(app)
 
@@ -39,12 +39,6 @@ app.add_routes([
     web.get('/', root_handler),
     web.static('/', path.dirname(__file__) + '/static') # needs to be last
 ])
-
-# cleanup websockets so it doesn't take 60 sec to restart
-app.on_shutdown.append(websocket.shutdown)
-
-app.on_startup.append(loop.startup)
-app.on_shutdown.append(loop.shutdown)
 
 if len(sys.argv) > 1:
     web.run_app(app, host='localhost', port=8080) # command line

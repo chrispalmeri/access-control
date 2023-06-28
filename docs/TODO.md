@@ -12,7 +12,6 @@ you are not using svelte-spa-router for anything yet
 DEBUG messages for user edited, user deleted
 api endpoint to get last unknown card (from logs)
 `Connected` styling
-Software screenshot
 not sure if $users in two places is ideal in UserList
 
 rename wiegand `auth.py`
