@@ -52,6 +52,8 @@ PG7  | 10       | 199      | IN   | doorbell
 
 # Software
 
+![screenshot](docs/webui-960.png)
+
 ## Preparation
 
 Download [Armbian][5] Bullseye CLI image (get the latest archive version),
