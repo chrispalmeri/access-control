@@ -2,6 +2,7 @@ import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import css from 'rollup-plugin-css-only';
 import del from 'rollup-plugin-delete';
+import { copy } from '@web/rollup-plugin-copy';
 
 export default {
     input: [
@@ -33,6 +34,11 @@ export default {
         }),
         del({
             targets: ['code/www/css', 'code/www/js']
+        }),
+        copy({
+            patterns: '**/*',
+            rootDir: './frontend',
+            exclude: '**/*.{js,css,svelte}'
         })
     ]
 };
