@@ -18,9 +18,9 @@ loop = Loop()
 # https://stackoverflow.com/questions/60588736/how-to-redirect-404-into-another-template-with-aiohttp
 
 async def root_handler(request):
-    return web.FileResponse(path.dirname(__file__) + '/www/index.html')
+    return web.FileResponse(path.dirname(__file__) + '/static/index.html')
 async def api_handler(request):
-    return web.FileResponse(path.dirname(__file__) + '/www/api/index.html')
+    return web.FileResponse(path.dirname(__file__) + '/static/api/index.html')
 
 app = web.Application()
 app['websockets'] = set()
@@ -37,7 +37,7 @@ app.add_routes([
     web.get('/ws', websocket.get),
     web.get('/api', api_handler),
     web.get('/', root_handler),
-    web.static('/', path.dirname(__file__) + '/www') # needs to be last
+    web.static('/', path.dirname(__file__) + '/static') # needs to be last
 ])
 
 # cleanup websockets so it doesn't take 60 sec to restart

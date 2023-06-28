@@ -14,8 +14,7 @@ api endpoint to get last unknown card (from logs)
 `Connected` styling
 Software screenshot
 not sure if $users in two places is ideal in UserList
-possibly rename `code` to `backend`, maybe even move `www` out?
-rollup-plugin-copy - keep www in frontend - probably rename static
+possibly rename `code` to `backend`
 
 rename wiegand `auth.py`
 

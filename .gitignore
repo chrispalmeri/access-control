@@ -6,4 +6,4 @@ __pycache__/
 db/
 .env
 node_modules/
-**/www/
+code/static/

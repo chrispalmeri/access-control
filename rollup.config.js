@@ -10,7 +10,7 @@ export default {
         'frontend/api.js'
     ],
     output: {
-        dir: 'code/www',
+        dir: 'code/static',
         format: 'es',
         entryFileNames: 'js/[name].js',
         chunkFileNames: 'js/[name].js',
@@ -33,12 +33,11 @@ export default {
             output: 'css/bundle.css'
         }),
         del({
-            targets: ['code/www/css', 'code/www/js']
+            targets: ['code/static/css', 'code/static/js']
         }),
         copy({
             patterns: '**/*',
-            rootDir: './frontend',
-            exclude: '**/*.{js,css,svelte}'
+            rootDir: './frontend/static'
         })
     ]
 };
