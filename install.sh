@@ -52,7 +52,7 @@ Requires=$app.socket
 
 [Service]
 User=$user
-ExecStart=/usr/bin/python3 $dir/code/serve.py
+ExecStart=/usr/bin/python3 $dir/backend/serve.py
 Restart=always
 
 [Install]

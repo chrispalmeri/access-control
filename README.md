@@ -145,7 +145,7 @@ Navigate to IP address in browser.
 <!--
 If events shows wrong contact status and wiegand readding errors
 
-remote in `nano access-control/code/config.py`
+remote in `nano access-control/backend/config.py`
 change pin numbers to correct ones for your board
 Ctrl+S, Ctrl+X
 `sudo systemctl restart doorctl`

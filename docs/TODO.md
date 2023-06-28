@@ -14,7 +14,6 @@ api endpoint to get last unknown card (from logs)
 `Connected` styling
 Software screenshot
 not sure if $users in two places is ideal in UserList
-possibly rename `code` to `backend`
 
 rename wiegand `auth.py`
 
@@ -48,7 +47,7 @@ rename wiegand `auth.py`
 
 ## Dev setup
 
-  * move `install.sh` into `code/` ?
+  * move `install.sh` into `backend/` ?
   * log ip address
   * smarter install/update script depending on what changed
   * split docs/make consistent for each windows dev, orange pi stage, nano pi prod
