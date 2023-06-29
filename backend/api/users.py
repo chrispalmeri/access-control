@@ -6,7 +6,7 @@ import broadcast
 # has no type checking of json values
 # would seperate views for /users and /users/{id} be better
 
-class view(web.View):
+class View(web.View):
     """For /users and /users/{id} routes"""
 
     async def get(self):
@@ -36,7 +36,7 @@ class view(web.View):
         temp = {'name': None, 'pin': None, 'card': None, 'facility': None}
         temp.update((key, value) for key, value in json.items() if key in temp.keys())
 
-        if temp.get('name') == None:
+        if temp.get('name') is None:
             raise web.HTTPUnprocessableEntity() #422
 
         try:
@@ -47,8 +47,8 @@ class view(web.View):
             await broadcast.event('DEBUG', f'User {userid} created')
 
             return web.json_response({'id': userid, **temp})
-        except Exception as e:
-            return web.json_response({'error': str(e)}, status=500)
+        except Exception as err:
+            return web.json_response({'error': str(err)}, status=500)
 
     async def put(self):
         """btw you have no type checking, but it's fine
@@ -81,8 +81,8 @@ class view(web.View):
                 WHERE id = :id""", temp).rowcount
             # not checking count before returning, but you did already do a select
             return web.json_response(temp)
-        except Exception as e:
-            return web.json_response({'error': str(e)}, status=500)
+        except Exception as err:
+            return web.json_response({'error': str(err)}, status=500)
 
     async def delete(self):
         userid = self.request.match_info.get('id', None)
@@ -92,7 +92,7 @@ class view(web.View):
         try:
             count = conn.execute('DELETE FROM users WHERE id = ?', (userid,)).rowcount
             # you could return count if you wanted
-        except Exception as e:
-            return web.json_response({'error': str(e)}, status=500)
+        except Exception as err:
+            return web.json_response({'error': str(err)}, status=500)
 
         raise web.HTTPNoContent()

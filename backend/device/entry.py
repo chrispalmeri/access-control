@@ -4,15 +4,15 @@ import config
 import state
 import broadcast
 
-lock = config.chip.get_line(config.lock)
-relay = config.chip.get_line(config.relay)
-led = config.chip.get_line(config.led)
-buzzer = config.chip.get_line(config.buzzer)
+lock = config.CHIP.get_line(config.LOCK)
+relay = config.CHIP.get_line(config.RELAY)
+led = config.CHIP.get_line(config.LED)
+buzzer = config.CHIP.get_line(config.BUZZER)
 
-lock.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
-relay.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
-led.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
-buzzer.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+lock.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+relay.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+led.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+buzzer.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
 # there is no PWM in libgpiod, so no fancy buzzer sounds
 
 unlocked = False # move to state
@@ -45,4 +45,3 @@ async def secure():
             led.set_value(0)
             unlocked = False
             await broadcast.event('INFO', 'Door secured')
-

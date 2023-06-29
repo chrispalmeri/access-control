@@ -5,6 +5,7 @@ class Card:
     def __init__(self, number, facility):
         self.number = number # aka 'user code', 'unique id', 'card number'
         self.facility = facility
+
     def __str__(self):
         return f'Card: {self.number} Facility: {self.facility}'
 
@@ -29,37 +30,35 @@ async def parse(data):
     if length == 4:
         return numpad.press(data)
 
-    '''
-    facility code is not the same for same card, it is actually a bigger number
-    so I am gonna just truncate it
+    # facility code is not the same for same card, it is actually a bigger number
+    # so I am gonna just truncate it
 
-    example
-    26 bit:         1.01100011.1000.010101111001.0
-    34 bit: 0.0000100101100011.1000010101111001.1
+    # example
+    # 26 bit:         1.01100011.1000.010101111001.0
+    # 34 bit: 0.0000100101100011.1000010101111001.1
 
-    this could be specific to 13.56 MHz cards (may not really have facility, vs 125KHz)
-    sending as Wiegand, and 34 bit which is less standardized than 26 bit is
-    '''
+    # this could be specific to 13.56 MHz cards (may not really have facility, vs 125KHz)
+    # sending as Wiegand, and 34 bit which is less standardized than 26 bit is
 
     # FYI Wiegand has 4 bit, 8 bit, 24 bit, 26 bit, 32 bit and 34 bit formats
 
     if length == 34:
         # 34 bit
-        evenParity = data >> 33 & 1
-        evenHalf = data >> 17 & 65535
-        oddHalf = data >> 1 & 65535
-        oddParity = data & 1
+        even_parity = data >> 33 & 1
+        even_half = data >> 17 & 65535
+        odd_half = data >> 1 & 65535
+        odd_parity = data & 1
     else:
         # default 26 bit
         # just so they are  not undefined if something weird happens
-        evenParity = data >> 25 & 1
-        evenHalf = data >> 13 & 4095
-        oddHalf = data >> 1 & 4095
-        oddParity = data & 1
+        even_parity = data >> 25 & 1
+        even_half = data >> 13 & 4095
+        odd_half = data >> 1 & 4095
+        odd_parity = data & 1
 
     # if parity is valid, get the numbers
     # you should skip this somehow if it's neither 26 or 34 bit
-    if parity(evenHalf, 0) == evenParity and parity(oddHalf, 1) == oddParity:
+    if parity(even_half, 0) == even_parity and parity(odd_half, 1) == odd_parity:
         # 26 bit
         facility = data >> 17 & 255
         #34 bit, just keeping 26 code which will truncate it to match
@@ -68,6 +67,6 @@ async def parse(data):
 
         return Card(number, facility)
 
-    else:
-        await broadcast.event('WARNING', 'Wiegand reading error')
-        return None
+    # else:
+    await broadcast.event('WARNING', 'Wiegand reading error')
+    return None

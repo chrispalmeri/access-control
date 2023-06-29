@@ -47,17 +47,21 @@ class Db:
         try:
             res = self.conn.execute(query, params)
             self.conn.commit() # no-op if unneeded
-        except sqlite3.Error as e:
+        except sqlite3.Error as err:
             # Exception > sqlite3.Error > sqlite3.DatabaseError > sqlite3.OperationalError
-            if str(e).startswith(('no such table', 'attempt to write a readonly', 'Cannot operate on a closed')):
+            if str(err).startswith((
+                    'no such table',
+                    'attempt to write a readonly',
+                    'Cannot operate on a closed'
+                )):
                 self.reopen()
                 res = self.conn.execute(query, params)
                 self.conn.commit()
             else:
-                raise e
+                raise err
 
         return res
 
     # cleanup install.sh
 
-conn = Db(config.dbpath)
+conn = Db(config.DBPATH)

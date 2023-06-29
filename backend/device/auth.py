@@ -4,7 +4,8 @@ import broadcast
 
 async def verify(code):
     if isinstance(code, wiegand.Card):
-        row = conn.execute('SELECT * FROM users WHERE card = ? AND facility = ?', (code.number, code.facility)).fetchone()
+        row = conn.execute("""SELECT * FROM users
+            WHERE card = ? AND facility = ?""", (code.number, code.facility)).fetchone()
     elif isinstance(code, str):
         row = conn.execute('SELECT * FROM users WHERE pin = ?', (code,)).fetchone()
         # either Pin should also be an object with a str method like Card

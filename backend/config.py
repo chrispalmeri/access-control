@@ -1,41 +1,37 @@
 from os import path
 import gpiod
-from configparser import ConfigParser
+import utils
 
 try:
-    chip = gpiod.Chip('gpiochip0')
+    CHIP = gpiod.Chip('gpiochip0')
 except FileNotFoundError:
-    chip = None
+    CHIP = None
 
-name = 'doorctl'
+NAME = 'doorctl'
 
-parser = ConfigParser()
-with open('/etc/armbian-release') as raw_file:
-    # cause configparser requires ini sections
-    file_content = '[armbian-release]\n' + raw_file.read()
-    parser.read_string(file_content)
+armbian_release = utils.read_config_file('/etc/armbian-release')
 
 # These are NanoPi NEO Core pins
-if parser['armbian-release']['BOARD'] == 'nanopineo':
-    lock   = 1
-    relay  = 200
-    led    = 201
-    buzzer = 6
-    door   = 198
-    aux    = 199
-    d0     = 3
-    d1     = 203
+if armbian_release['BOARD'] == 'nanopineo':
+    LOCK   = 1
+    RELAY  = 200
+    LED    = 201
+    BUZZER = 6
+    DOOR   = 198
+    AUX    = 199
+    D0     = 3
+    D1     = 203
 
 # These are Orange PI PC+ pins
 # Used for development
-if parser['armbian-release']['BOARD'] == 'orangepipcplus':
-    lock   = 2
-    relay  = 68
-    led    = 71
-    buzzer = 110
-    door   = 13
-    aux    = 14
-    d0     = 3
-    d1     = 6
+if armbian_release['BOARD'] == 'orangepipcplus':
+    LOCK   = 2
+    RELAY  = 68
+    LED    = 71
+    BUZZER = 110
+    DOOR   = 13
+    AUX    = 14
+    D0     = 3
+    D1     = 6
 
-dbpath = path.normpath(path.dirname(__file__) + '/../db/database.db')
+DBPATH = path.normpath(path.dirname(__file__) + '/../db/database.db')

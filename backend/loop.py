@@ -26,8 +26,9 @@ class Loop():
             session.gc()
 
             await asyncio.sleep(0)
-        else:
-            await broadcast.event('DEBUG', 'Hardware loop gracefully stopped')
+
+        # else:
+        await broadcast.event('DEBUG', 'Hardware loop gracefully stopped')
 
     async def startup(self, app):
         await broadcast.event('DEBUG', 'Hardware loop startup')

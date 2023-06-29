@@ -7,10 +7,10 @@
 
 import uuid
 import json
-from datetime import datetime
-from db import conn
 from collections import UserDict
 import time
+from db import conn
+import utils
 
 # other columns to consider:
 # created_date
@@ -20,7 +20,7 @@ import time
 class Session(UserDict):
     def __init__(self, cookie):
         super().__init__()
-        self.access = datetime.utcnow().isoformat(timespec='milliseconds') + 'Z'
+        self.access = utils.iso_timestamp()
 
         if cookie:
             self.uuid = cookie

@@ -1,5 +1,5 @@
-from datetime import datetime
 from db import conn
+import utils
 
 app = None
 
@@ -9,12 +9,7 @@ def setup(parent):
 
 async def event(channel, message):
     conn.execute("""INSERT INTO events (time, channel, message)
-        VALUES (?,?,?)""", (
-            datetime.utcnow().isoformat(timespec='milliseconds') + 'Z',
-            channel,
-            message
-        )
-    )
+        VALUES (?, ?, ?)""", (utils.iso_timestamp(), channel, message))
 
     # Ping websockets about update
     if app:

@@ -1,7 +1,7 @@
 from aiohttp import web
 from db import conn
 
-class view(web.View):
+class View(web.View):
     async def get(self):
         # add pages or record count to response?
 

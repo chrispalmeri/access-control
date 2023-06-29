@@ -18,6 +18,7 @@ from websocket import WebSocket
 
 async def root_handler(request):
     return web.FileResponse(path.dirname(__file__) + '/static/index.html')
+
 async def api_handler(request):
     return web.FileResponse(path.dirname(__file__) + '/static/api/index.html')
 
@@ -29,11 +30,11 @@ broadcast.setup(app)
 
 # add trailing slash seperatley if you want it
 app.add_routes([
-    web.view('/api/users', api.users.view),
-    web.view('/api/users/{id}', api.users.view),
-    web.view('/api/events', api.events.view),
-    web.view('/api/database', api.database.view),
-    web.view('/api/auth', api.auth.view),
+    web.view('/api/users', api.users.View),
+    web.view('/api/users/{id}', api.users.View),
+    web.view('/api/events', api.events.View),
+    web.view('/api/database', api.database.View),
+    web.view('/api/auth', api.auth.View),
     web.get('/ws', websocket.get),
     web.get('/api', api_handler),
     web.get('/', root_handler),

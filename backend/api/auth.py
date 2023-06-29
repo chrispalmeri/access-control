@@ -1,7 +1,7 @@
 from aiohttp import web
 from session import Session
 
-class view(web.View):
+class View(web.View):
     """For /auth routes"""
 
     async def post(self):

@@ -1,11 +1,11 @@
 from aiohttp import web
 import config
 
-class view(web.View):
+class View(web.View):
     """For /database routes"""
 
     async def get(self):
-        resp = web.FileResponse(path=config.dbpath)
+        resp = web.FileResponse(path=config.DBPATH)
         resp.content_type = 'application/vnd.sqlite3'
         return resp
 
@@ -26,7 +26,7 @@ class view(web.View):
             return web.json_response({'error': 'not a sqlite file'}, status=400)
 
         # save it to filesystem
-        with open(config.dbpath, 'wb') as oldfile:
+        with open(config.DBPATH, 'wb') as oldfile:
             oldfile.write(newfile.read())
 
-        return web.json_response({'success': 'Restored from {}'.format(filename)})
+        return web.json_response({'success': f'Restored from {filename}'})

@@ -3,30 +3,21 @@ import config
 import state
 import broadcast
 
-door = config.chip.get_line(config.door)
-aux = config.chip.get_line(config.aux)
+door = config.CHIP.get_line(config.DOOR)
+aux = config.CHIP.get_line(config.AUX)
 
-door.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN)
-aux.request(consumer=config.name, type=gpiod.LINE_REQ_DIR_IN)
+door.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_IN)
+aux.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_IN)
 
 async def check():
-    # door check
-    if door.get_value() == 0:
-        doorTemp = True
-    else:
-        doorTemp = False
+    door_check = bool(door.get_value() == 0)
 
-    if state.doorClosed != doorTemp:
-        state.doorClosed = doorTemp
+    if state.doorClosed != door_check:
+        state.doorClosed = door_check
         await broadcast.event('INFO', 'Door closed' if state.doorClosed else 'Door opened')
 
-    # aux check
-    if aux.get_value() == 0:
-        auxTemp = True
-    else:
-        auxTemp = False
+    aux_check = bool(aux.get_value() == 0)
 
-    if state.auxClosed != auxTemp:
-        state.auxClosed = auxTemp
+    if state.auxClosed != aux_check:
+        state.auxClosed = aux_check
         await broadcast.event('INFO', 'Aux closed' if state.auxClosed else 'Aux opened')
-

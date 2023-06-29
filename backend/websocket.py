@@ -26,7 +26,8 @@ class WebSocket():
                 else:
                     await ws.send_str('Received: ' + msg.data)
             elif msg.type == WSMsgType.ERROR:
-                await broadcast.event('WARNING', 'Websocket connection closed with exception %s' % ws.exception())
+                await broadcast.event('WARNING',
+                    f'Websocket connection closed with exception {ws.exception()}')
 
         # actually not sure how it only comes to this block after close
         request.app['websockets'].remove(ws)
