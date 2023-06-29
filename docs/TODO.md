@@ -8,14 +8,16 @@
 
 ## Code changes
 
-you are not using svelte-spa-router for anything yet
-DEBUG messages for user edited, user deleted
-api endpoint to get last unknown card (from logs)
-`Connected` styling
+  * ui filters for event list (channel select)
+  * DEBUG messages for user edited, user deleted
+  * api endpoint to get last unknown card (from logs)
+  * "Connected" styling
+  * get rid of state.py and global vars if possible
+
+you are not using svelte-spa-router for anything yet  
 not sure if $users in two places is ideal in UserList
 
   * move api docs from `docs` to `/api` component
-  * ui filters for event list (channel select)
   * add database restored event log - at least show if restore completed, currently no feedback
     * obviously refresh events afterward
   * Authentication
@@ -61,3 +63,33 @@ Would it be possible to go to doorctl.com
 and have it connect websockets to any devices on local network?
 and somehow sign in to all of them
 that would be super cool
+
+---
+
+`broadcast.py` seems like it should be a class, for cleaner init,
+but then how do you reference it everywhere?
+
+aiohttp want you to do something like this in `serve.py`
+but your 'device' stuff is pretty separated from 'app'
+
+```py
+app['database'] = conn
+app['broadcaster'] = broadcast
+```
+
+---
+
+`return web.json_response({'error': '404: Not Found'}, status=404)` seems better than
+`raise web.HTTPNotFound()`
+
+but maybe need a try/catch middleware instead of changing it everywhere
+https://github.com/yuvalherziger/aiohttp-catcher
+
+I don't know if you can provide the "allowed methods" thing using `json_response`
+
+<!--
+also this doesn't work
+`raise web.HTTPBadRequest(body=None, content_type=None)`
+cause there is a bug where `body` cannot be a string (it's bytes, or maybe a full response object)
+and `content_type` doesn't affect default response either
+-->
