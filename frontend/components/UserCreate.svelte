@@ -5,7 +5,7 @@
     import NumberInput from './NumberInput.svelte';
     import { users } from '../stores.js';
 
-    let payload = {};
+    const payload = {};
 
     /*
     const myForm = [
@@ -44,7 +44,7 @@
     async function post(body) {
         const response = await fetch('/api/users', {
             method: 'POST',
-            body: JSON.stringify(body, (k, v) => v == '' ? null : v)
+            body: JSON.stringify(body, (k, v) => v === '' ? null : v)
         });
 
         if (!response.ok) {

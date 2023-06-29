@@ -16,7 +16,7 @@ export default {
         chunkFileNames: 'js/[name].js',
         manualChunks: {
             svelte: ['svelte', 'svelte/store'],
-            router: ['svelte-spa-router'],
+            router: ['svelte-spa-router']
         }
     },
     plugins: [

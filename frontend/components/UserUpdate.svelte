@@ -6,7 +6,7 @@
     export let user;
 
     let dialog;
-    let payload = {};
+    const payload = {};
 
     function show() {
         // this is so user is unchanged if you cancel
@@ -34,7 +34,7 @@
     async function put(body) {
         const response = await fetch(`/api/users/${user.id}`, {
             method: 'PUT',
-            body: JSON.stringify(body, (k, v) => v == '' ? null : v)
+            body: JSON.stringify(body, (k, v) => v === '' ? null : v)
         });
 
         if (!response.ok) {

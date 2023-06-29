@@ -7,8 +7,8 @@
     users.refresh();
 
     // option
-    //var pin = user.pin ? user.pin.replace(/./g, '*') : '';
-    //var card = user.card && user.facility ? user.card.replace(/./g, '*') : '';
+    // var pin = user.pin ? user.pin.replace(/./g, '*') : '';
+    // var card = user.card && user.facility ? user.card.replace(/./g, '*') : '';
 </script>
 
 <div class="card">

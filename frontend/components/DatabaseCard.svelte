@@ -3,23 +3,23 @@
 
     function backup() {
         fetch('/api/database')
-        .then(response => response.blob())
-        .then(function(myBlob) {
-            var link = document.createElement('a');
-            link.setAttribute('href', URL.createObjectURL(myBlob));
-            link.setAttribute('download', 'database.db');
-            link.click();
-        });
+            .then(response => response.blob())
+            .then(function (myBlob) {
+                const link = document.createElement('a');
+                link.setAttribute('href', URL.createObjectURL(myBlob));
+                link.setAttribute('download', 'database.db');
+                link.click();
+            });
     }
 
     function restore() {
-        var upload = document.createElement("input");
-        upload.setAttribute("type", "file");
-        upload.addEventListener('change', function(e) {
-            var file = e.target.files[0];
+        const upload = document.createElement('input');
+        upload.setAttribute('type', 'file');
+        upload.addEventListener('change', function (e) {
+            const file = e.target.files[0];
             // apparently you can't manually change the content-type of the file part
             // it will probably be application/octet-stream
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('file', file);
             fetch('/api/database', {
                 method: 'POST',

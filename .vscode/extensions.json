@@ -3,6 +3,7 @@
         "satiromarra.code-sftp",
         "svelte.svelte-vscode",
         "humao.rest-client",
-        "ms-python.pylint"
+        "ms-python.pylint",
+        "dbaeumer.vscode-eslint"
     ]
 }

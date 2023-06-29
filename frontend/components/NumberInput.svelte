@@ -6,10 +6,10 @@
     // cause firefox lets you enter text in number inputs
     // all the caret position preservation is probably overkill
     function clean(e) {
-        let input = e.target.value;
+        const input = e.target.value;
         let caret = e.target.selectionStart;
-        let cleaned = input.replace(/\D/g, '');
-        let diff = input.length - cleaned.length;
+        const cleaned = input.replace(/\D/g, '');
+        const diff = input.length - cleaned.length;
 
         value = cleaned;
 

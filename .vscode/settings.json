@@ -8,5 +8,9 @@
     },
     "python.analysis.diagnosticSeverityOverrides": {
         "reportMissingImports": "none"
-    }
+    },
+    "eslint.validate": [
+        "javascript",
+        "svelte"
+    ]
 }

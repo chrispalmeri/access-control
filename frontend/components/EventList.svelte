@@ -12,7 +12,7 @@
     const socket = new WebSocket('ws://' + location.host + '/ws');
 
     // Connection opened
-    socket.addEventListener('open', function (event) {
+    socket.addEventListener('open', function () {
         socket.send('Hello Server!');
     });
 
@@ -26,9 +26,9 @@
     });
 
     // Connection closed by server
-    socket.addEventListener('close', function (event) {
+    socket.addEventListener('close', function () {
         console.log('The connection has been closed');
-        state = 'Disconnected'
+        state = 'Disconnected';
     });
 </script>
 
