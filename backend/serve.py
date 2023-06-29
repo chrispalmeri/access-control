@@ -41,8 +41,8 @@ app.add_routes([
     web.static('/', path.dirname(__file__) + '/static') # needs to be last
 ])
 
-if len(sys.argv) > 1:
-    web.run_app(app, host='localhost', port=8080) # command line
+if sys.stdout.isatty():
+    web.run_app(app, host='0.0.0.0', port=8080) # command line
 else:
     web.run_app(app, sock=socket(fileno=3)) # systemd
 

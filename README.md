@@ -166,6 +166,17 @@ Restart process with `sudo systemctl restart doorctl`
 
 Check for errors with `sudo journalctl -u doorctl --since "5 minutes ago"`
 
+You can also stop the service and run it from the command line, to easier see
+the output. The app will be on port `8080` though instead of `80`
+
+`sudo systemctl stop doorctl`
+
+`sudo systemctl stop doorctl.socket`
+
+`cd ~/access-control/backend/`
+
+`python3 serve.py`
+
 ## Update
 
 <!-- assuming on device, otherwise you can just SFTP: Upload Project again -->
