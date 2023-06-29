@@ -67,6 +67,6 @@ async def parse(data):
 
         return Card(number, facility)
 
-    # else:
-    await broadcast.event('WARNING', 'Wiegand reading error')
-    return None
+    else:
+        await broadcast.event('WARNING', 'Wiegand reading error')
+        return None

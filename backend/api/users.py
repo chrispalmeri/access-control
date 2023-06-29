@@ -1,3 +1,4 @@
+import sqlite3
 from aiohttp import web
 from db import conn
 import broadcast
@@ -47,7 +48,7 @@ class View(web.View):
             await broadcast.event('DEBUG', f'User {userid} created')
 
             return web.json_response({'id': userid, **temp})
-        except Exception as err:
+        except sqlite3.Error as err:
             return web.json_response({'error': str(err)}, status=500)
 
     async def put(self):
@@ -73,15 +74,14 @@ class View(web.View):
         temp.update((key, value) for key, value in json.items() if key in temp.keys())
 
         try:
-            count = conn.execute("""UPDATE users SET
+            conn.execute("""UPDATE users SET
                 name = :name,
                 pin = :pin,
                 card = :card,
                 facility = :facility
-                WHERE id = :id""", temp).rowcount
-            # not checking count before returning, but you did already do a select
+                WHERE id = :id""", temp)
             return web.json_response(temp)
-        except Exception as err:
+        except sqlite3.Error as err:
             return web.json_response({'error': str(err)}, status=500)
 
     async def delete(self):
@@ -91,8 +91,10 @@ class View(web.View):
 
         try:
             count = conn.execute('DELETE FROM users WHERE id = ?', (userid,)).rowcount
-            # you could return count if you wanted
-        except Exception as err:
+        except sqlite3.Error as err:
             return web.json_response({'error': str(err)}, status=500)
+
+        if count < 1:
+            raise web.HTTPNotFound()
 
         raise web.HTTPNoContent()

@@ -1,2 +1,5 @@
+# [MESSAGES CONTROL]
+# disable=no-else-return,too-few-public-methods
+
 [IMPORTS]
 ignored-modules=gpiod,aiohttp
