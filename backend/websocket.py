@@ -3,8 +3,6 @@ import broadcast
 
 class WebSocket():
     def __init__(self, app):
-        app['websockets'] = set()
-
         # cleanup websockets so it doesn't take 60 sec to restart
         app.on_shutdown.append(self.shutdown)
 
@@ -12,7 +10,7 @@ class WebSocket():
         ws = web.WebSocketResponse()
         await ws.prepare(request)
 
-        request.app['websockets'].add(ws)
+        broadcast.clients.add(ws)
 
         async for msg in ws:
             if msg.type == WSMsgType.TEXT:
@@ -30,14 +28,14 @@ class WebSocket():
                     f'Websocket connection closed with exception {ws.exception()}')
 
         # actually not sure how it only comes to this block after close
-        request.app['websockets'].remove(ws)
+        broadcast.clients.remove(ws)
         await broadcast.event('DEBUG', 'Websocket client disconnected')
 
         return ws
 
-    async def shutdown(self, app):
+    async def shutdown(self, _app):
         # cause of 'RuntimeError: Set changed size during iteration'
         # I think cause when you close it it triggers above to remove from set
-        copy = app['websockets'].copy()
+        copy = broadcast.clients.copy()
         for ws in copy:
             await ws.close()

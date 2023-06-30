@@ -2,7 +2,7 @@ from types import SimpleNamespace
 import time
 import gpiod
 import config
-import state
+from device import sensors
 import broadcast
 
 # unclear about uppercasing instances of things, but won't be directly reassigned
@@ -40,7 +40,7 @@ async def secure():
         now = time.time()
 
         # if time is up and door is closed re-lock
-        if now - self.unlock_time > 5 and state.doorClosed: # add config for time
+        if now - self.unlock_time > 5 and sensors.status.door_closed: # add config for time
             LOCK.set_value(0)
             LED.set_value(0)
             self.unlocked = False

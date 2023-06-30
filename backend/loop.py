@@ -1,16 +1,17 @@
 import asyncio
 from device import auth, sensors, entry, reader, wiegand
 import broadcast
-import state
 import session
 
 class Loop():
     def __init__(self, app):
+        self.loop_running = False
+        self.task = None
         app.on_startup.append(self.startup)
         app.on_shutdown.append(self.shutdown)
 
     async def run(self, _app):
-        while state.loopRunning:
+        while self.loop_running:
             rawdata = reader.read()
             data = await wiegand.parse(rawdata)
 
@@ -32,9 +33,10 @@ class Loop():
 
     async def startup(self, app):
         await broadcast.event('DEBUG', 'Hardware loop startup')
-        app['hardware_loop'] = asyncio.create_task(self.run(app))
+        self.loop_running = True
+        self.task = asyncio.create_task(self.run(app))
 
-    async def shutdown(self, app):
+    async def shutdown(self, _app):
         await broadcast.event('DEBUG', 'Hardware loop shutdown')
-        state.loopRunning = False
-        await app['hardware_loop']
+        self.loop_running = False
+        await self.task

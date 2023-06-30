@@ -1,6 +1,5 @@
 import gpiod
 import config
-import state
 
 d0 = config.CHIP.get_line(config.D0)
 d1 = config.CHIP.get_line(config.D1)
@@ -16,6 +15,10 @@ def get_events():
     you allow the task to keep running, somehow event_wait still gets
     interrupted by the Ctrl+C or term signal
 
+    this seems to be a gpiod thing, and NOT related
+    to previous aiohttp shutdown sequence issue
+    https://github.com/aio-libs/aiohttp/issues/3593
+
     want to make sure you don't stop in the middle of a read
 
     wait time is very specific
@@ -25,7 +28,6 @@ def get_events():
     try:
         events = lines.event_wait(nsec=3000000)
     except InterruptedError:
-        state.LoopRunning = False
         events = lines.event_wait(nsec=3000000) # don't interrupt me
     return events
 

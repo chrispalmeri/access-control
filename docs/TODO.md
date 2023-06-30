@@ -12,7 +12,6 @@
   * DEBUG messages for user edited, user deleted
   * api endpoint to get last unknown card (from logs)
   * "Connected" styling
-  * get rid of state.py and global vars if possible
 
 you are not using svelte-spa-router for anything yet  
 not sure if $users in two places is ideal in UserList
@@ -32,7 +31,6 @@ not sure if $users in two places is ideal in UserList
   * rename event channels like physicalAccess,remoteAccess,serverStatus,hardwareStatus,humanResources,codeDebug
   * user export/import csv
     * so, basically just break db backup/restore into two - users, and events - that's all that is is the db anyway
-  * put state in app[]? would have to pass app around more
   * include state in websocket data instead of generic notification
   * 'gpio' package, change 'entry' to 'output'
   * increasing timeout for bad pin or card attempts

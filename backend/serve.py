@@ -7,7 +7,6 @@ import api.users
 import api.events
 import api.database
 import api.auth
-import broadcast
 
 from loop import Loop
 from websocket import WebSocket
@@ -25,8 +24,6 @@ async def api_handler(_request):
 app = web.Application()
 loop = Loop(app)
 websocket = WebSocket(app)
-
-broadcast.setup(app)
 
 # add trailing slash seperatley if you want it
 app.add_routes([
