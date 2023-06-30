@@ -62,6 +62,4 @@ class Db:
 
         return res
 
-    # cleanup install.sh
-
 conn = Db(config.DBPATH)

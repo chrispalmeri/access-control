@@ -1,31 +1,34 @@
+from types import SimpleNamespace
 import time
 import gpiod
 import config
 import state
 import broadcast
 
-lock = config.CHIP.get_line(config.LOCK)
-relay = config.CHIP.get_line(config.RELAY)
-led = config.CHIP.get_line(config.LED)
-buzzer = config.CHIP.get_line(config.BUZZER)
+# unclear about uppercasing instances of things, but won't be directly reassigned
+LOCK = config.CHIP.get_line(config.LOCK)
+RELAY = config.CHIP.get_line(config.RELAY)
+LED = config.CHIP.get_line(config.LED)
+BUZZER = config.CHIP.get_line(config.BUZZER)
 
-lock.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
-relay.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
-led.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
-buzzer.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+LOCK.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+RELAY.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+LED.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
+BUZZER.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
 # there is no PWM in libgpiod, so no fancy buzzer sounds
 
-unlocked = False # move to state
-unlockTime = 0
+# not sure if good or bad, to avoid using global keyword
+# self is just a convention for classes not actually reserved
+# SimpleNamespace allows accessing with dot notation, unlike dict
+self = SimpleNamespace()
+self.unlocked = False
+self.unlock_time = 0
 
 def allow():
-    global unlocked
-    global unlockTime
-
-    lock.set_value(1)
-    led.set_value(1)
-    unlocked = True
-    unlockTime = time.time()
+    LOCK.set_value(1)
+    LED.set_value(1)
+    self.unlocked = True
+    self.unlock_time = time.time()
 
 def deny():
     # buzzer
@@ -33,15 +36,12 @@ def deny():
     pass
 
 async def secure():
-    global unlocked
-    global unlockTime
-
-    if unlocked:
+    if self.unlocked:
         now = time.time()
 
         # if time is up and door is closed re-lock
-        if now - unlockTime > 5 and state.doorClosed: # add config for time
-            lock.set_value(0)
-            led.set_value(0)
-            unlocked = False
+        if now - self.unlock_time > 5 and state.doorClosed: # add config for time
+            LOCK.set_value(0)
+            LED.set_value(0)
+            self.unlocked = False
             await broadcast.event('INFO', 'Door secured')

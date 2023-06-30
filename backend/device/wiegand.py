@@ -61,8 +61,8 @@ async def parse(data):
     if parity(even_half, 0) == even_parity and parity(odd_half, 1) == odd_parity:
         # 26 bit
         facility = data >> 17 & 255
-        #34 bit, just keeping 26 code which will truncate it to match
-        #facility = data >> 17 & 65535
+        # 34 bit, just keeping 26 code which will truncate it to match
+        # facility = data >> 17 & 65535
         number = data >> 1 & 65535
 
         return Card(number, facility)

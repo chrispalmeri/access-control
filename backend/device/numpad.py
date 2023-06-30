@@ -1,34 +1,36 @@
+from types import SimpleNamespace
 import time
 
-pin = ''
-buttonTime = 0
+self = SimpleNamespace()
+self.pin = ''
+self.last_press = 0
 
 def press(key):
-    global pin
-    global buttonTime
-
     now = time.time()
 
     # check if past the timeout
     # should you add a function and call in main loop
     # doesn't matter if it hangs around if not broadcast
-    if now - buttonTime > 5:
-        pin = ''
+    if now - self.last_press > 5:
+        self.pin = ''
         # chirp buzzer?
 
-    buttonTime = now
+    self.last_press = now
 
     if key == 10: # ESC
-        pin = ''
+        self.pin = ''
     elif key == 11: # ENT
-        temp = pin
-        pin = ''
-        return temp if temp != '' else None
+        temp = self.pin
+        self.pin = ''
+        if temp != '':
+            return temp
     else:
-        pin = pin + str(key)
+        self.pin = self.pin + str(key)
 
         # auto submit if length is 6
-        if len(pin) == 6:
-            temp = pin
-            pin = ''
+        if len(self.pin) == 6:
+            temp = self.pin
+            self.pin = ''
             return temp
+
+    return None

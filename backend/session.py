@@ -8,6 +8,7 @@
 import uuid
 import json
 from collections import UserDict
+from types import SimpleNamespace
 import time
 from db import conn
 import utils
@@ -53,22 +54,23 @@ class Session(UserDict):
             WHERE uuid = :uuid""", vars(self)).rowcount
 
     # not doing anything special so no need to overwrite
-    #def __getitem__(self, key):
-        #return self.data[key]
+    # def __getitem__(self, key):
+        # return self.data[key]
 
 # probably move to config
-maxlifetime = 300 # 5 minutes
-gc_interval = 60 # 1 minute
-last_gc = 0
+MAX_LIFETIME = 300 # 5 minutes
+GC_INTERVAL = 60 # 1 minute
 
-def gc():
-    global last_gc
+module = SimpleNamespace()
+module.last_gc = 0
+
+def garbage_collect():
     now = time.time()
 
     # this won't expire a frequently used session btw
     # not til it is unused for 5 minutes
-    if now - last_gc > gc_interval:
-        last_gc = now
+    if now - module.last_gc > GC_INTERVAL:
+        module.last_gc = now
 
-        count = conn.execute("""DELETE FROM sessions
-            WHERE strftime('%s', 'now') - strftime('%s', access) > ?""", (maxlifetime,)).rowcount
+        conn.execute("""DELETE FROM sessions
+            WHERE strftime('%s', 'now') - strftime('%s', access) > ?""", (MAX_LIFETIME,))

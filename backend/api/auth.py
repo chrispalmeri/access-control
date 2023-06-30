@@ -22,7 +22,7 @@ class View(web.View):
         })
 
         resp.set_cookie('__Host-Session', session.uuid,
-            #secure = True, # can't use yet
+            # secure = True, # can't use yet
             httponly = True,
             samesite = 'Strict'
         )

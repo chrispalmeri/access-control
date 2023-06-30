@@ -9,7 +9,7 @@ class Loop():
         app.on_startup.append(self.startup)
         app.on_shutdown.append(self.shutdown)
 
-    async def run(self, app):
+    async def run(self, _app):
         while state.loopRunning:
             rawdata = reader.read()
             data = await wiegand.parse(rawdata)
@@ -23,7 +23,7 @@ class Loop():
             await sensors.check()
             await entry.secure()
 
-            session.gc()
+            session.garbage_collect()
 
             await asyncio.sleep(0)
 

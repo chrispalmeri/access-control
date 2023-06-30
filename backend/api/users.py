@@ -35,7 +35,7 @@ class View(web.View):
         # merge default values with received values
         # so there is nothing missing for the sql binding
         temp = {'name': None, 'pin': None, 'card': None, 'facility': None}
-        temp.update((key, value) for key, value in json.items() if key in temp.keys())
+        temp.update((key, value) for key, value in json.items() if key in temp)
 
         if temp.get('name') is None:
             raise web.HTTPUnprocessableEntity() #422
@@ -52,7 +52,8 @@ class View(web.View):
             return web.json_response({'error': str(err)}, status=500)
 
     async def put(self):
-        """btw you have no type checking, but it's fine
+        """
+        btw you have no type checking, but it's fine
         SELECT seems like overkill, but it was hard to dynamically generate
         UPDATE statement with optional columns, same for POST
         """

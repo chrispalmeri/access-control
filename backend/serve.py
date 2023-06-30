@@ -16,10 +16,10 @@ from websocket import WebSocket
 # https://aiohttp-demos.readthedocs.io/en/latest/tutorial.html#aiohttp-demos-polls-middlewares
 # https://stackoverflow.com/questions/60588736/how-to-redirect-404-into-another-template-with-aiohttp
 
-async def root_handler(request):
+async def root_handler(_request):
     return web.FileResponse(path.dirname(__file__) + '/static/index.html')
 
-async def api_handler(request):
+async def api_handler(_request):
     return web.FileResponse(path.dirname(__file__) + '/static/api/index.html')
 
 app = web.Application()

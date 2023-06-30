@@ -1,5 +1,14 @@
-# [MESSAGES CONTROL]
-# disable=no-else-return,too-few-public-methods
+[BASIC]
+good-names = p, ws
+
+[MESSAGES CONTROL]
+disable =
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    # no-else-return,
+    # too-few-public-methods,
+    # attribute-defined-outside-init
 
 [IMPORTS]
-ignored-modules=gpiod,aiohttp
+ignored-modules = gpiod, aiohttp
