@@ -8,7 +8,6 @@
 
 ## Code changes
 
-  * ui filters for event list (channel select)
   * DEBUG messages for user edited, user deleted
   * api endpoint to get last unknown card (from logs)
   * "Connected" styling
@@ -64,10 +63,7 @@ that would be super cool
 
 ---
 
-`broadcast.py` seems like it should be a class, for cleaner init,
-but then how do you reference it everywhere?
-
-aiohttp want you to do something like this in `serve.py`
+aiohttp want you to do state like this
 but your 'device' stuff is pretty separated from 'app'
 
 ```py
@@ -91,3 +87,11 @@ also this doesn't work
 cause there is a bug where `body` cannot be a string (it's bytes, or maybe a full response object)
 and `content_type` doesn't affect default response either
 -->
+
+---
+
+you usually get a hardware loop startup log in webui on restart.
+i guess it gets hit with a last websocket, and then hits the api,
+but the api doesn't respond til service is back up.
+
+...so why don't you try to reconnect automatically

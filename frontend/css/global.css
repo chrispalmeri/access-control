@@ -1,6 +1,6 @@
 body {
     font-family: sans-serif;
-    line-height: 1.15;
+    line-height: 1.15; /* makes the heights decimal pixels, should override */
     color: #333333;
     background-color: #eaeaea;
     font-size: 16px;
@@ -90,6 +90,7 @@ label {
 .smallgap {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 12px;
 }
 input {
@@ -104,8 +105,8 @@ input:disabled {
     color: #777777;
 }
 .buttons {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     padding: 8px 0 0;
 }

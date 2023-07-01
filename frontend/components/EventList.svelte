@@ -1,13 +1,46 @@
 <script>
+    import Select from './Select.svelte';
+
     let state = 'Disconnected';
     let events = [];
 
+    // pagination
+    // let page = 1;
+    // let perPage = 15;
+
+    const options = [
+        { value: 'CRITICAL', text: 'Critical' },
+        { value: 'ERROR', text: 'Error' },
+        { value: 'WARNING', text: 'Warning' },
+        { value: 'INFO', text: 'Info' },
+        { value: 'DEBUG', text: 'Debug' }
+    ];
+    let selected = 'DEBUG';
+    // what you selected will be reset on page reload
+
+    // when selected changes, get() again
+    $: get(selected);
+
+    // this hits endpoint twice on page load
+    // cause both selected change and websocket connect
+    // also websocket hits it even when events created that will not display
+
     async function get() {
-        const response = await fetch('/api/events?channel=DEBUG&channel=INFO&channel=WARNING&limit=15');
+        // query builder
+        const url = new URL('/api/events', window.location.origin);
+        url.searchParams.append('limit', 15);
+
+        for (const option of options) {
+            url.searchParams.append('channel', option.value);
+            if (option.value === selected) break;
+        }
+
+        const response = await fetch(url);
         const data = await response.json();
         events = data;
     }
 
+    // this should be a class so you can reconnect
     // Create WebSocket connection.
     const socket = new WebSocket('ws://' + location.host + '/ws');
 
@@ -34,7 +67,10 @@
 
 <div class="card">
     <h2>Events</h2>
-    <p>{state}</p>
+    <p class="smallgap">
+        {state} <!-- change to disconnect/reconnect button -->
+        <Select options={options} bind:value={selected} />
+    </p>
     {#if events.length > 0}
     <table>
         <tr>
@@ -53,4 +89,9 @@
     {:else}
     <p>No items to show</p>
     {/if}
+    <!-- <p>
+        <button>&lt;</button>
+        {page}
+        <button>&gt;</button>
+    </p> -->
 </div>
