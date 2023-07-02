@@ -27,6 +27,7 @@ not sure if $users in two places is ideal in UserList
     * login/logout
     * http?
   * if it gets laggy then edit webhook to send event - so web does not need to hit api every time
+    * pretty sure that won't happen and the complexity to keep the ui accurate won't be worth it
   * rename event channels like physicalAccess,remoteAccess,serverStatus,hardwareStatus,humanResources,codeDebug
   * user export/import csv
     * so, basically just break db backup/restore into two - users, and events - that's all that is is the db anyway
@@ -37,7 +38,6 @@ not sure if $users in two places is ideal in UserList
   * upgrade command
   * beep or something on startup, so you know when it is ready after a power cycle
   * add control buttons on homepage, would need api first
-  * ping websocket periodically, power loss still shows connected
   * way to delete events
   * websocket connects/disconnects when firefox scrapes a page preview - auth would stop that
 
@@ -87,11 +87,3 @@ also this doesn't work
 cause there is a bug where `body` cannot be a string (it's bytes, or maybe a full response object)
 and `content_type` doesn't affect default response either
 -->
-
----
-
-you usually get a hardware loop startup log in webui on restart.
-i guess it gets hit with a last websocket, and then hits the api,
-but the api doesn't respond til service is back up.
-
-...so why don't you try to reconnect automatically

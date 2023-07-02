@@ -16,7 +16,9 @@ async def event(channel, message):
 
     # Ping websockets about update
     for ws in clients:
-        # not currently happening, but you should check if it is not in process of closing
-        # just in case of 'ConnectionResetError: Cannot write to closing transport'
-        # see aiohttp docs for WebSocketResponse
-        await ws.send_str('New events available')
+        # check if it is not in process of closing
+        # in case of 'ConnectionResetError: Cannot write to closing transport'
+        # not really sure how long 'in process of closing' lasts after cable
+        # disconnect, but maybe don't care if there is minimal overhead
+        if not ws.closed:
+            await ws.send_str('New events available')

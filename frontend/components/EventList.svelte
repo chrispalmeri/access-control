@@ -27,7 +27,7 @@
 
     async function get() {
         // query builder
-        const url = new URL('/api/events', window.location.origin);
+        const url = new URL('/api/events', location.origin);
         url.searchParams.append('limit', 15);
 
         for (const option of options) {
@@ -38,31 +38,72 @@
         const response = await fetch(url);
         const data = await response.json();
         events = data;
+
+        // you usually get a hardware loop startup log in webui on restart.
+        // i guess it gets hit with a last websocket, and then hits the api,
+        // but the api doesn't respond til service is back up.
+        // so use that to reconnect automatically
+        // also this is now how socket is opened on initial page load
+        if (!socket) {
+            console.log('open from api');
+            startWebsocket();
+        }
     }
 
-    // this should be a class so you can reconnect
-    // Create WebSocket connection.
-    const socket = new WebSocket('ws://' + location.host + '/ws');
+    let socket = null;
 
-    // Connection opened
-    socket.addEventListener('open', function () {
-        socket.send('Hello Server!');
-    });
+    function startWebsocket() {
+        // not entirely necessary
+        if (socket) {
+            console.log('rejected');
+            return;
+        }
 
-    // Listen for messages
-    socket.addEventListener('message', function (event) {
-        console.log('Message from server:', event.data);
-        state = 'Connected';
+        // Create WebSocket connection.
+        socket = new WebSocket('ws://' + location.host + '/ws');
 
-        // refresh the event list
-        get();
-    });
+        // Connection opened
+        socket.addEventListener('open', function () {
+            // socket.send('Hello Server!');
+            state = 'Connected';
+        });
 
-    // Connection closed by server
-    socket.addEventListener('close', function () {
-        console.log('The connection has been closed');
-        state = 'Disconnected';
-    });
+        // Listen for messages
+        socket.addEventListener('message', function (event) {
+            console.log('Message from server:', event.data);
+            // state = 'Connected';
+
+            // refresh the event list
+            if (event.data === 'New events available') {
+                get();
+            }
+        });
+
+        // Connection closed by server
+        // also get this event on failed to open connection, and after errors
+        socket.addEventListener('close', function () {
+            console.log('The connection has been closed');
+            state = 'Disconnected';
+            socket = null;
+        });
+    }
+
+    // if there is no attempted activity, browser won't detect cable disconnect
+    // for 10 minutes, with activity it detects in 20 sec, don't even need to
+    // get a text response
+    function check() {
+        if (socket && socket.readyState === WebSocket.OPEN) {
+            console.log('ping');
+            socket.send('ping');
+        } else if (!socket) {
+            console.log('open from interval');
+            startWebsocket();
+        }
+    }
+
+    // should build some incremental backoff
+    // and some option to force clearInterval would probably be smart
+    setInterval(check, 5000);
 </script>
 
 <div class="card">

@@ -12,17 +12,19 @@ class WebSocket():
 
         broadcast.clients.add(ws)
 
+        # should include ip
+        await broadcast.event('DEBUG', 'Websocket client connected')
+
         async for msg in ws:
             if msg.type == WSMsgType.TEXT:
-
-                # can also include `msg.data` if you want
-                # should include ip
-                await broadcast.event('DEBUG', 'Websocket client connected')
-
+                # is this close fake?
                 if msg.data == 'close':
                     await ws.close()
-                else:
-                    await ws.send_str('Received: ' + msg.data)
+                # these were just for testing
+                # elif msg.data == 'ping':
+                    # pass
+                # else:
+                    # await ws.send_str('Received: ' + msg.data)
             elif msg.type == WSMsgType.ERROR:
                 await broadcast.event('WARNING',
                     f'Websocket connection closed with exception {ws.exception()}')
