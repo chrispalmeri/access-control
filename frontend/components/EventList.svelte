@@ -85,15 +85,20 @@
             console.log('The connection has been closed');
             state = 'Disconnected';
             socket = null;
+            // check immediatley?
         });
     }
+
+    // https://stackoverflow.com/a/31985557
+
+    // rename startWebsocket and check
 
     // if there is no attempted activity, browser won't detect cable disconnect
     // for 10 minutes, with activity it detects in 20 sec, don't even need to
     // get a text response
     function check() {
         if (socket && socket.readyState === WebSocket.OPEN) {
-            console.log('ping');
+            // console.log('ping');
             socket.send('ping');
         } else if (!socket) {
             console.log('open from interval');

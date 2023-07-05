@@ -87,3 +87,14 @@ also this doesn't work
 cause there is a bug where `body` cannot be a string (it's bytes, or maybe a full response object)
 and `content_type` doesn't affect default response either
 -->
+
+---
+
+dip switch to send 12V to relay?
+also, both 12V jack and terminals next to each other
+label the switch with "double check your power draw first"
+
+---
+
+here's a werid thing, the socket can still be up, but api down,
+cause of name resolution I guess, like network switch is up but router is down

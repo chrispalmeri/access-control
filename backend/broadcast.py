@@ -22,3 +22,5 @@ async def event(channel, message):
         # disconnect, but maybe don't care if there is minimal overhead
         if not ws.closed:
             await ws.send_str('New events available')
+            # somehow it is still possible to sometimes get
+            # ConnectionResetError: Cannot write to closing transport

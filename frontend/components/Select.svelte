@@ -32,7 +32,7 @@
     let focusIndex = 0;
 
     function findValue(x) {
-        const i = options.findIndex(option => option.value.startsWith(x));
+        const i = options.findIndex(option => option.value.toLowerCase().startsWith(x.toLowerCase()));
         if (i > -1) {
             setEverything(i);
         }
@@ -69,6 +69,27 @@
         });
     }
 
+    let keyTimer;
+    let searchString = '';
+
+    function keySearch(input) {
+        clearTimeout(keyTimer);
+
+        if (input === 'Backspace') {
+            searchString = searchString.substring(0, searchString.length - 1);
+        } else {
+            searchString = searchString + input;
+        }
+
+        // console.log(searchString);
+
+        if (searchString) { // skip if empty string
+            findValue(searchString);
+        }
+
+        keyTimer = setTimeout(() => { searchString = ''; }, 1000);
+    }
+
     function keyPress(e) {
         if (e.key === 'Escape') {
             closeSelect();
@@ -84,16 +105,11 @@
             setEverything(Math.max(focusIndex - 1, 0));
         } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
             setEverything(Math.min(focusIndex + 1, options.length - 1));
+        } else if (e.key.length === 1 || e.key === 'Backspace') {
+            keySearch(e.key);
         } else {
             console.log("'" + e.key + "'");
-            // ! 'Shift', 'Enter', 'Control', 'Alt', 'CapsLock', etc
-            // if length === 1?
-            // 'Backspace'
-
-            // search by text
-            // check if timer running
-            //   append input into string
-            //   else reset and start timer
+            // 'Shift', 'Enter', 'Control', 'Alt', 'CapsLock', etc
         }
     }
 
