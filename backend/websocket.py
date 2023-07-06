@@ -1,5 +1,6 @@
 from aiohttp import web, WSMsgType, WSCloseCode
 import broadcast
+from session import Session
 
 class WebSocket():
     def __init__(self, app):
@@ -10,22 +11,31 @@ class WebSocket():
         ws = web.WebSocketResponse()
         await ws.prepare(request)
 
+        # drop it if not logged in
+        cookie = request.cookies.get('My-Session')
+        session = Session(cookie)
+        if session.get('username') is None:
+            return await ws.close(code=WSCloseCode.POLICY_VIOLATION, message='login')
+
         broadcast.clients.add(ws)
 
         # should include ip
         await broadcast.event('DEBUG', 'Websocket client connected')
 
         async for msg in ws:
-            if msg.type == WSMsgType.TEXT:
-                # is this close fake?
-                if msg.data == 'close':
-                    await ws.close()
+
+            # socket won't extend session, but api will...
+            # also this kinda depends on the client
+            if session.is_still_valid() is False:
+                await ws.close(code=WSCloseCode.POLICY_VIOLATION, message='login')
+
+            # if msg.type == WSMsgType.TEXT:
                 # these were just for testing
-                # elif msg.data == 'ping':
+                # if msg.data == 'ping':
                     # pass
                 # else:
                     # await ws.send_str('Received: ' + msg.data)
-            elif msg.type == WSMsgType.ERROR:
+            if msg.type == WSMsgType.ERROR:
                 await broadcast.event('WARNING',
                     f'Websocket connection closed with exception {ws.exception()}')
 
@@ -33,11 +43,9 @@ class WebSocket():
         broadcast.clients.remove(ws)
         await broadcast.event('DEBUG', 'Websocket client disconnected')
 
-        return ws
-
     async def shutdown(self, _app):
         # cause of 'RuntimeError: Set changed size during iteration'
         # I think cause when you close it it triggers above to remove from set
         copy = broadcast.clients.copy()
         for ws in copy:
-            await ws.close()
+            await ws.close(code=WSCloseCode.SERVICE_RESTART)

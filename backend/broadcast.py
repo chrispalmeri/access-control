@@ -16,6 +16,8 @@ async def event(channel, message):
 
     # Ping websockets about update
     for ws in clients:
+        # CHECK SESSION - maybe need a socket class wrapper around ws, to store session
+
         # check if it is not in process of closing
         # in case of 'ConnectionResetError: Cannot write to closing transport'
         # not really sure how long 'in process of closing' lasts after cable

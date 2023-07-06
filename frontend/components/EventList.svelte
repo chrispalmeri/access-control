@@ -1,4 +1,5 @@
 <script>
+    import { onDestroy } from 'svelte';
     import Select from './Select.svelte';
 
     let state = 'Disconnected';
@@ -50,7 +51,7 @@
         }
     }
 
-    let socket = null;
+    let socket = null; // does not respect existing socket onMount?
 
     function startWebsocket() {
         // not entirely necessary
@@ -81,11 +82,18 @@
 
         // Connection closed by server
         // also get this event on failed to open connection, and after errors
-        socket.addEventListener('close', function () {
+        socket.addEventListener('close', function (event) {
+            // https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent
+            console.log(event.code, event.reason, event.wasClean);
+
             console.log('The connection has been closed');
             state = 'Disconnected';
             socket = null;
             // check immediatley?
+
+            if (event.reason === 'login') {
+                location.hash = '/login';
+            }
         });
     }
 
@@ -100,15 +108,24 @@
         if (socket && socket.readyState === WebSocket.OPEN) {
             // console.log('ping');
             socket.send('ping');
-        } else if (!socket) {
+        }
+        // do you really want to open from interval?
+        /* else if (!socket) {
             console.log('open from interval');
             startWebsocket();
-        }
+        } */
     }
 
     // should build some incremental backoff
     // and some option to force clearInterval would probably be smart
-    setInterval(check, 5000);
+    const detector = setInterval(check, 5000);
+
+    onDestroy(() => {
+        clearInterval(detector);
+        if (socket) {
+            socket.close(); // can get reopend by interval though
+        }
+    });
 </script>
 
 <div class="card">

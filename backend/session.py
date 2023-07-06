@@ -58,6 +58,10 @@ class Session(UserDict):
     # def __getitem__(self, key):
         # return self.data[key]
 
+    def is_still_valid(self):
+        row = conn.execute('SELECT * FROM sessions WHERE uuid = :uuid', vars(self)).fetchone()
+        return bool(row)
+
 # probably move to config
 MAX_LIFETIME = 300 # 5 minutes
 GC_INTERVAL = 60 # 1 minute
