@@ -37,6 +37,11 @@
         }
 
         const response = await fetch(url);
+        if (response.status === 403) {
+            events = [];
+            location.hash = '/login';
+            return;
+        }
         const data = await response.json();
         events = data;
 

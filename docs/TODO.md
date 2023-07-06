@@ -8,6 +8,11 @@
 
 ## Code changes
 
+should you actually just get rid of spa router?  
+dunno, you have enough pages already
+what's the point if navigation refetches events and users anyway
+and you have a flash before redir to login
+
   * DEBUG messages for user edited, user deleted
   * api endpoint to get last unknown card (from logs)
   * "Connected" styling
@@ -113,3 +118,9 @@ and then use the NotFound component
 OOOHH, you could point it at the root handler though
 then you just need to detect if location is wrong in js?
 dunno if spa router can handle that though, or would you just redirect?
+
+--- 
+
+https://packages.ubuntu.com/search?suite=default&section=all&arch=any&keywords=aiohttp&searchon=names
+
+https://github.com/maximdanilchenko/aiohttp-apispec
