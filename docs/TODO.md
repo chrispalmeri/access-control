@@ -98,3 +98,18 @@ label the switch with "double check your power draw first"
 
 here's a werid thing, the socket can still be up, but api down,
 cause of name resolution I guess, like network switch is up but router is down
+
+---
+
+you can't compile svelte in 404.html  
+you can't get response code in JS  
+aiohttp doesn't have templates  
+well https://github.com/aio-libs/aiohttp-jinja2
+
+spa router 404 will always be different from true 404  
+unless you add 404.js, 500.js and rollup entries for them  
+and then use the NotFound component
+
+OOOHH, you could point it at the root handler though
+then you just need to detect if location is wrong in js?
+dunno if spa router can handle that though, or would you just redirect?
