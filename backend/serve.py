@@ -10,6 +10,7 @@ import api.auth
 
 from loop import Loop
 from websocket import WebSocket
+from middleware import api_auth_ware, http_error_ware
 
 # custom 404 page (also should be consistent with svelte-spa-router 404 page)
 # https://aiohttp-demos.readthedocs.io/en/latest/tutorial.html#aiohttp-demos-polls-middlewares
@@ -21,19 +22,28 @@ async def root_handler(_request):
 async def api_handler(_request):
     return web.FileResponse(path.dirname(__file__) + '/static/api/index.html')
 
-app = web.Application()
+app = web.Application(middlewares=[http_error_ware])
 loop = Loop(app)
 websocket = WebSocket(app)
 
+api_app = web.Application(middlewares=[api_auth_ware])
+
+api_app.add_routes([
+    web.view('/users', api.users.View),
+    web.view('/users/{id}', api.users.View),
+    web.view('/events', api.events.View),
+    web.view('/database', api.database.View),
+    web.view('/auth', api.auth.View),
+    web.get('', api_handler)
+    # parent static doesn't work
+])
+
+app.add_subapp('/api/', api_app)
+
+# HAS to come after subapp for some reason, else subapp not working
 # add trailing slash seperatley if you want it
 app.add_routes([
-    web.view('/api/users', api.users.View),
-    web.view('/api/users/{id}', api.users.View),
-    web.view('/api/events', api.events.View),
-    web.view('/api/database', api.database.View),
-    web.view('/api/auth', api.auth.View),
     web.get('/ws', websocket.get),
-    web.get('/api', api_handler),
     web.get('/', root_handler),
     web.static('/', path.dirname(__file__) + '/static') # needs to be last
 ])

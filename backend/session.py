@@ -22,6 +22,7 @@ class Session(UserDict):
     def __init__(self, cookie):
         super().__init__()
         self.access = utils.iso_timestamp()
+        row = None
 
         if cookie:
             self.uuid = cookie

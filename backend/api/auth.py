@@ -1,5 +1,4 @@
 from aiohttp import web
-from session import Session
 
 class View(web.View):
     """For /auth routes"""
@@ -10,9 +9,8 @@ class View(web.View):
         if self.request.body_exists:
             json = await self.request.json()
 
-        cookie = self.request.cookies.get('__Host-Session')
-
-        session = Session(cookie)
+        session = self.request['session']
+        # you really should regen the session before adding user to it
         session['username'] = json['username']
 
         resp = web.json_response({
@@ -20,11 +18,5 @@ class View(web.View):
             'session_id': session.uuid,
             'session_data': dict(session)
         })
-
-        resp.set_cookie('__Host-Session', session.uuid,
-            # secure = True, # can't use yet
-            httponly = True,
-            samesite = 'Strict'
-        )
 
         return resp
