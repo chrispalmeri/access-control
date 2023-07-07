@@ -24,8 +24,11 @@ async def root_handler(request):
 
     if session.get('username') is None:
         raise web.HTTPFound(request.url.with_path('/login'))
+        # .update_query({'redir': request.url.path})
 
-    return web.FileResponse(path.dirname(__file__) + '/static/index.html')
+    resp = web.FileResponse(path.dirname(__file__) + '/static/index.html')
+    resp.headers['Cache-Control'] = 'no-store, must-revalidate'
+    return resp
 
 async def api_handler(_request):
     return web.FileResponse(path.dirname(__file__) + '/static/api/index.html')

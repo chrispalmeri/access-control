@@ -14,7 +14,7 @@ class View(web.View):
         session['username'] = json['username']
 
         resp = web.json_response({
-            'success': 'probably',
+            'success': True,
             'session_id': session.uuid,
             'session_data': dict(session)
         })

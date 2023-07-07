@@ -1,5 +1,6 @@
 <script>
     import TextInput from '../components/TextInput.svelte';
+    import PasswordInput from '../components/PasswordInput.svelte';
 
     const payload = {};
     payload.username = null;
@@ -15,20 +16,27 @@
             throw new Error(`HTTP Status Code ${response.status}`);
         }
 
-        // const data = await response.json();
-        // return data;
+        const data = await response.json();
 
         // redirect to home
-        location.replace('/');
+        if (data.success === true) {
+            location.replace('/');
+        }
+    }
+
+    function keyPress(event) {
+        if (event.key === 'Enter') {
+            submit();
+        }
     }
 </script>
 
 <div class="dialog-mask">
     <div class="dialog-modal">
-        <div class="card">
+        <div class="card" on:keypress={keyPress}>
             <h2>Login</h2>
             <TextInput label='Username' bind:value={payload.username} />
-            <TextInput label='Password' bind:value={payload.password} />
+            <PasswordInput label='Password' bind:value={payload.password} />
             <p class="buttons">
                 <button class="primary" on:click={submit}>Login</button>
             </p>
