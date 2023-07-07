@@ -39,7 +39,7 @@
         const response = await fetch(url);
         if (response.status === 403) {
             events.set([]);
-            location.hash = '/login';
+            location.replace('/login');
             return;
         }
         const data = await response.json();
@@ -97,7 +97,7 @@
             // check immediatley?
 
             if (event.reason === 'login') {
-                location.hash = '/login';
+                location.replace('/login');
             }
         });
     }

@@ -6,7 +6,7 @@ users.refresh = async function () {
     const response = await fetch('/api/users');
     if (response.status === 403) {
         users.set([]);
-        location.hash = '/login';
+        location.replace('/login');
         return;
     }
     const data = await response.json();

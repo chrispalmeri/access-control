@@ -6,8 +6,9 @@ import { copy } from '@web/rollup-plugin-copy';
 
 export default {
     input: [
-        'frontend/main.js',
-        'frontend/api.js'
+        'frontend/index.js',
+        'frontend/api.js',
+        'frontend/login.js'
     ],
     output: {
         dir: 'backend/static',
@@ -15,8 +16,7 @@ export default {
         entryFileNames: 'js/[name].js',
         chunkFileNames: 'js/[name].js',
         manualChunks: {
-            svelte: ['svelte', 'svelte/store'],
-            router: ['svelte-spa-router']
+            svelte: ['svelte', 'svelte/store']
         }
     },
     plugins: [

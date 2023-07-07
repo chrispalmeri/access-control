@@ -19,7 +19,7 @@
         // return data;
 
         // redirect to home
-        location.hash = '/';
+        location.replace('/');
     }
 </script>
 
@@ -32,7 +32,7 @@
             <p class="buttons">
                 <button class="primary" on:click={submit}>Login</button>
             </p>
-            <a href="#/">Home</a>
+            <a href="/">Home</a>
         </div>
     </div>
 </div>
@@ -46,7 +46,6 @@
     width: 100vw;
     display: grid;
     place-content: center;
-    background: rgba(128, 128, 128, 0.28);
 }
 .dialog-modal {
     overflow-y: auto;
