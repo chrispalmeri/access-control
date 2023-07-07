@@ -1,9 +1,9 @@
 <script>
     import { onDestroy } from 'svelte';
     import Select from './Select.svelte';
+    import { events } from '../stores.js';
 
     let state = 'Disconnected';
-    let events = [];
 
     // pagination
     // let page = 1;
@@ -38,12 +38,12 @@
 
         const response = await fetch(url);
         if (response.status === 403) {
-            events = [];
+            events.set([]);
             location.hash = '/login';
             return;
         }
         const data = await response.json();
-        events = data;
+        events.set(data);
 
         // you usually get a hardware loop startup log in webui on restart.
         // i guess it gets hit with a last websocket, and then hits the api,
@@ -139,14 +139,14 @@
         {state} <!-- change to disconnect/reconnect button -->
         <Select options={options} bind:value={selected} />
     </p>
-    {#if events.length > 0}
+    {#if $events.length > 0}
     <table>
         <tr>
             <th>Time</th>
             <th>Channel</th>
             <th>Message</th>
         </tr>
-        {#each events as event (event.id)}
+        {#each $events as event (event.id)}
         <tr>
             <td>{new Date(event.time).toLocaleString()}</td>
             <td>{event.channel}</td>

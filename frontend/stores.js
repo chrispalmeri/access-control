@@ -12,3 +12,5 @@ users.refresh = async function () {
     const data = await response.json();
     users.set(data);
 };
+
+export const events = writable([]);
