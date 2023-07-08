@@ -3,6 +3,7 @@
 
     function backup() {
         fetch('/api/database')
+            // you need to check for 403 before saving this
             .then(response => response.blob())
             .then(function (myBlob) {
                 const link = document.createElement('a');

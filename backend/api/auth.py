@@ -20,3 +20,9 @@ class View(web.View):
         })
 
         return resp
+
+    async def delete(self):
+        self.request['session'].revoke()
+        # would be better to replace session? if middleware can pass along
+
+        raise web.HTTPNoContent()

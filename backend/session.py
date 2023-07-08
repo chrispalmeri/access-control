@@ -62,6 +62,12 @@ class Session(UserDict):
         row = conn.execute('SELECT * FROM sessions WHERE uuid = :uuid', vars(self)).fetchone()
         return bool(row)
 
+    def revoke(self):
+        # didn't put too much thought into it
+        self.data = {}
+        self.json = json.dumps(self.data)
+        conn.execute('DELETE FROM sessions WHERE uuid = :uuid', vars(self))
+
 # probably move to config
 MAX_LIFETIME = 300 # 5 minutes
 GC_INTERVAL = 60 # 1 minute

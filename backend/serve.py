@@ -23,11 +23,13 @@ async def root_handler(request):
     session = Session(cookie)
 
     if session.get('username') is None:
+        # actually this can take relative path
         raise web.HTTPFound(request.url.with_path('/login'))
         # .update_query({'redir': request.url.path})
 
     resp = web.FileResponse(path.dirname(__file__) + '/static/index.html')
     resp.headers['Cache-Control'] = 'no-store, must-revalidate'
+    # should you set the cookie again here?
     return resp
 
 async def api_handler(_request):
