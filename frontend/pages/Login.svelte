@@ -1,6 +1,8 @@
 <script>
     import TextInput from '../components/TextInput.svelte';
     import PasswordInput from '../components/PasswordInput.svelte';
+    import ThemeSwitch from '../components/ThemeSwitch.svelte';
+    import Footer from '../components/Footer.svelte';
 
     const payload = {};
     payload.username = null;
@@ -31,31 +33,15 @@
     }
 </script>
 
-<div class="dialog-mask">
-    <div class="dialog-modal">
-        <div class="card" on:keypress={keyPress}>
-            <h2>Login</h2>
-            <TextInput label='Username' bind:value={payload.username} />
-            <PasswordInput label='Password' bind:value={payload.password} />
-            <p class="buttons">
-                <button class="primary" on:click={submit}>Login</button>
-            </p>
-            <a href="/">Home</a>
-        </div>
-    </div>
+<ThemeSwitch />
+
+<div class="center card" on:keypress={keyPress}>
+    <h2>Login</h2>
+    <TextInput label='Username' bind:value={payload.username} />
+    <PasswordInput label='Password' bind:value={payload.password} />
+    <p class="buttons">
+        <button class="primary" on:click={submit}>Login</button>
+    </p>
 </div>
 
-<style>
-.dialog-mask {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    place-content: center;
-}
-.dialog-modal {
-    overflow-y: auto;
-}
-</style>
+<Footer />

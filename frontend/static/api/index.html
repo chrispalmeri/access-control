@@ -6,6 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../css/bundle.css">
         <script type="module" src="../js/api.js"></script>
+        <script>
+            let theme = localStorage.getItem('theme');
+            if(!theme) {
+                if (matchMedia('(prefers-color-scheme: dark)').matches) {
+                    theme = 'dark';
+                } else {
+                    theme = 'light';
+                }
+                localStorage.setItem('theme', theme);
+            }
+            document.documentElement.className = theme;
+        </script>
     </head>
     <body>
     </body>

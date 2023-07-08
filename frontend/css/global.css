@@ -1,41 +1,134 @@
+@font-face {
+    font-family: "Rubik";
+    src: url('/fonts/Rubik-Regular.subset.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Rubik";
+    src: url('/fonts/Rubik-Medium.subset.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+:root {
+	--gray-0: #ffffff;
+	--gray-1: #eaeaea;
+	--gray-2: #c2c2c2;
+	--gray-3: #9c9c9c;
+	--gray-4l: #767676;
+	--gray-4d: #7f7f7f;
+	--gray-5: #545454;
+	--gray-5d: #505050;
+	--gray-6: #333333;
+	--gray-7: #161616;
+	--gray-8: #000000;
+	--red-2: #ffadae;
+    --red-4l: #bd555c;
+    --red-4d: #c26268;
+	--red-5: #883c41;
+	--cyan-2: #55d4d9;
+	--cyan-3: #0fadb2;
+	--cyan-4l: #098387;
+	--cyan-4d: #098e92;
+	--cyan-5: #045e61;
+
+	--accent-color: var(--cyan-4l);
+	--hover: var(--cyan-3);
+	--page: var(--gray-1);
+	--card: var(--gray-0);
+	--text: var(--gray-6);
+	--soft: var(--gray-4l);
+	--button2: var(--gray-2);
+	--button2-text: var(--gray-5d);
+	--input: var(--gray-1);
+	--label: var(--gray-5);
+	--selection: var(--cyan-3);
+	--code-0: var(--gray-1);
+	--code-2: var(--gray-5);
+	--code-4: var(--cyan-5);
+	--code-6: var(--red-5);
+	--border: var(--gray-1);
+	--radius: 4px;
+}
+.dark {
+	--accent-color: var(--cyan-4d);
+	--hover: var(--cyan-3);
+	--page: var(--gray-8);
+	--card: var(--gray-7);
+	--text: var(--gray-2);
+	--soft: var(--gray-4d);
+	--button2: var(--gray-5d);
+	--button2-text: var(--gray-2);
+	--input: var(--gray-6);
+	--label: var(--gray-3);
+	--selection: var(--cyan-5);
+	--code-0: var(--gray-6);
+	--code-2: var(--gray-2);
+	--code-4: var(--cyan-2);
+	--code-6: var(--red-2);
+	--border: var(--gray-6);
+}
+
+.danger {
+    --accent-color: var(--red-4l);
+}
+
+.dark .danger {
+    --accent-color: var(--red-4d);
+}
+
 body {
-    font-family: sans-serif;
-    line-height: 1.15; /* makes the heights decimal pixels, should override */
-    color: #333333;
-    background-color: #eaeaea;
+    font-family: 'Rubik', sans-serif;
+    color: var(--text);
+    background-color: var(--page);
     font-size: 16px;
+    line-height: 20px;
+    display: grid;
+    grid-template-rows: max-content auto max-content;
+    min-height: 100vh;
+    margin: 0;
+}
+main {
     display: flex;
     margin: 0 12px;
 }
 .card {
-    margin: 24px 12px;
+    /* margin: 24px 12px; */
+    margin: 0 12px;
     padding: 8px 24px;
-    background-color: #ffffff;
+    background-color: var(--card);
     border-radius: 4px;
+}
+.center {
+    align-self: center;
+    justify-self: center;
 }
 p {
     margin: 16px 0;
 }
+a {
+	color: var(--accent-color);
+}
 h2 {
-    color: #098387;
+    color: var(--accent-color);
     font-weight: 500;
     margin: 16px 0;
     font-size: 28px;
-}
-h2.danger {
-    color: #bd555c;
+    line-height: 34px;
 }
 table {
     border-collapse: collapse;
     margin: 16px 0;
 }
 tr {
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid var(--border);
 }
 th {
-    color: #098387;
+    color: var(--accent-color);
     font-weight: 500;
     font-size: 18px;
+    line-height: 22px;
 }
 td, th {
     padding: 8px 24px 8px 0;
@@ -47,26 +140,22 @@ td.end {
 button, input {
     font-family: inherit;
     font-size: 100%;
-    line-height: 1.2;
+    line-height: 20px;
 }
 button {
     min-width: 88px;
     padding: 8px 12px;
-    color: #505050;
-    background-color: #c2c2c2;
+    color: var(--button2-text);
+    background-color: var(--button2);
     border: none;
     border-radius: 4px;
 }
 button:focus, input:focus {
-    outline: 2px solid #0fadb2;
+    outline: 2px solid var(--selection);
 }
 button.primary {
-    color: #ffffff;
-    background-color: #098387;
-}
-button.danger {
-    color: #ffffff;
-    background-color: #bd555c;
+    color: var(--card);
+    background-color: var(--accent-color);
 }
 td > button {
     min-width: 64px;
@@ -74,6 +163,7 @@ td > button {
     margin: -4px 0;
 }
 dialog {
+    color: inherit;
     background: transparent;
     padding: 0; /* needed to detect click on backdrop */
     border: none;
@@ -97,12 +187,12 @@ input {
     color: inherit;
     box-sizing: border-box;
     padding: 8px;
-    background: #eaeaea;
+    background: var(--input);
     border: none;
     border-radius: 4px;
 }
 input:disabled {
-    color: #777777;
+    color: var(--soft);
 }
 .buttons {
     display: flex;

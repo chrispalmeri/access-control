@@ -161,14 +161,14 @@
         cursor: default;
     }
     input.open {
-        outline: 2px solid #0fadb2;
+        outline: 2px solid var(--selection);
     }
     .select svg {
         position: absolute;
         top: 14px;
         right: 12px;
         pointer-events: none;
-        fill: #777777;
+        fill: var(--soft);
     }
     .select ul {
         box-sizing: border-box;
@@ -182,7 +182,7 @@
         border-radius: 4px;
         /*box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);*/
         overflow: hidden;
-        outline: 2px solid #0fadb2;
+        outline: 2px solid var(--selection);
     }
 
     .select button {
@@ -190,11 +190,11 @@
         display: block;
         min-height: 34px; /* not ideal */
         text-align: left;
-        background: #eaeaea;
+        background: var(--input);
         border-radius: 0;
     }
     button.current {
-        background: #c2c2c2;
+        background: var(--button2);
     }
     button:focus {
         outline: none;
