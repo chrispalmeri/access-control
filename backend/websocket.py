@@ -14,13 +14,14 @@ class WebSocket():
         # drop it if not logged in
         cookie = request.cookies.get('My-Session')
         session = Session(cookie)
+        ws['session'] = session
         if session.get('username') is None:
             return await ws.close(code=WSCloseCode.POLICY_VIOLATION, message='login')
 
-        broadcast.clients.add(ws)
+        broadcast.clients.append(ws)
 
         # should include ip
-        await broadcast.event('DEBUG', 'Websocket client connected')
+        await broadcast.event('DEBUG', f'Websocket client {request.remote} connected')
 
         async for msg in ws:
 
@@ -40,8 +41,11 @@ class WebSocket():
                     f'Websocket connection closed with exception {ws.exception()}')
 
         # actually not sure how it only comes to this block after close
-        broadcast.clients.remove(ws)
-        await broadcast.event('DEBUG', 'Websocket client disconnected')
+        try:
+            broadcast.clients.remove(ws)
+        except ValueError:
+            pass
+        await broadcast.event('DEBUG', f'Websocket client {request.remote} disconnected')
 
     async def shutdown(self, _app):
         # cause of 'RuntimeError: Set changed size during iteration'

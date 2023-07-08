@@ -113,18 +113,17 @@
         if (socket && socket.readyState === WebSocket.OPEN) {
             // console.log('ping');
             socket.send('ping');
-        }
-        // do you really want to open from interval?
-        /* else if (!socket) {
+        } else if (!socket) {
             console.log('open from interval');
             startWebsocket();
-        } */
+        }
     }
 
     // should build some incremental backoff
     // and some option to force clearInterval would probably be smart
     const detector = setInterval(check, 5000);
 
+    // don't even need anymore, cause navigation is new page
     onDestroy(() => {
         clearInterval(detector);
         if (socket) {
