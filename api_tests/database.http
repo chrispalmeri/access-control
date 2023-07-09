@@ -1,11 +1,11 @@
-GET http://doorctl-dev/api/database
+GET https://doorctl-dev/api/database
 
 # you should save the response body from this as `database.db` in this directory
 # if you want the restore (POST) call to work
 
 ###
 
-POST http://doorctl-dev/api/database
+POST https://doorctl-dev/api/database
 content-type: multipart/form-data; boundary=my_unique_boundary
 
 --my_unique_boundary

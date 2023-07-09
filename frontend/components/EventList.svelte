@@ -66,7 +66,7 @@
         }
 
         // Create WebSocket connection.
-        socket = new WebSocket('ws://' + location.host + '/ws');
+        socket = new WebSocket('wss://' + location.host + '/ws');
 
         // Connection opened
         socket.addEventListener('open', function () {

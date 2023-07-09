@@ -1,12 +1,12 @@
-GET http://doorctl-dev/api/users
+GET https://doorctl-dev/api/users
 
 ###
 
-GET http://doorctl-dev/api/users/1
+GET https://doorctl-dev/api/users/1
 
 ###
 
-POST http://doorctl-dev/api/users
+POST https://doorctl-dev/api/users
 
 {
     "name": "First Last",
@@ -17,7 +17,7 @@ POST http://doorctl-dev/api/users
 
 ###
 
-PUT http://doorctl-dev/api/users/2
+PUT https://doorctl-dev/api/users/2
 
 {
     "name": "First Last",
@@ -28,4 +28,4 @@ PUT http://doorctl-dev/api/users/2
 
 ###
 
-DELETE http://doorctl-dev/api/users/2
+DELETE https://doorctl-dev/api/users/2

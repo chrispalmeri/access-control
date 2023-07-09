@@ -35,13 +35,31 @@ cat > /etc/udev/rules.d/99-custom.rules << EOF
 SUBSYSTEM=="gpio", GROUP="gpio", MODE="0660"
 EOF
 
+# setup ssl directory
+if [ ! -d $dir/ssl ]; then
+    mkdir $dir/ssl
+    chown $user:$user $dir/ssl
+fi
+
+# generate self signed cert
+openssl req  -x509 -newkey rsa:4096 -sha256 -days 3650 \
+    -out ../ssl/cert.pem -keyout ../ssl/key.pem -nodes \
+    -subj "/C=US/O=Door Controller/CN=doorctl-dev" \
+    -addext "subjectAltName = DNS:doorctl-dev, IP:192.168.1.187" \
+    -addext "keyUsage = critical, digitalSignature, keyEncipherment" \
+    -addext "extendedKeyUsage = critical, serverAuth"
+
+# change ownership of cert
+chown $user:$user $dir/ssl/cert.pem
+chown $user:$user $dir/ssl/key.pem
+
 # setup systemd service and port
 cat > /etc/systemd/system/$app.socket << EOF
 [Unit]
 Description=$app socket
 
 [Socket]
-ListenStream=80
+ListenStream=443
 EOF
 
 cat > /etc/systemd/system/$app.service << EOF

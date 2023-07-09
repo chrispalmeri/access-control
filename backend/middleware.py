@@ -16,7 +16,7 @@ async def api_auth(request, handler):
     if request.path == '/api':
         return await handler(request)
 
-    cookie = request.cookies.get('My-Session')
+    cookie = request.cookies.get('__Host-Session')
     session = Session(cookie)
 
     try:
@@ -36,9 +36,9 @@ async def api_auth(request, handler):
         if 'Allow' in exc.headers:
             response.headers['Allow'] = exc.headers['Allow']
 
-    # can't use name '__Host-Session' without https
-    response.set_cookie('My-Session', session.uuid,
-        # secure = True, # can't use yet
+    # name '__Host-Session' and option 'secure = True' only work with https
+    response.set_cookie('__Host-Session', session.uuid,
+        secure = True,
         httponly = True,
         samesite = 'Strict'
     )

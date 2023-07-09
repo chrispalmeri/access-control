@@ -1,4 +1,4 @@
-POST http://doorctl-dev/api/auth
+POST https://doorctl-dev/api/auth
 content-type: application/json
 
 {

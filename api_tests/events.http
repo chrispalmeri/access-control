@@ -1,4 +1,4 @@
-GET http://doorctl-dev/api/events
+GET https://doorctl-dev/api/events
     ?channel=DEBUG
     &channel=INFO
     &channel=WARNING

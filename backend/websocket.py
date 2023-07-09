@@ -12,7 +12,7 @@ class WebSocket():
         await ws.prepare(request)
 
         # drop it if not logged in
-        cookie = request.cookies.get('My-Session')
+        cookie = request.cookies.get('__Host-Session')
         session = Session(cookie)
         ws['session'] = session
         if session.get('username') is None:

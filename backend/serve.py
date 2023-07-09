@@ -1,4 +1,5 @@
 import sys
+import ssl
 from os import path
 from socket import socket
 from aiohttp import web
@@ -17,9 +18,8 @@ from middleware import api_auth_ware, http_error_ware
 # https://aiohttp-demos.readthedocs.io/en/latest/tutorial.html#aiohttp-demos-polls-middlewares
 # https://stackoverflow.com/questions/60588736/how-to-redirect-404-into-another-template-with-aiohttp
 
-
 async def root_handler(request):
-    cookie = request.cookies.get('My-Session')
+    cookie = request.cookies.get('__Host-Session')
     session = Session(cookie)
 
     if session.get('username') is None:
@@ -65,9 +65,18 @@ app.add_routes([
     web.static('/', path.dirname(__file__) + '/static') # needs to be last
 ])
 
+CERT_PATH = path.normpath(path.dirname(__file__) + '/../ssl/cert.pem')
+KEY_PATH = path.normpath(path.dirname(__file__) + '/../ssl/key.pem')
+
+ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+ssl_context.load_cert_chain(CERT_PATH, KEY_PATH)
+
 if sys.stdout.isatty():
-    web.run_app(app, host='0.0.0.0', port=8080) # command line
+    web.run_app(app, host='0.0.0.0', port=8080, ssl_context=ssl_context) # command line
 else:
-    web.run_app(app, sock=socket(fileno=3)) # systemd
+    web.run_app(app, sock=socket(fileno=3), ssl_context=ssl_context) # systemd
+    # your whole socket thing may be roundabout, dunno
+    # https://docs.python.org/3/library/ssl.html#ssl-contexts
+    # interesting websocket clients show ::fff: ip address now
 
 # code here won't run til server stops
