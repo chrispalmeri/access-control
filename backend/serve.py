@@ -77,8 +77,9 @@ if sys.stdout.isatty():
     web.run_app(app, host='0.0.0.0', port=8080, ssl_context=ssl_context) # command line
 else:
     web.run_app(app, sock=socket(fileno=3), ssl_context=ssl_context) # systemd
+    # 3 is just the first file descriptor systemd will use
+    # (0, 1, 2 are stdin, stdout and stderr, normal linux stuff)
     # your whole socket thing may be roundabout, dunno
     # https://docs.python.org/3/library/ssl.html#ssl-contexts
-    # interesting websocket clients show ::fff: ip address now
 
 # code here won't run til server stops

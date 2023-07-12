@@ -54,12 +54,13 @@ chown $user:$user $dir/ssl/cert.pem
 chown $user:$user $dir/ssl/key.pem
 
 # setup systemd service and port
+# explicitly IPv4
 cat > /etc/systemd/system/$app.socket << EOF
 [Unit]
 Description=$app socket
 
 [Socket]
-ListenStream=443
+ListenStream=0.0.0.0:443
 EOF
 
 cat > /etc/systemd/system/$app.service << EOF
