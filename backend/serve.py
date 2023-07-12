@@ -8,6 +8,7 @@ import api.users
 import api.events
 import api.database
 import api.auth
+import api.card
 
 from loop import Loop
 from websocket import WebSocket
@@ -50,6 +51,7 @@ api_app.add_routes([
     web.view('/events', api.events.View),
     web.view('/database', api.database.View),
     web.view('/auth', api.auth.View),
+    web.view('/card', api.card.View),
     web.get('', api_handler)
     # parent static doesn't work
 ])

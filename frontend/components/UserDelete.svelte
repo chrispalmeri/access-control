@@ -30,11 +30,11 @@
 <button class="danger primary" on:click={show}>Delete</button>
 
 <dialog bind:this={dialog} on:click|self={cancel}>
-    <div class="card">
-        <h2 class="danger">Delete user</h2>
+    <div class="danger card">
+        <h2>Delete user</h2>
         <p>Are you sure you want to delete {user.name}?</p>
         <p class="buttons">
-            <button class="danger primary" on:click={del}>Delete</button>
+            <button class="primary" on:click={del}>Delete</button>
             <button on:click={cancel}>Cancel</button>
         </p>
     </div>

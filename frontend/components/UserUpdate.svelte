@@ -45,6 +45,22 @@
         const data = await response.json();
         return data;
     }
+
+    async function lastSwiped() {
+        const response = await fetch('/api/card');
+
+        if (!response.ok) {
+            throw new Error(`HTTP Status Code ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // "Access denied for Card: 54009 Facility: 204"
+        const numbers = data.message.match(/\d+/g);
+
+        payload.card = numbers[0];
+        payload.facility = numbers[1];
+    }
 </script>
 
 <button on:click={show}>Edit</button>
@@ -57,6 +73,9 @@
         <NumberInput label='Pin' bind:value={payload.pin} />
         <NumberInput label='Card' bind:value={payload.card} />
         <NumberInput label='Facility' bind:value={payload.facility} />
+        <p>
+            <button on:click={lastSwiped}>Last denied card</button>
+        </p>
         <p class="buttons">
             <button class="primary" on:click={save}>Save</button>
             <button on:click={cancel}>Cancel</button>

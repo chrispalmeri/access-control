@@ -11,11 +11,7 @@
 replace any API `json_response` errors with `raise`
 
   * DEBUG messages for user edited, user deleted
-  * api endpoint to get last unknown card (from logs)
   * "Connected" styling
-
-not sure if $users in two places is ideal in UserList
-
   * move api docs from `docs` to `/api` component
   * add database restored event log - at least show if restore completed, currently no feedback
     * obviously refresh events afterward
