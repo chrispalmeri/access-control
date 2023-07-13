@@ -1,4 +1,5 @@
 from os import path
+import sqlite3
 from aiohttp import web
 from session import Session
 
@@ -35,6 +36,11 @@ async def api_auth(request, handler):
         # feels bad hardcoding it
         if 'Allow' in exc.headers:
             response.headers['Allow'] = exc.headers['Allow']
+    except sqlite3.Error as ex2:
+        response = web.json_response({
+            'code': 500,
+            'message': str(ex2)
+        }, status = 500)
 
     # name '__Host-Session' and option 'secure = True' only work with https
     response.set_cookie('__Host-Session', session.uuid,

@@ -8,11 +8,8 @@
 
 ## Code changes
 
-replace any API `json_response` errors with `raise`
-
   * DEBUG messages for user edited, user deleted
   * "Connected" styling
-  * move api docs from `docs` to `/api` component
   * add database restored event log - at least show if restore completed, currently no feedback
     * obviously refresh events afterward
   * refactor events (differentiate specific status from operational event)

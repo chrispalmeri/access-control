@@ -3,6 +3,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import css from 'rollup-plugin-css-only';
 import del from 'rollup-plugin-delete';
 import { copy } from '@web/rollup-plugin-copy';
+import commonjs from '@rollup/plugin-commonjs';
 
 export default {
     input: [
@@ -16,10 +17,12 @@ export default {
         entryFileNames: 'js/[name].js',
         chunkFileNames: 'js/[name].js',
         manualChunks: {
-            svelte: ['svelte', 'svelte/store']
+            svelte: ['svelte', 'svelte/store'],
+            prism: ['prismjs']
         }
     },
     plugins: [
+        commonjs(),
         svelte({
             onwarn: (warning, handler) => {
                 if (warning.code.startsWith('a11y-')) {

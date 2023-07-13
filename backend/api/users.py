@@ -1,4 +1,3 @@
-import sqlite3
 from aiohttp import web
 from db import conn
 import broadcast
@@ -40,16 +39,13 @@ class View(web.View):
         if temp.get('name') is None:
             raise web.HTTPUnprocessableEntity() #422
 
-        try:
-            userid = conn.execute("""INSERT INTO users ( name, pin, card, facility )
-                VALUES ( :name, :pin, :card, :facility )""", temp).lastrowid
+        userid = conn.execute("""INSERT INTO users ( name, pin, card, facility )
+            VALUES ( :name, :pin, :card, :facility )""", temp).lastrowid
 
-            # Broadcast it
-            await broadcast.event('DEBUG', f'User {userid} created')
+        # Broadcast it
+        await broadcast.event('DEBUG', f'User {userid} created')
 
-            return web.json_response({'id': userid, **temp})
-        except sqlite3.Error as err:
-            return web.json_response({'error': str(err)}, status=500)
+        return web.json_response({'id': userid, **temp})
 
     async def put(self):
         """
@@ -74,26 +70,20 @@ class View(web.View):
         json.pop('id', None) # id is valid key, but don't want it changed from body
         temp.update((key, value) for key, value in json.items() if key in temp.keys())
 
-        try:
-            conn.execute("""UPDATE users SET
-                name = :name,
-                pin = :pin,
-                card = :card,
-                facility = :facility
-                WHERE id = :id""", temp)
-            return web.json_response(temp)
-        except sqlite3.Error as err:
-            return web.json_response({'error': str(err)}, status=500)
+        conn.execute("""UPDATE users SET
+            name = :name,
+            pin = :pin,
+            card = :card,
+            facility = :facility
+            WHERE id = :id""", temp)
+        return web.json_response(temp)
 
     async def delete(self):
         userid = self.request.match_info.get('id', None)
         if userid is None:
             raise web.HTTPMethodNotAllowed('DELETE', ['GET', 'POST'])
 
-        try:
-            count = conn.execute('DELETE FROM users WHERE id = ?', (userid,)).rowcount
-        except sqlite3.Error as err:
-            return web.json_response({'error': str(err)}, status=500)
+        count = conn.execute('DELETE FROM users2 WHERE id = ?', (userid,)).rowcount
 
         if count < 1:
             raise web.HTTPNotFound()

@@ -22,7 +22,7 @@ class View(web.View):
         newfile.seek(0) # reset to beginning of file
 
         if start != 'SQLite format 3':
-            return web.json_response({'error': 'not a sqlite file'}, status=400)
+            raise web.HTTPUnprocessableEntity() #422
 
         # save it to filesystem
         with open(config.DBPATH, 'wb') as oldfile:

@@ -10,64 +10,114 @@
     font-weight: 500;
     font-display: swap;
 }
+@font-face {
+    font-family: "Fira Mono";
+    src: url('/fonts/FiraMono-Regular.subset.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
 
 :root {
-	--gray-0: #ffffff;
-	--gray-1: #eaeaea;
-	--gray-2: #c2c2c2;
-	--gray-3: #9c9c9c;
-	--gray-4l: #767676;
-	--gray-4d: #7f7f7f;
-	--gray-5: #545454;
-	--gray-5d: #505050;
-	--gray-6: #333333;
-	--gray-7: #161616;
-	--gray-8: #000000;
-	--red-2: #ffadae;
+    --gray-0: #ffffff;
+    --gray-1: #eaeaea;
+    --gray-2: #c2c2c2;
+    --gray-3: #9c9c9c;
+    --gray-4l: #767676;
+    --gray-4: #777777;
+    --gray-4d: #7f7f7f;
+    --gray-5: #545454;
+    --gray-5d: #505050;
+    --gray-6: #333333;
+    --gray-7: #161616;
+    --gray-8: #000000;
+    --red-2: #ffadae;
+    --red-3: #e67d82;
     --red-4l: #bd555c;
+    --red-4: #be565d;
     --red-4d: #c26268;
-	--red-5: #883c41;
-	--cyan-2: #55d4d9;
-	--cyan-3: #0fadb2;
-	--cyan-4l: #098387;
-	--cyan-4d: #098e92;
-	--cyan-5: #045e61;
+    --red-5: #883c41;
+    --cyan-2: #55d4d9;
+    --cyan-3: #0fadb2;
+    --cyan-4l: #098387;
+    --cyan-4: #098488;
+    --cyan-4d: #098e92;
+    --cyan-5: #045e61;
 
-	--accent-color: var(--cyan-4l);
-	--hover: var(--cyan-3);
-	--page: var(--gray-1);
-	--card: var(--gray-0);
-	--text: var(--gray-6);
-	--soft: var(--gray-4l);
-	--button2: var(--gray-2);
-	--button2-text: var(--gray-5d);
-	--input: var(--gray-1);
-	--label: var(--gray-5);
-	--selection: var(--cyan-3);
-	--code-0: var(--gray-1);
-	--code-2: var(--gray-5);
-	--code-4: var(--cyan-5);
-	--code-6: var(--red-5);
-	--border: var(--gray-1);
-	--radius: 4px;
+    --red-5d: #82393e;
+    --red-6: #562327;
+
+    --yellow-2: #eabb6b;
+    --yellow-3: #bf9549;
+    --yellow-5d: #634c21;
+    --yellow-6: #413114;
+
+    --green-2: #86d584;
+    --green-3: #62ac62;
+    --green-5d: #305a2f;
+    --green-6: #1d3a1d;
+
+    --blue-2: #8dc8fe;
+    --blue-3: #4da3e2;
+    --blue-5d: #255475;
+    --blue-6: #15364e;
+
+    --accent-color: var(--cyan-4l);
+    --hover: var(--cyan-3);
+    --page: var(--gray-1);
+    --card: var(--gray-0);
+    --text: var(--gray-6);
+    --soft: var(--gray-4l);
+    --button2: var(--gray-2);
+    --button2-text: var(--gray-5d);
+    --input: var(--gray-1);
+    --label: var(--gray-5);
+    --selection: var(--cyan-3);
+    --code-0: var(--gray-1);
+    --code-1: var(--gray-4);
+    --code-2: var(--gray-5);
+    --code-3: var(--cyan-4);
+    --code-4: var(--cyan-5);
+    --code-5: var(--red-4);
+    --code-6: var(--red-5);
+    --border: var(--gray-1);
+    --radius: 4px;
+    --danger-0: var(--red-5d);
+    --warning-0: var(--yellow-5d);
+    --success-0: var(--green-5d);
+    --info-0: var(--blue-5d);
+    --danger-1: var(--red-2);
+    --warning-1: var(--yellow-2);
+    --success-1: var(--green-2);
+    --info-1: var(--blue-2);
 }
 .dark {
-	--accent-color: var(--cyan-4d);
-	--hover: var(--cyan-3);
-	--page: var(--gray-8);
-	--card: var(--gray-7);
-	--text: var(--gray-2);
-	--soft: var(--gray-4d);
-	--button2: var(--gray-5d);
-	--button2-text: var(--gray-2);
-	--input: var(--gray-6);
-	--label: var(--gray-3);
-	--selection: var(--cyan-5);
-	--code-0: var(--gray-6);
-	--code-2: var(--gray-2);
-	--code-4: var(--cyan-2);
-	--code-6: var(--red-2);
-	--border: var(--gray-6);
+    --accent-color: var(--cyan-4d);
+    --hover: var(--cyan-3);
+    --page: var(--gray-8);
+    --card: var(--gray-7);
+    --text: var(--gray-2);
+    --soft: var(--gray-4d);
+    --button2: var(--gray-5d);
+    --button2-text: var(--gray-2);
+    --input: var(--gray-6);
+    --label: var(--gray-3);
+    --selection: var(--cyan-5);
+    --code-0: var(--gray-6);
+    --code-1: var(--gray-3);
+    --code-2: var(--gray-2);
+    --code-3: var(--cyan-3);
+    --code-4: var(--cyan-2);
+    --code-5: var(--red-3);
+    --code-6: var(--red-2);
+    --border: var(--gray-6);
+    --danger-0: var(--red-3);
+    --warning-0: var(--yellow-3);
+    --success-0: var(--green-3);
+    --info-0: var(--blue-3);
+    --danger-1: var(--red-6);
+    --warning-1: var(--yellow-6);
+    --success-1: var(--green-6);
+    --info-1: var(--blue-6);
 }
 
 .danger {
@@ -93,6 +143,9 @@ main {
     display: flex;
     margin: 0 12px;
 }
+/* main > * {
+    flex-basis: 35%;
+} */
 .card {
     /* margin: 24px 12px; */
     margin: 0 12px;
@@ -108,14 +161,36 @@ p {
     margin: 16px 0;
 }
 a {
-	color: var(--accent-color);
+    color: var(--accent-color);
 }
-h2 {
+h1, h2, h3, h4, h5, h6 {
     color: var(--accent-color);
     font-weight: 500;
     margin: 16px 0;
+}
+h1 {
+    font-size: 34px;
+    line-height: 40px;
+}
+h2 {
     font-size: 28px;
     line-height: 34px;
+}
+h3 {
+    font-size: 24px;
+    line-height: 28px;
+}
+h4 {
+    font-size: 20px;
+    line-height: 24px;
+}
+h5 {
+    font-size: 18px;
+    line-height: 22px;
+}
+h6 {
+    font-size: 16px;
+    line-height: 20px;
 }
 table {
     border-collapse: collapse;
@@ -199,4 +274,105 @@ input:disabled {
     justify-content: space-around;
     align-items: center;
     padding: 8px 0 0;
+}
+
+/* ------------------ */
+
+.alert {
+    padding: 8px 12px;
+    border-radius: var(--radius);
+}
+.danger-alert {
+    color: var(--danger-0);
+    background: var(--danger-1);
+}
+.warning {
+    color: var(--warning-0);
+    background: var(--warning-1);
+}
+.success {
+    color: var(--success-0);
+    background: var(--success-1);
+}
+.info-alert {
+    color: var(--info-0);
+    background: var(--info-1);
+}
+
+/* ------------------ */
+
+pre, code {
+    font-family: 'Fira Mono', monospace;
+    line-height: 22px;
+    color: var(--code-4);
+    background: var(--code-0);
+    border-radius: var(--radius);
+    tab-size: 4;
+}
+pre {
+    overflow: auto;
+}
+code {
+    padding: 2px 6px;
+}
+pre > code {
+    display: block;
+    width: max-content;
+    padding: 16px;
+}
+
+::selection {
+    background: var(--selection);
+}
+
+/* ----- prism ------ */
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: var(--code-1);
+}
+
+.token.namespace,
+.token.punctuation,
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: var(--code-2);
+}
+
+.token.boolean,
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: var(--code-3);
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: var(--code-4);
+}
+
+.token.regex,
+.token.important,
+.token.variable,
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: var(--code-5);
+}
+
+.token.number,
+.token.function,
+.token.class-name {
+    color: var(--code-6);
 }
