@@ -136,7 +136,9 @@ reboot maybe should be part of the script?
 printing IP address should also be part of the script
 -->
 
-Run `sudo systemctl restart doorctl` whenever you make changes
+Run `sudo systemctl restart doorctl` over ssh whenever you make backend changes.
+
+Run `npm run build` locally after making frontend changes.
 
   [9]: https://code.visualstudio.com/download
 

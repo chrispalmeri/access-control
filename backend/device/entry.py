@@ -16,6 +16,8 @@ RELAY.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0
 LED.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
 BUZZER.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[0])
 # there is no PWM in libgpiod, so no fancy buzzer sounds
+# use this then: https://python-periphery.readthedocs.io/en/latest/pwm.html
+# you were thinking about converting to that anyway
 
 # not sure if good or bad, to avoid using global keyword
 # self is just a convention for classes not actually reserved

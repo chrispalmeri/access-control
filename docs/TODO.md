@@ -1,5 +1,30 @@
 # To do
 
+https://pages.nist.gov/800-63-3/sp800-63b.html#reqauthtype
+
+revealable password field
+
+per user salt
+10,000 rounds pbk
+
++1 round using server secret salt, not stored in db
+
+https://docs.python.org/3/library/hashlib.html#key-derivation
+
+https://www.slingacademy.com/article/python-ways-to-hash-a-password/#Three_Ways_to_Hash_a_Password
+
+https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Authentication_Cheat_Sheet.md
+
+https://scotthelme.co.uk/boosting-account-security-pwned-passwords-and-zxcvbn/
+
+---
+
+`apt get install python3-pyotp` https://github.com/pyauth/pyotp
+
+need to store random_base32 in db
+
+store last timestamp and code (or hash of code) to deny using the same one again
+
 ## Layout Changes
 
   * add connection diagram or image
@@ -7,6 +32,8 @@
   * brief directions, plus link to Mouser project
 
 ## Code changes
+
+show database size - also is there a memory limit or anything?
 
   * DEBUG messages for user edited, user deleted
   * "Connected" styling

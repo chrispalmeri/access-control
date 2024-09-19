@@ -83,7 +83,7 @@ class View(web.View):
         if userid is None:
             raise web.HTTPMethodNotAllowed('DELETE', ['GET', 'POST'])
 
-        count = conn.execute('DELETE FROM users2 WHERE id = ?', (userid,)).rowcount
+        count = conn.execute('DELETE FROM users WHERE id = ?', (userid,)).rowcount
 
         if count < 1:
             raise web.HTTPNotFound()
