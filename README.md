@@ -162,6 +162,11 @@ Swipe a card and check the events for the number, then add it to a user.
 
 Should be good to go. Check that the hardware is all working correctly.
 
+## Advanced usage
+
+`1` on keypad before credential to toggle persistent unlocked state.
+`2` to trigger aux relay.
+
 ## Troubleshooting
 
 Restart process with `sudo systemctl restart doorctl`

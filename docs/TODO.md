@@ -33,6 +33,9 @@ store last timestamp and code (or hash of code) to deny using the same one again
 
 ## Code changes
 
+endpoints to loose and secure
+you could add "Last Denied Pin" button to users dialog now if you wanted
+
 show database size - also is there a memory limit or anything?
 
   * DEBUG messages for user edited, user deleted

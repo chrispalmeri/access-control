@@ -25,6 +25,7 @@ BUZZER.request(consumer=config.NAME, type=gpiod.LINE_REQ_DIR_OUT, default_vals=[
 self = SimpleNamespace()
 self.unlocked = False
 self.unlock_time = 0
+self.loose = False
 
 def allow():
     LOCK.set_value(1)
@@ -38,7 +39,7 @@ def deny():
     pass
 
 async def secure():
-    if self.unlocked:
+    if self.unlocked and not self.loose:
         now = time.time()
 
         # if time is up and door is closed re-lock
@@ -47,3 +48,37 @@ async def secure():
             LED.set_value(0)
             self.unlocked = False
             await broadcast.event('INFO', 'Door secured')
+
+async def buzz(app):
+    BUZZER.set_value(1)
+    app.loop.call_later(0.25, lambda: BUZZER.set_value(0))
+
+async def relay(app):
+    RELAY.set_value(1)
+    # relay spec is max 10ms to close, 5ms to open
+    # they did longevity testing at 200ms or less
+    # so relay is fine, gdo might like longer, def less than 1s i would think
+    app.loop.call_later(0.25, lambda: RELAY.set_value(0))
+    await broadcast.event('INFO', 'Relay momentary trigger')
+
+async def do(app, action):
+    # make this configurable in settings
+    if action == '1': # maintained unlock
+        if not self.loose:
+            self.loose = True
+            allow()
+            await buzz(app)
+            await broadcast.event('INFO', 'Door loosed')
+        else:
+            self.loose = False # loop will then secure it immediatley
+            await buzz(app)
+    elif action ==  '2': # aux relay
+        await relay(app)
+        await buzz(app)
+    else:
+        # ignore undefined actions and do default
+        # could do nothing but the log shows access granted anyway
+        # and this is consistent with random even number plus swipe
+        # only further sanitization would be to disregard bogus action before logging
+        allow()
+        await buzz(app)

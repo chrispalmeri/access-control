@@ -1,13 +1,6 @@
 from device import numpad
 import broadcast
-
-class Card:
-    def __init__(self, number, facility):
-        self.number = number # aka 'user code', 'unique id', 'card number'
-        self.facility = facility
-
-    def __str__(self):
-        return f'Card: {self.number} Facility: {self.facility}'
+from cred import Cred
 
 def parity(datain, p):
     while datain:
@@ -28,7 +21,14 @@ async def parse(data):
 
     # this should maybe go at the end, and split up if divisible by 4
     if length == 4:
-        return numpad.press(data)
+        if data == 10: # ESC
+            numpad.clear_value()
+            return None
+        elif data == 11: # ENT
+            return numpad.get_value()
+        else:
+            numpad.press(data)
+            return None
 
     # facility code is not the same for same card, it is actually a bigger number
     # so I am gonna just truncate it
@@ -65,7 +65,14 @@ async def parse(data):
         # facility = data >> 17 & 65535
         number = data >> 1 & 65535
 
-        return Card(number, facility)
+        cred = numpad.get_value()
+        # include action only if action is clean, no extra pin digits
+        if cred is not None and cred.pin is None:
+            cred.number = number
+            cred.facility = facility
+            return cred
+        else:
+            return Cred(number, facility)
 
     else:
         await broadcast.event('WARNING', 'Wiegand reading error')

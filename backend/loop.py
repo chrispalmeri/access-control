@@ -10,7 +10,7 @@ class Loop():
         app.on_startup.append(self.startup)
         app.on_shutdown.append(self.shutdown)
 
-    async def run(self, _app):
+    async def run(self, app):
         while self.loop_running:
             rawdata = reader.read()
             data = await wiegand.parse(rawdata)
@@ -19,7 +19,7 @@ class Loop():
                 valid = await auth.verify(data)
 
                 if valid:
-                    entry.allow()
+                    await entry.do(app, data.action)
 
             await sensors.check()
             await entry.secure()
